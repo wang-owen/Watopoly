@@ -1,7 +1,6 @@
 #ifndef PIECEMANAGER_H
 #define PIECEMANAGER_H
 
-#include <string>
 #include <unordered_set>
 #include <vector>
 

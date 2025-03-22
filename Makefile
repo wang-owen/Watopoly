@@ -1,9 +1,9 @@
 CXX = clang++
 CXXFLAGS = -Wall -Wextra -O2 -std=c++20
 
-SRCS = main.cc Board-impl.cc PieceManager-impl.cc Player-impl.cc
+SRCS = main.cc Board-impl.cc PieceManager-impl.cc Player-impl.cc Building-impl.cc CommandCenter-impl.cc
 OBJS = $(SRCS:.cc=.o)
-DEPS = Board.h Piece.h PieceManager.h Player.h Building.h
+DEPS = Board.h Piece.h PieceManager.h Player.h Building.h CommandCenter.h
 
 TARGET = watopoly
 

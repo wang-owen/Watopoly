@@ -1,12 +1,12 @@
 #include <format>
 #include <iostream>
+#include <memory>
 #include <sstream>
-#include <stdexcept>
 #include <string>
+#include <unordered_set>
 
-#include "Board.h"
+#include "CommandCenter.h"
 #include "PieceManager.h"
-#include "Player.h"
 
 void formatError(std::string &message) {
   std::cerr << std::format("ERROR: {}\n", message);
@@ -14,30 +14,34 @@ void formatError(std::string &message) {
 
 int main(int argc, char *argv[]) {
   // Verify arguments
-  if (argc > 2) {
-    std::cerr << std::format("Usage: {} [-test]\n", argv[0]);
+  if (argc > 3) {
+    std::cerr << std::format("Usage: {} [-load file] [-testing] \n", argv[0]);
     return 1;
   }
 
-  // Create board
-  Board board{};
+  // Initialize command center
+  CommandCenter cmd{};
+  const int STARTING_FUNDS = 1500;
+  const int MIN_PLAYERS = 2;
+  const int MAX_PLAYERS = 6;
 
   // Prompt for player count
   int numPlayers = 0;
-  std::cout << std::format("Enter number of players ({}-{}): ",
-                           Board::MIN_PLAYERS, Board::MAX_PLAYERS);
-  while (!(std::cin >> numPlayers) || numPlayers < Board::MIN_PLAYERS ||
-         numPlayers > Board::MAX_PLAYERS) {
+  std::cout << std::format("Enter number of players ({}-{}): ", MIN_PLAYERS,
+                           MAX_PLAYERS);
+  while (!(std::cin >> numPlayers) || numPlayers < MIN_PLAYERS ||
+         numPlayers > MAX_PLAYERS) {
     std::cout << std::format(
         "Invalid input. Please enter an integer between {} and {}: ",
-        Board::MIN_PLAYERS, Board::MAX_PLAYERS);
+        MIN_PLAYERS, MAX_PLAYERS);
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   }
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-  // Prompt for player name and piece choice
+  // Setup player objects
   PieceManager pm{};
+  std::unordered_set<std::string> taken_names;
   for (auto n = 1; n <= numPlayers; n++) {
     std::cout << std::endl;
     pm.displayPieces();
@@ -45,31 +49,48 @@ int main(int argc, char *argv[]) {
     std::string username, input, extra;
     int pieceNum;
 
+    // Prompt for username and piece type
     while (true) {
+      // Prompt for username
       std::cout << std::format(
-          "\nEnter your username (alphanumeric, one word) and piece (1-{}): ",
-          pm.getNumPieces());
+          "\nPlayer {} - Enter username (alphanumeric, one word): ", n);
       std::getline(std::cin, input);
 
       std::istringstream iss(input);
-      if (!(iss >> username >> pieceNum) || username.empty() ||
+      if (!(iss >> username) || username.empty() ||
           !std::all_of(username.begin(), username.end(), ::isalnum) ||
-          pieceNum < 1 || pieceNum > pm.getNumPieces() ||
-          !(pm.isAvailable(pieceNum)) || (iss >> extra)) {
+          (iss >> extra)) {
         std::cout << "Invalid input. Try again.\n";
-      } else {
-        break;
+        continue;
+      } else if (taken_names.contains(username)) {
+        std::cout << "Username taken. Try again.\n";
+        continue;
       }
+
+      // Prompt for piece type
+      int numPieces = pm.getNumPieces();
+      std::cout << std::format("Player {} - Enter piece selection (1-{}): ", n,
+                               numPieces);
+      while (!(std::cin >> pieceNum) || pieceNum < 1 || pieceNum > numPieces ||
+             !pm.isAvailable(pieceNum)) {
+        std::cout << std::format(
+            "Invalid input. Please enter an integer between 1 and {}: ",
+            numPieces);
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      }
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      break;
     }
 
     // Initialize player
-    auto player = std::make_unique<Player>(username, pm.selectPiece(pieceNum));
-    board.addPlayer(std::move(player));
+    taken_names.insert(username);
+    cmd.addPlayer(username, pm.selectPiece(pieceNum), STARTING_FUNDS);
   }
 
-  // Display all players
-  std::cout << std::endl;
-  board.displayPlayers();
+  // Display players
+  std::cout << "\n";
+  cmd.displayPlayers();
 
   // Gameplay loop
 
