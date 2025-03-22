@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "CommandCenter.h"
+#include "Player.h"
 
 CommandCenter::CommandCenter() : board{std::make_unique<Board>()} {}
 

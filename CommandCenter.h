@@ -3,7 +3,8 @@
 
 #include "Board.h"
 #include "Piece.h"
-#include "Player.h"
+
+class Player;
 
 class CommandCenter {
 public:
