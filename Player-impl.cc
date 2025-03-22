@@ -1,3 +1,4 @@
+#include "Building.h"
 #include "Player.h"
 
 Player::Player(std::string username, Piece piece, int funds)

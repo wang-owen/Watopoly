@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "Building.h"
+class Building;
 
 class Board {
 public:

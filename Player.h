@@ -4,8 +4,9 @@
 #include <memory>
 #include <string>
 
-#include "Building.h"
 #include "Piece.h"
+
+class Building;
 
 class Player {
 public:
