@@ -1,5 +1,5 @@
 CXX = clang++
-CXXFLAGS = -Wall -Wextra -O2 -std=c++20
+CXXFLAGS = -Wall -Wextra -std=c++20
 
 SRCS = main.cc Board-impl.cc PieceManager-impl.cc Player-impl.cc Building-impl.cc CommandCenter-impl.cc
 OBJS = $(SRCS:.cc=.o)
