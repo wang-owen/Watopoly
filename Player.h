@@ -10,7 +10,9 @@ class Building;
 
 class Player {
 public:
-  Player(std::string username, Piece piece, int funds);
+  Player(const std::string &username, const Piece &piece, int funds);
+
+  Player(std::string &&username, Piece &&piece, int funds);
 
   std::string getUsername() const;
 
