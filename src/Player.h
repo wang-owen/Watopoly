@@ -15,7 +15,11 @@ public:
 
   char getPiece() const;
 
-  int getFunds() const;
+  int getBalance() const;
+
+  void increaseFunds(int amount);
+
+  void reduceFunds(int amount);
 
   void setPosition(int n);
 
@@ -27,7 +31,7 @@ public:
 private:
   std::string name;
   char piece;
-  int funds;
+  int balance;
   int position;
   std::unordered_map<std::string, std::shared_ptr<Building>> properties;
   int num_residences;

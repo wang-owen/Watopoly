@@ -20,7 +20,7 @@ public:
 
   void displayPlayers() const;
 
-  bool parse(const std::string &input);
+  bool scan();
 
   bool execute();
 

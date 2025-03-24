@@ -7,14 +7,18 @@ class Player;
 
 class OwnableBuilding : public Building {
 public:
-  OwnableBuilding(const std::string &name, int purchase_cost);
+  OwnableBuilding(const std::string &name, int cost);
 
-  int getPurchaseCost() const;
+  int getCost() const;
+
+  bool hasOwner() const;
+
+  void setOwner(std::shared_ptr<Player> player);
 
   virtual int getFee() const = 0;
 
 protected:
-  int purchase_cost;
+  int cost;
   bool has_owner;
   std::weak_ptr<Player> owner;
 };

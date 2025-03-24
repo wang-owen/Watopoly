@@ -8,6 +8,8 @@ class Building {
 public:
   Building(const std::string &name);
 
+  virtual ~Building() = default;
+
   std::string getName() const;
 
   void addPiece(char c);

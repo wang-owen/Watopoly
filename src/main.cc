@@ -89,18 +89,16 @@ int main(int argc, char *argv[]) {
   }
 
   // Display players
-  std::cout << "\n";
+  std::cout << "\n\n";
   cmd.displayPlayers();
   std::cout << "\n";
 
+  std::cout << std::format("\nPlayer 1 turn:\n--------------\n");
+
   // Gameplay loop
   bool running = true;
-  std::string input;
   while (running) {
-    std::cout << "> ";
-    std::getline(std::cin, input);
-    if (!cmd.parse(input)) {
-      std::cout << std::format("command not found: {}\n", input);
+    if (!cmd.scan()) {
       continue;
     }
     running = cmd.execute();

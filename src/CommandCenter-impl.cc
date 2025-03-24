@@ -56,8 +56,12 @@ void CommandCenter::displayPlayers() const {
   }
 }
 
-bool CommandCenter::parse(const std::string &input) {
-  // TODO: verify command validity, return false if invalid
+bool CommandCenter::scan() {
+  std::string input;
+
+  std::cout << "> ";
+  std::getline(std::cin, input);
+
   if (input.empty()) {
     return false;
   }
@@ -65,6 +69,7 @@ bool CommandCenter::parse(const std::string &input) {
   std::istringstream iss{input};
   params.clear();
   if (iss >> command && !(commands.contains(command))) {
+    std::cout << std::format("command not found: {}\n", input);
     return false;
   }
   std::string param;
