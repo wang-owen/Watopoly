@@ -3,16 +3,13 @@
 
 #include "Command.h"
 
-class Board;
-
 class NextCommand : public Command {
 public:
   static const std::string NAME;
 
-  bool execute(std::shared_ptr<Player> player,
-               const std::vector<std::string> &params = {}) override {}
-};
+  explicit NextCommand(std::weak_ptr<CommandContext> context);
 
-const std::string NextCommand::NAME = "next";
+  bool execute() override;
+};
 
 #endif

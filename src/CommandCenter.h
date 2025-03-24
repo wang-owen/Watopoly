@@ -6,8 +6,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Board.h"
 #include "Commands/Command.h"
+
+struct CommandContext;
 
 class Player;
 
@@ -24,12 +25,10 @@ public:
   bool execute();
 
 private:
-  std::shared_ptr<Board> board;
-  std::shared_ptr<Player> cur_player;
-  std::vector<std::shared_ptr<Player>> players;
+  std::unordered_map<std::string, std::unique_ptr<Command>> commands;
   std::string command;
   std::vector<std::string> params;
-  std::unordered_map<std::string, std::unique_ptr<Command>> commands;
+  std::shared_ptr<CommandContext> context;
 };
 
 #endif

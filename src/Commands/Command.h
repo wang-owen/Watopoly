@@ -2,15 +2,17 @@
 #define COMMAND_H
 
 #include <memory>
-#include <string>
-#include <vector>
 
-#include "../Player.h"
+struct CommandContext;
 
 class Command {
 public:
-  virtual bool execute(std::shared_ptr<Player> player,
-                       const std::vector<std::string> &params = {}) = 0;
+  Command(std::weak_ptr<CommandContext> context);
+
+  virtual bool execute() = 0;
+
+protected:
+  std::weak_ptr<CommandContext> context;
 };
 
 #endif
