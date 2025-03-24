@@ -4,7 +4,16 @@
 #include <unordered_set>
 #include <vector>
 
-#include "Piece.h"
+const enum class PieceType {
+  Goose,
+  GRTBus,
+  TimHortonsDoughnut,
+  Professor,
+  Student,
+  Money,
+  Laptop,
+  PinkTie
+};
 
 class PieceManager {
 public:
@@ -16,12 +25,11 @@ public:
 
   bool isAvailable(int idx) const;
 
-  Piece selectPiece(int idx);
+  char selectPiece(int idx);
 
 private:
-  Piece createPiece(PieceType type);
-
-  std::vector<PieceType> pieces;
+  static const std::vector<std::pair<char, std::string>> PIECES;
+  static const std::vector<PieceType> PIECE_TYPES;
   std::unordered_set<PieceType> available_pieces;
 };
 

@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
 
   // Initialize command center
   CommandCenter cmd{};
+
   const int STARTING_FUNDS = 1500;
   const int MIN_PLAYERS = 2;
   const int MAX_PLAYERS = 6;
@@ -46,24 +47,23 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
     pm.displayPieces();
 
-    std::string username, input, extra;
+    std::string name, input, extra;
     int pieceNum;
 
-    // Prompt for username and piece type
+    // Prompt for name and piece type
     while (true) {
-      // Prompt for username
+      // Prompt for name
       std::cout << std::format(
-          "\nPlayer {} - Enter username (alphanumeric, one word): ", n);
+          "\nPlayer {} - Enter name (alphanumeric, one word): ", n);
       std::getline(std::cin, input);
 
       std::istringstream iss(input);
-      if (!(iss >> username) || username.empty() ||
-          !std::all_of(username.begin(), username.end(), ::isalnum) ||
-          (iss >> extra)) {
+      if (!(iss >> name) || name.empty() ||
+          !std::all_of(name.begin(), name.end(), ::isalnum) || (iss >> extra)) {
         std::cout << "Invalid input. Try again.\n";
         continue;
-      } else if (taken_names.contains(username)) {
-        std::cout << "Username taken. Try again.\n";
+      } else if (taken_names.contains(name)) {
+        std::cout << "Name taken. Try again.\n";
         continue;
       }
 
@@ -84,8 +84,8 @@ int main(int argc, char *argv[]) {
     }
 
     // Initialize player
-    taken_names.insert(username);
-    cmd.addPlayer(username, pm.selectPiece(pieceNum), STARTING_FUNDS);
+    taken_names.insert(name);
+    cmd.addPlayer(name, pm.selectPiece(pieceNum), STARTING_FUNDS);
   }
 
   // Display players
@@ -93,6 +93,16 @@ int main(int argc, char *argv[]) {
   cmd.displayPlayers();
 
   // Gameplay loop
+  bool running = true;
+  std::string input;
+  while (running) {
+    std::cout << "\n> ";
+    std::getline(std::cin, input);
+    if (!cmd.parse(input)) {
+      continue;
+    }
+    cmd.execute();
+  }
 
   return 0;
 }
