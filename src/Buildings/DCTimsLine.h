@@ -5,7 +5,7 @@
 
 class DCTimsLine : public UnownableBuilding {
 public:
-  DCTimsLine() : UnownableBuilding{} {}
+  DCTimsLine() : UnownableBuilding{"DC TIMS LINE"} {}
 };
 
 #endif

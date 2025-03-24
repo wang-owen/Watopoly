@@ -6,12 +6,10 @@ const std::vector<std::string> ResidenceBuilding::RESIDENCE_NAMES = {
     "MKV", "UWP", "V1", "REV"};
 
 ResidenceBuilding::ResidenceBuilding(const std::string &name)
-    : name{name}, hasOwner{false} {}
-
-int ResidenceBuilding::getPurchaseCost() const { return PURCHASE_COST; }
+    : OwnableBuilding{name, PURCHASE_COST} {}
 
 int ResidenceBuilding::getFee() const {
-  if (hasOwner) {
+  if (has_owner) {
     if (auto o = owner.lock()) {
       int fee = 0;
       for (auto &name : RESIDENCE_NAMES) {

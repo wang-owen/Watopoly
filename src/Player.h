@@ -5,6 +5,8 @@
 #include <string>
 #include <unordered_map>
 
+class Building;
+
 class Player {
 public:
   Player(const std::string &name, char piece, int funds);

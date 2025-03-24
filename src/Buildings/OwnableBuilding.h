@@ -3,13 +3,20 @@
 
 #include "Building.h"
 
+class Player;
+
 class OwnableBuilding : public Building {
 public:
-  OwnableBuilding() : Building{} {}
+  OwnableBuilding(const std::string &name, int purchase_cost);
 
-  virtual int getPurchaseCost() const = 0;
+  int getPurchaseCost() const;
 
   virtual int getFee() const = 0;
+
+protected:
+  int purchase_cost;
+  bool has_owner;
+  std::weak_ptr<Player> owner;
 };
 
 #endif

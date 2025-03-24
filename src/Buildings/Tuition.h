@@ -5,7 +5,7 @@
 
 class Tuition : public UnownableBuilding {
 public:
-  Tuition() : UnownableBuilding{} {}
+  Tuition() : UnownableBuilding{"TUITION"} {}
 };
 
 #endif

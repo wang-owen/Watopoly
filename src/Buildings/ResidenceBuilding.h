@@ -9,15 +9,10 @@ public:
 
   ResidenceBuilding(const std::string &name);
 
-  int getPurchaseCost() const override;
-
   int getFee() const override;
 
 private:
   static const int PURCHASE_COST = 200;
-  std::string name;
-  bool hasOwner;
-  std::weak_ptr<Player> owner;
 };
 
 #endif

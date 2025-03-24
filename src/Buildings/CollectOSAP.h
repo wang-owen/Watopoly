@@ -5,7 +5,7 @@
 
 class CollectOSAP : public UnownableBuilding {
 public:
-  CollectOSAP() : UnownableBuilding{} {}
+  CollectOSAP() : UnownableBuilding{"COLLECT OSAP"} {}
 };
 
 #endif

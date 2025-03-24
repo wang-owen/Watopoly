@@ -1,15 +1,14 @@
 #include "../Dice.h"
-#include "GymBuilding.h"
 #include "../Player.h"
+#include "GymBuilding.h"
 
 const std::vector<std::string> GymBuilding::GYM_NAMES = {"PAC", "CIF"};
 
-GymBuilding::GymBuilding(const std::string &name) : name{name} {}
-
-int GymBuilding::getPurchaseCost() const { return PURCHASE_COST; }
+GymBuilding::GymBuilding(const std::string &name)
+    : OwnableBuilding{name, PURCHASE_COST} {}
 
 int GymBuilding::getFee() const {
-  if (hasOwner) {
+  if (has_owner) {
     if (auto o = owner.lock()) {
       Dice dice{6};
       int fee = 0;

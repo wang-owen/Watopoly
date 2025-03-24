@@ -5,7 +5,7 @@
 
 class GooseNesting : public UnownableBuilding {
 public:
-  GooseNesting() : UnownableBuilding{} {}
+  GooseNesting() : UnownableBuilding{"GOOSE NESTING"} {}
 };
 
 #endif

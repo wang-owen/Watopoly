@@ -10,10 +10,8 @@ class Player;
 class AcademicBuilding : public OwnableBuilding {
 public:
   AcademicBuilding(const std::string &name, MonopolyBlock block,
-                   int purchaseCost, int improvementCost,
+                   int purchase_cost, int improvement_cost,
                    const std::array<int, 6> &tuition);
-
-  int getPurchaseCost() const override;
 
   int getFee() const override;
 
@@ -22,13 +20,10 @@ public:
   MonopolyBlock getBlock() const;
 
 private:
-  std::string name;
   MonopolyBlock block;
-  int purchaseCost, improvementCost;
+  int improvement_cost;
   std::array<int, 6> tuition;
-  int numImprovements;
-  bool hasOwner;
-  std::weak_ptr<Player> owner;
+  int num_improvements;
 };
 
 #endif

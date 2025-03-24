@@ -5,7 +5,7 @@
 
 class GoToTims : public UnownableBuilding {
 public:
-  GoToTims() : UnownableBuilding{} {}
+  GoToTims() : UnownableBuilding{"GO TO TIMS"} {}
 };
 
 #endif

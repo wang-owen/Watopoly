@@ -5,7 +5,7 @@
 
 class SLC : public UnownableBuilding {
 public:
-  SLC() : UnownableBuilding{} {}
+  SLC() : UnownableBuilding{"SLC"} {}
 };
 
 #endif

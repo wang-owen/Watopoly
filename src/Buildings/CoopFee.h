@@ -5,7 +5,7 @@
 
 class CoopFee : public UnownableBuilding {
 public:
-  CoopFee() : UnownableBuilding{} {}
+  CoopFee() : UnownableBuilding{"COOP FEE"} {}
 };
 
 #endif

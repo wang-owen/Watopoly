@@ -5,7 +5,7 @@
 
 class UnownableBuilding : public Building {
 public:
-  UnownableBuilding() : Building{} {}
+  UnownableBuilding(const std::string &name);
 };
 
 #endif

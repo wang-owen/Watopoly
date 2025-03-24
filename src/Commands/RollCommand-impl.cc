@@ -31,7 +31,8 @@ bool RollCommand::execute() {
     buildings[curPos]->removePiece(player->getPiece());
     buildings[newPos]->addPiece(player->getPiece());
 
-    std::cout << std::format("Moved {} steps\n", steps);
+    std::cout << std::format("Moved {} steps to {}\n", steps,
+                             buildings[newPos]->getName());
 
     return true;
   }
