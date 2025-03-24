@@ -14,6 +14,7 @@
 #include "Buildings/Tuition.h"
 
 Board::Board() {
+  buildings.reserve(40);
   auto slc = std::make_shared<RollUpTheRimDecorator>(std::make_shared<SLC>());
   auto needles_hall =
       std::make_shared<RollUpTheRimDecorator>(std::make_shared<NeedlesHall>());

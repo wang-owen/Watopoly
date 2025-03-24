@@ -11,3 +11,10 @@ void OwnableBuilding::setOwner(std::shared_ptr<Player> player) {
   owner = player;
   has_owner = true;
 }
+
+std::shared_ptr<Player> OwnableBuilding::getOwner() const {
+  if (auto o = owner.lock()) {
+    return o;
+  }
+  return nullptr;
+}

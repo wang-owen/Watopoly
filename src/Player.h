@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 class OwnableBuilding;
 
@@ -17,26 +18,29 @@ public:
 
   int getBalance() const;
 
+  int getDebt() const;
+
+  void setDebt(int amount);
+
   void increaseFunds(int amount);
 
-  void reduceFunds(int amount);
+  int reduceFunds(int amount);
 
   void setPosition(int n);
 
   int getPosition() const;
 
-  const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
-  getProperties() const;
+  std::vector<std::shared_ptr<OwnableBuilding>> getProperties() const;
+
+  std::shared_ptr<OwnableBuilding> getProperty(const std::string &name) const;
 
   void addProperty(std::shared_ptr<OwnableBuilding> property);
 
 private:
   std::string name;
   char piece;
-  int balance;
-  int position;
+  int balance, debt, position, num_residences;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
-  int num_residences;
 };
 
 #endif

@@ -84,5 +84,10 @@ bool CommandCenter::execute() {
   if (!context->cur_player) {
     return false;
   }
-  return commands[command]->execute();
+  bool running = commands[command]->execute();
+  if (context->cur_player->getDebt() > 0) {
+    // TODO: Player has existing debt
+    // Continue to scan for commands, enable usage of 'bankrupt' command
+  }
+  return running;
 }

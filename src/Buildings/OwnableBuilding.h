@@ -15,6 +15,8 @@ public:
 
   void setOwner(std::shared_ptr<Player> player);
 
+  std::shared_ptr<Player> getOwner() const;
+
   virtual int getFee() const = 0;
 
 protected:

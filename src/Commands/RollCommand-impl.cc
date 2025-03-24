@@ -4,6 +4,7 @@
 
 #include "../Buildings/Building.h"
 #include "../Buildings/OwnableBuilding.h"
+#include "../Buildings/UnownableBuilding.h"
 #include "../Dice.h"
 #include "CommandContext.h"
 #include "RollCommand.h"
@@ -37,59 +38,83 @@ bool RollCommand::execute() {
     std::cout << std::format("Moved {} steps to {}\n", steps,
                              buildings[new_pos]->getName());
 
-    // Check if building is purchaseable
+    // Take action on building landed upon
     auto &building = buildings[new_pos];
     if (auto property = std::dynamic_pointer_cast<OwnableBuilding>(building)) {
-      if (!property->hasOwner()) {
-        // Building is available for purchase
-        auto property_cost = property->getCost();
-        while (true) {
-          std::cout << std::format("\nCurrent balance: ${}\n",
-                                   player->getBalance());
-          std::cout << std::format(
-              "Would you like to purchase {} for ${}? (y/n) ",
-              property->getName(), property_cost);
-
-          std::string input, extra;
-          char answer;
-          std::getline(std::cin, input);
-          std::istringstream iss{input};
-
-          if (!(iss >> answer) || (iss >> extra)) {
-            std::cout << "Invalid input. Try again.\n";
-            continue;
-          }
-
-          switch (std::tolower(answer)) {
-          case 'y':
-            // Attempt to purchase property
-            // Check player balance
-            if (player->getBalance() < property_cost) {
-              std::cout << "Insufficient funds.\n";
-            } else {
-              player->reduceFunds(property_cost);
-              property->setOwner(player);
-              player->addProperty(property);
-            }
-
-            std::cout << std::format("\n{} has purchased {} for ${}\n",
-                                     player->getName(), property->getName(),
-                                     property_cost);
-            std::cout << std::format("New balance: ${}\n",
-                                     player->getBalance());
-            return true;
-
-          case 'n':
-            return true;
-
-          default:
-            // Loop
-            continue;
-          }
-        }
-      }
+      ownableBuildingAction(player, property);
+    } else if (auto b =
+                   std::dynamic_pointer_cast<UnownableBuilding>(building)) {
+      // TODO: Unownable building action
     }
     return true;
   }
   return false;
+}
+
+bool RollCommand::ownableBuildingAction(
+    std::shared_ptr<Player> player, std::shared_ptr<OwnableBuilding> property) {
+  auto property_name = property->getName();
+
+  std::cout << std::format("\nCurrent balance: ${}\n", player->getBalance());
+
+  if (!property->hasOwner()) {
+    // Building is available for purchase
+    auto property_cost = property->getCost();
+    bool error = true;
+    while (error) {
+      std::cout << std::format("Would you like to purchase {} for ${}? (y/n) ",
+                               property_name, property_cost);
+
+      std::string input, extra;
+      char answer;
+      std::getline(std::cin, input);
+      std::istringstream iss{input};
+
+      if (!(iss >> answer) || (iss >> extra)) {
+        std::cout << "Invalid input. Try again.\n";
+        continue;
+      }
+
+      switch (std::tolower(answer)) {
+      case 'y':
+        // Attempt to purchase property
+        // Check player balance
+        if (player->getBalance() < property_cost) {
+          std::cout << "Insufficient funds.\n";
+        } else {
+          player->reduceFunds(property_cost);
+          property->setOwner(player);
+          player->addProperty(property);
+        }
+
+        std::cout << std::format("\n{} has purchased {} for ${}\n",
+                                 player->getName(), property_name,
+                                 property_cost);
+        error = false;
+        break;
+
+      case 'n':
+        error = false;
+        break;
+
+      default:
+        // Loop
+        continue;
+      }
+    }
+  } else {
+    // Pay fee
+    auto fee = property->getFee();
+    std::cout << std::format("{} Fee: ${}\n", property_name, fee);
+    auto reduced_funds = player->reduceFunds(fee);
+    property->getOwner()->increaseFunds(reduced_funds);
+    if (reduced_funds < fee) {
+      // Player lacks sufficient funds
+      player->setDebt(fee - reduced_funds);
+      std::cout << std::format("You lack sufficient funds. You owe ${}\n",
+                               fee - reduced_funds);
+    }
+  }
+  std::cout << std::format("New balance: ${}\n", player->getBalance());
+  return true;
 }

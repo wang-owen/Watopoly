@@ -8,10 +8,6 @@
 #include "CommandCenter.h"
 #include "PieceManager.h"
 
-void formatError(std::string &message) {
-  std::cerr << std::format("ERROR: {}\n", message);
-}
-
 int main(int argc, char *argv[]) {
   // Verify arguments
   if (argc > 3) {
