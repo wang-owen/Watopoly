@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-class Building;
+class OwnableBuilding;
 
 class Player {
 public:
@@ -25,15 +25,17 @@ public:
 
   int getPosition() const;
 
-  const std::unordered_map<std::string, std::shared_ptr<Building>> &
+  const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
   getProperties() const;
+
+  void addProperty(std::shared_ptr<OwnableBuilding> property);
 
 private:
   std::string name;
   char piece;
   int balance;
   int position;
-  std::unordered_map<std::string, std::shared_ptr<Building>> properties;
+  std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
   int num_residences;
 };
 

@@ -1,4 +1,5 @@
-#include "Buildings/Building.h"
+#include "Buildings/OwnableBuilding.h"
+#include "Buildings/ResidenceBuilding.h"
 #include "Player.h"
 
 Player::Player(const std::string &name, char piece, int balance)
@@ -20,7 +21,14 @@ void Player::setPosition(int n) { position = n; }
 
 int Player::getPosition() const { return position; }
 
-const std::unordered_map<std::string, std::shared_ptr<Building>> &
+const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
 Player::getProperties() const {
   return properties;
+}
+
+void Player::addProperty(std::shared_ptr<OwnableBuilding> property) {
+  properties[property->getName()] = property;
+  if (std::dynamic_pointer_cast<ResidenceBuilding>(property)) {
+    num_residences++;
+  }
 }

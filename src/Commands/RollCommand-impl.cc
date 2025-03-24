@@ -69,6 +69,7 @@ bool RollCommand::execute() {
             } else {
               player->reduceFunds(property_cost);
               property->setOwner(player);
+              player->addProperty(property);
             }
 
             std::cout << std::format("\n{} has purchased {} for ${}\n",
