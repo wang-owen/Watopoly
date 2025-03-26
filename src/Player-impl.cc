@@ -33,13 +33,9 @@ void Player::setPosition(int n) { position = n; }
 
 int Player::getPosition() const { return position; }
 
-std::vector<std::shared_ptr<OwnableBuilding>> Player::getProperties() const {
-  std::vector<std::shared_ptr<OwnableBuilding>> vals;
-  vals.reserve(properties.size());
-  for (auto kv : properties) {
-    vals.push_back(kv.second);
-  }
-  return vals;
+const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
+Player::getProperties() const {
+  return properties;
 }
 
 std::shared_ptr<OwnableBuilding>

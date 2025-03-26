@@ -30,7 +30,8 @@ public:
 
   int getPosition() const;
 
-  std::vector<std::shared_ptr<OwnableBuilding>> getProperties() const;
+  const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
+  getProperties() const;
 
   std::shared_ptr<OwnableBuilding> getProperty(const std::string &name) const;
 

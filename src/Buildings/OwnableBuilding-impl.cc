@@ -9,7 +9,7 @@ bool OwnableBuilding::hasOwner() const { return has_owner; }
 
 void OwnableBuilding::setOwner(std::shared_ptr<Player> player) {
   owner = player;
-  has_owner = true;
+  has_owner = player ? true : false;
 }
 
 std::shared_ptr<Player> OwnableBuilding::getOwner() const {

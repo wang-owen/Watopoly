@@ -9,7 +9,7 @@
 #include "Player.h"
 // #include "Commands/AllCommand.h"
 // #include "Commands/AssetsCommand.h"
-// #include "Commands/BankruptCommand.h"
+#include "Commands/BankruptCommand.h"
 // #include "Commands/ImproveCommand.h"
 // #include "Commands/MortgageCommand.h"
 // #include "Commands/SaveCommand.h"
@@ -29,8 +29,8 @@ CommandCenter::CommandCenter() : context{std::make_shared<CommandContext>()} {
   //                  std::make_unique<MortgageCommand>(context));
   // commands.emplace(UnmortgageCommand::NAME,
   //                  std::make_unique<UnmortgageCommand>(context));
-  // commands.emplace(BankruptCommand::NAME,
-  //                  std::make_unique<BankruptCommand>(context));
+  commands.emplace(BankruptCommand::NAME,
+                   std::make_unique<BankruptCommand>(context));
   // commands.emplace(AssetsCommand::NAME,
   //                  std::make_unique<AssetsCommand>(context));
   // commands.emplace(AllCommand::NAME, std::make_unique<AllCommand>(context));
@@ -85,9 +85,5 @@ bool CommandCenter::execute() {
     return false;
   }
   bool running = commands[command]->execute();
-  if (context->cur_player->getDebt() > 0) {
-    // TODO: Player has existing debt
-    // Continue to scan for commands, enable usage of 'bankrupt' command
-  }
   return running;
 }
