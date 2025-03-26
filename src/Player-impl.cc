@@ -4,7 +4,11 @@
 
 Player::Player(const std::string &name, char piece, int balance)
     : name{name}, piece{piece}, balance{balance}, debt{0}, position{0},
-      num_residences{0} {}
+      num_residences{0}, active{true} {}
+
+void Player::disable() { active = false; }
+
+bool Player::isActive() const { return active; }
 
 std::string Player::getName() const { return name; }
 

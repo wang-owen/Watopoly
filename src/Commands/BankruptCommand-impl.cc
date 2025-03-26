@@ -34,11 +34,13 @@ bool BankruptCommand::execute() {
       // Player's assets go to bank
       for (auto &[name, property] : player->getProperties()) {
         property->setOwner(nullptr);
+        // TODO: Auction properties to all players
       }
 
       // TODO: Destroy Roll Up the Rim tickets
     }
-    // TODO: Destroy player
+    // TODO: Disable player
+    player->disable();
 
     // TODO: Call 'next' command
   }

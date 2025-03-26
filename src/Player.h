@@ -12,6 +12,10 @@ class Player {
 public:
   Player(const std::string &name, char piece, int funds);
 
+  void disable();
+
+  bool isActive() const;
+
   std::string getName() const;
 
   char getPiece() const;
@@ -42,6 +46,7 @@ private:
   char piece;
   int balance, debt, position, num_residences;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
+  bool active;
 };
 
 #endif

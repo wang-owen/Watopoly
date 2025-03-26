@@ -50,9 +50,11 @@ void CommandCenter::displayPlayers() const {
   std::cout << "Players:\n";
   std::cout << "--------\n";
   for (size_t i = 0; i < context->players.size(); i++) {
-    std::cout << std::format("Player {}: {} ({})\n", static_cast<int>(i + 1),
-                             context->players[i]->getName(),
-                             context->players[i]->getPiece());
+    auto &player = context->players[i];
+    if (player->isActive()) {
+      std::cout << std::format("Player {}: {} ({})\n", static_cast<int>(i + 1),
+                               player->getName(), player->getPiece());
+    }
   }
 }
 
