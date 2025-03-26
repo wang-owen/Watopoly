@@ -48,6 +48,7 @@ bool RollCommand::execute() {
     }
     return true;
   }
+  throw("Failed to acquire player pointer");
   return false;
 }
 
