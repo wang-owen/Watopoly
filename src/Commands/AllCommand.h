@@ -1,0 +1,15 @@
+#ifndef ALLCOMMAND_H
+#define ALLCOMMAND_H
+
+#include "Command.h"
+
+class AllCommand : public Command {
+public:
+  static const std::string NAME;
+
+  explicit AllCommand(std::weak_ptr<CommandContext> context);
+
+  bool execute() override;
+};
+
+#endif
