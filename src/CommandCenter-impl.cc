@@ -8,7 +8,7 @@
 #include "Commands/RollCommand.h"
 #include "Player.h"
 // #include "Commands/AllCommand.h"
-// #include "Commands/AssetsCommand.h"
+#include "Commands/AssetsCommand.h"
 #include "Commands/BankruptCommand.h"
 // #include "Commands/ImproveCommand.h"
 // #include "Commands/MortgageCommand.h"
@@ -31,8 +31,7 @@ CommandCenter::CommandCenter() : context{std::make_shared<CommandContext>()} {
   //                  std::make_unique<UnmortgageCommand>(context));
   commands.emplace(BankruptCommand::NAME,
                    std::make_unique<BankruptCommand>(context));
-  // commands.emplace(AssetsCommand::NAME,
-  //                  std::make_unique<AssetsCommand>(context));
+  commands.emplace(AssetsCommand::NAME, std::make_unique<AssetsCommand>(context));
   // commands.emplace(AllCommand::NAME, std::make_unique<AllCommand>(context));
   // commands.emplace(SaveCommand::NAME,
   // std::make_unique<SaveCommand>(context));
