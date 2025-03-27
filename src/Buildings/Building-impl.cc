@@ -7,3 +7,5 @@ std::string Building::getName() const { return name; }
 void Building::addPiece(char piece) { visiting_pieces.insert(piece); }
 
 void Building::removePiece(char piece) { visiting_pieces.erase(piece); }
+
+std::unordered_set<char>& Building::getVisitingPieces() { return visiting_pieces; }

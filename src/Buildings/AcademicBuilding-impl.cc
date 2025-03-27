@@ -11,4 +11,6 @@ int AcademicBuilding::getFee() const { return tuition[num_improvements]; }
 
 int AcademicBuilding::getImprovementCost() const { return improvement_cost; }
 
+int AcademicBuilding::getNumImprovements() const { return num_improvements; }
+
 MonopolyBlock AcademicBuilding::getBlock() const { return block; }

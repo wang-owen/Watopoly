@@ -1,3 +1,4 @@
+#include "iostream"
 #include "Board.h"
 #include "Buildings/AcademicBuilding.h"
 #include "Buildings/Building.h"
@@ -106,7 +107,62 @@ Board::Board() {
       std::array<int, 6>{50, 200, 600, 1400, 1700, 2000}));
 }
 
-void Board::displayBoard() const {}
+void Board::displayBoard() const {
+    std::cout << "_________________________________________________________________________________________" << std::endl;
+    std::cout << "|Goose |       |NEEDLES|       |       |V1     |       |       |CIF    |       |GO TO  |" << std::endl;
+    std::cout << "|Nesting|" 
+        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[21]))
+        << "|HALL   |" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[23])) << "|"
+        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[24])) << "|       |"
+        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[26])) << "|"
+        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[27])) << "|       |"
+        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[29])) << "|TIMS   |" << std::endl;
+    std::cout << "|       |EV1    |       |EV2    |EV3    |       |PHYS   |B1     |       |B2     |       |" << std::endl;
+    std::cout << "|" << printEmptySquareWithPieces(buildings[20]) << "|" << printEmptySquareWithPieces(buildings[21]) << "|" 
+        << printEmptySquareWithPieces(buildings[22]) << "|" << printEmptySquareWithPieces(buildings[23]) 
+        << "|" << printEmptySquareWithPieces(buildings[24]) << "|" << printEmptySquareWithPieces(buildings[25]) 
+        << "|" << printEmptySquareWithPieces(buildings[26]) << "|" << printEmptySquareWithPieces(buildings[27]) 
+        << "|" << printEmptySquareWithPieces(buildings[28]) << "|" << printEmptySquareWithPieces(buildings[29]) 
+        << "|" << printEmptySquareWithPieces(buildings[30]) << "|" << std::endl;
+    std::cout << "|       |" << "|       |" << "|       |" << "|       |" << "|       |" << "|       |" << "|       |" << "|       |" << "|       |"  << "|       |" << "|       |" << std::endl; 
+    std::cout << "|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|" << std::endl;
+    std::cout << "|       |" << std::string(71, ' ') << "|       |" << std::endl;
+    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[19])) << "|" << std::string(71, ' ') 
+        << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[31])) << "|" << std::endl;
+    std::cout << "|OPT    |" << std::string(71, ' ') << "|EIT    |" << std::endl;
+    std::cout << "|" << printEmptySquareWithPieces(buildings[19]) << "|" << std::string(71, ' ') 
+        << "|" << printEmptySquareWithPieces(buildings[31]) << "|" << std::endl;
+    std::cout << "|_______|" << std::string(71, ' ') << "|_______|" << std::endl;
+    std::cout << "|       |" << std::string(71, ' ') << "|       |" << std::endl;
+    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[18])) << "|" << std::string(71, ' ') 
+        << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[32])) << "|" << std::endl;
+}
+
+std::string Board::printImprovements(std::shared_ptr<AcademicBuilding> building) const {
+    int numImprovements = building->getNumImprovements();
+    std::string result = "";
+    for (int i = 0; i < AcademicBuilding::MAX_IMPROVEMENTS; i++) {
+        if (numImprovements <= 0) {
+            result += "_";
+        } else {
+            result += "I";
+            numImprovements--;
+        }
+    }
+    result += "  ";
+    return result;
+}
+
+std::string Board::printEmptySquareWithPieces(std::shared_ptr<Building> building) const {
+    std::string result = "";
+    for (auto& piece : building->getVisitingPieces()) {
+        result += piece;
+    }
+    while (result.size() < 7) { // magic number maybe change later
+        result += " ";
+    }
+    return result;
+}
 
 const std::vector<std::shared_ptr<Building>> &Board::getBuildings() const {
   return buildings;
