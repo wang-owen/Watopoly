@@ -9,7 +9,7 @@ public:
 
   explicit BankruptCommand(std::weak_ptr<CommandContext> context);
 
-  bool execute() override;
+  bool execute(std::vector<std::string> params = {}) override;
 };
 
 #endif

@@ -10,7 +10,7 @@ const std::string AssetsCommand::NAME = "assets";
 AssetsCommand::AssetsCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool AssetsCommand::execute() {
+bool AssetsCommand::execute(std::vector<std::string> params) {
     auto ctx = context.lock();
     if (!ctx) {
         return false;

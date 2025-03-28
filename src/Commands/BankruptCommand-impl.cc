@@ -10,7 +10,7 @@ const std::string BankruptCommand::NAME = "bankrupt";
 BankruptCommand::BankruptCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool BankruptCommand::execute() {
+bool BankruptCommand::execute(std::vector<std::string> params) {
   if (auto ctx = context.lock()) {
     auto &player = ctx->cur_player;
 

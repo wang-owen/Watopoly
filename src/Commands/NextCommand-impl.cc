@@ -9,7 +9,7 @@ const std::string NextCommand::NAME = "next";
 NextCommand::NextCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool NextCommand::execute() {
+bool NextCommand::execute(std::vector<std::string> params) {
   if (auto ctx = context.lock()) {
     auto &cur_player = ctx->cur_player;
     auto &cur_player_idx = ctx->cur_player_idx;

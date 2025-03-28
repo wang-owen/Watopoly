@@ -10,7 +10,7 @@ const std::string AllCommand::NAME = "all";
 AllCommand::AllCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool AllCommand::execute() {
+bool AllCommand::execute(std::vector<std::string> params) {
     auto ctx = context.lock();
     if (!ctx) {
         return false;

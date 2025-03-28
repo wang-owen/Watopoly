@@ -9,7 +9,7 @@ public:
 
   explicit RollCommand(std::weak_ptr<CommandContext> context);
 
-  bool execute() override;
+  bool execute(std::vector<std::string> params = {}) override;
 
 private:
   bool ownableBuildingAction(std::shared_ptr<Player> player,

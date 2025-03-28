@@ -14,7 +14,7 @@ const std::string RollCommand::NAME = "roll";
 RollCommand::RollCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool RollCommand::execute() {
+bool RollCommand::execute(std::vector<std::string> params) {
   if (auto ctx = context.lock()) {
     // Generate dice roll
     Dice dice{6};

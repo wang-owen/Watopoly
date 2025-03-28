@@ -13,7 +13,7 @@
 #include "Commands/BankruptCommand.h"
 // #include "Commands/ImproveCommand.h"
 // #include "Commands/MortgageCommand.h"
-// #include "Commands/SaveCommand.h"
+#include "Commands/SaveCommand.h"
 // #include "Commands/TradeCommand.h"
 // #include "Commands/UnmortgageCommand.h"
 
@@ -30,12 +30,10 @@ CommandCenter::CommandCenter() : context{std::make_shared<CommandContext>()} {
   //                  std::make_unique<MortgageCommand>(context));
   // commands.emplace(UnmortgageCommand::NAME,
   //                  std::make_unique<UnmortgageCommand>(context));
-  commands.emplace(BankruptCommand::NAME,
-                   std::make_unique<BankruptCommand>(context));
+  commands.emplace(BankruptCommand::NAME, std::make_unique<BankruptCommand>(context));
   commands.emplace(AssetsCommand::NAME, std::make_unique<AssetsCommand>(context));
   commands.emplace(AllCommand::NAME, std::make_unique<AllCommand>(context));
-  // commands.emplace(SaveCommand::NAME,
-  // std::make_unique<SaveCommand>(context));
+  commands.emplace(SaveCommand::NAME, std::make_unique<SaveCommand>(context));
 }
 
 void CommandCenter::addPlayer(const std::string &name, char piece, int funds) {
@@ -87,7 +85,7 @@ bool CommandCenter::execute() {
   if (!context->cur_player) {
     return false;
   }
-  bool running = commands[command]->execute();
+  bool running = commands[command]->execute(params);
   context->board->displayBoard();
   return running;
 }
