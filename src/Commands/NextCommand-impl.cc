@@ -29,7 +29,7 @@ bool NextCommand::execute() {
         (cur_player_idx + 1 < num_players) ? cur_player_idx + 1 : 0;
     cur_player = players[cur_player_idx];
 
-    std::cout << std::format("\nPlayer {} turn:\n--------------",
+    std::cout << std::format("\nPlayer {} turn:\n--------------\n",
                              cur_player_idx + 1);
 
     return true;

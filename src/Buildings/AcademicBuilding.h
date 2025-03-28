@@ -13,9 +13,13 @@ public:
                    int purchase_cost, int improvement_cost,
                    const std::array<int, 6> &tuition);
 
+  static const int MAX_IMPROVEMENTS = 5;
+  
   int getFee() const override;
 
   int getImprovementCost() const;
+
+  int getNumImprovements() const;
 
   MonopolyBlock getBlock() const;
 

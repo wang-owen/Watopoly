@@ -16,6 +16,8 @@ public:
 
   void removePiece(char c);
 
+  std::unordered_set<char>& getVisitingPieces();
+
 private:
   std::string name;
   std::unordered_set<char> visiting_pieces;

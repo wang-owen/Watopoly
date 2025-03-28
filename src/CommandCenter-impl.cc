@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "Buildings/Building.h"
 #include "CommandCenter.h"
 #include "Commands/CommandContext.h"
 #include "Commands/NextCommand.h"
@@ -39,6 +40,7 @@ CommandCenter::CommandCenter() : context{std::make_shared<CommandContext>()} {
 
 void CommandCenter::addPlayer(const std::string &name, char piece, int funds) {
   context->players.emplace_back(std::make_shared<Player>(name, piece, funds));
+  context->board->getBuildings()[0]->addPiece(piece);
   if (!context->cur_player) {
     context->cur_player = context->players[0];
     context->cur_player_idx = 0;
@@ -86,5 +88,6 @@ bool CommandCenter::execute() {
     return false;
   }
   bool running = commands[command]->execute();
+  context->board->displayBoard();
   return running;
 }
