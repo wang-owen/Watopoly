@@ -4,11 +4,15 @@
 
 Player::Player(const std::string &name, char piece, int balance)
     : name{name}, piece{piece}, balance{balance}, debt{0}, position{0},
-      num_residences{0}, active{true} {}
+      num_residences{0}, num_cups{0}, active{true}, rolled{false} {}
 
-void Player::disable() { active = false; }
+void Player::deactivate() { active = false; }
 
 bool Player::isActive() const { return active; }
+
+bool Player::hasRolled() const { return rolled; }
+
+void Player::toggleRolled() { rolled = !rolled; }
 
 std::string Player::getName() const { return name; }
 
@@ -36,6 +40,12 @@ int Player::reduceFunds(int amount) {
 void Player::setPosition(int n) { position = n; }
 
 int Player::getPosition() const { return position; }
+
+int Player::getCups() const { return num_cups; }
+
+void Player::addCup() { num_cups++; }
+
+void Player::removeCup() { num_cups = num_cups - 1 < 0 ? 0 : num_cups - 1; }
 
 const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
 Player::getProperties() const {

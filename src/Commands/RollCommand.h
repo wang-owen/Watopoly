@@ -10,10 +10,6 @@ public:
   explicit RollCommand(std::weak_ptr<CommandContext> context);
 
   bool execute() override;
-
-private:
-  bool ownableBuildingAction(std::shared_ptr<Player> player,
-                             std::shared_ptr<OwnableBuilding> property);
 };
 
 #endif
