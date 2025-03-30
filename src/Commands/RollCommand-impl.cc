@@ -16,7 +16,7 @@ RollCommand::RollCommand(std::shared_ptr<CommandContext> context)
 
 void RollCommand::execute(const std::vector<std::string> &params) {
   auto &player = context->cur_player;
-  if (player->hasRolled()) {
+  if (player->hasRolled() && player->getDoublesRolled() == 0) {
     std::cout << "You have already rolled this turn!\n";
     return;
   }
@@ -43,6 +43,24 @@ void RollCommand::execute(const std::vector<std::string> &params) {
     }
   }
 
+  if (die1 == die2) {
+    player->setDoublesRolled(player->getDoublesRolled() + 1);
+
+    // Send player to DC Tims Line
+    if (player->getDoublesRolled() == 3) {
+      std::cout
+          << "You have rolled doubles thrice. Go straight to DC Tims Line.\n";
+      player->setTurnsInTims(1);
+      player->moveToIdx(10, context->board->getBuildings());
+      player->setDoublesRolled(0);
+      player->setRolled(true);
+      context->board->displayBoard();
+      return;
+    }
+
+    std::cout << "You have rolled doubles! You may roll again.\n";
+  }
+
   // Player is stuck in DC Tims Line
   if (player->getTurnsInTims()) {
     if (die1 == die2) {
@@ -56,6 +74,6 @@ void RollCommand::execute(const std::vector<std::string> &params) {
   }
 
   player->move(die1 + die2, context->board->getBuildings());
-  player->toggleRolled();
+  player->setRolled(true);
   context->board->displayBoard();
 }

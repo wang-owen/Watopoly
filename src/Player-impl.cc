@@ -16,7 +16,7 @@ bool Player::isActive() const { return active; }
 
 bool Player::hasRolled() const { return rolled; }
 
-void Player::toggleRolled() { rolled = !rolled; }
+void Player::setRolled(bool b) { rolled = b; }
 
 std::string Player::getName() const { return name; }
 
@@ -95,6 +95,10 @@ void Player::removeCup() { num_cups = num_cups - 1 < 0 ? 0 : num_cups - 1; }
 int Player::getTurnsInTims() const { return turns_in_tims; }
 
 void Player::setTurnsInTims(int turns) { turns_in_tims = turns; }
+
+int Player::getDoublesRolled() const { return doubles_rolled; }
+
+void Player::setDoublesRolled(int n) { doubles_rolled = n; }
 
 const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
 Player::getProperties() const {

@@ -19,7 +19,7 @@ public:
 
   bool hasRolled() const;
 
-  void toggleRolled();
+  void setRolled(bool b);
 
   std::string getName() const;
 
@@ -54,6 +54,10 @@ public:
 
   void setTurnsInTims(int turns);
 
+  int getDoublesRolled() const;
+
+  void setDoublesRolled(int n);
+
   const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
   getProperties() const;
 
@@ -68,7 +72,8 @@ public:
 private:
   std::string name;
   char piece;
-  int balance, debt, position, num_residences, num_cups, turns_in_tims;
+  int balance, debt, position, num_residences, num_cups, turns_in_tims,
+      doubles_rolled;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
   bool active, rolled;
 };

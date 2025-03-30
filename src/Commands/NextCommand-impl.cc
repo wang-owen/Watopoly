@@ -32,7 +32,8 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
     player->setTurnsInTims(turns + 1);
   }
 
-  player->toggleRolled();
+  player->setRolled(false);
+  player->setDoublesRolled(0);
 
   // Transfer control to next active player
   auto num_players = static_cast<int>(players.size());
