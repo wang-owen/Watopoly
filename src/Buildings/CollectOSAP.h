@@ -14,7 +14,7 @@ public:
   void processEvent(const std::shared_ptr<Player> &player) override {
     std::cout << "You have collected your OSAP grant of $200\n";
     player->increaseFunds(OSAP_AMOUNT);
-    std::cout << std::format("New balance: ${}\n", player->getBalance());
+    player->displayBalance();
   }
 
 private:

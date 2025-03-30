@@ -33,5 +33,5 @@ void Tuition::processEvent(const std::shared_ptr<Player> &player) {
     std::cout << std::format("You lack sufficient funds. You owe ${}\n",
                              fee - reduced_funds);
   }
-  std::cout << std::format("New balance: ${}\n", player->getBalance());
+  player->displayBalance();
 }

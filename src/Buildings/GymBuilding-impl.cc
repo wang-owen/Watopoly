@@ -15,8 +15,8 @@ int GymBuilding::getFee() const {
         fee += n;
       }
       auto &properties = o->getProperties();
-      if (properties.contains(GYM_NAMES[0]) &&
-          properties.contains(GYM_NAMES[1])) {
+      if (properties.count(GYM_NAMES[0]) &&
+          properties.count(GYM_NAMES[1])) {
         return fee * 10;
       }
       return fee * 4;

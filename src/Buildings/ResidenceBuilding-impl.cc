@@ -13,7 +13,7 @@ int ResidenceBuilding::getFee() const {
     if (auto o = owner.lock()) {
       int fee = 0;
       for (auto &name : RESIDENCE_NAMES) {
-        if (o->getProperties().contains(name)) {
+        if (o->getProperties().count(name)) {
           fee = (fee == 0) ? 25 : fee * 2;
         }
       }

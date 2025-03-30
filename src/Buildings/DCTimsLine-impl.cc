@@ -56,7 +56,7 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
         std::cout << std::format("You lack sufficient funds. You owe ${}\n",
                                  FEE_AMOUNT - reduced_funds);
       }
-      std::cout << std::format("New balance: ${}\n", player->getBalance());
+      player->displayBalance();
       error = false;
       break;
     }

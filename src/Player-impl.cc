@@ -16,7 +16,7 @@ bool Player::isActive() const { return active; }
 
 bool Player::hasRolled() const { return rolled; }
 
-void Player::toggleRolled() { rolled = !rolled; }
+void Player::setRolled(bool b) { rolled = b; }
 
 std::string Player::getName() const { return name; }
 
@@ -25,6 +25,10 @@ char Player::getPiece() const { return piece; }
 int Player::getPosition() const { return position; }
 
 int Player::getBalance() const { return balance; }
+
+void Player::displayBalance() const {
+  std::cout << std::format("Balance: ${}\n", getBalance());
+}
 
 int Player::getDebt() const { return debt; }
 
@@ -57,15 +61,15 @@ void Player::move(int steps,
                                      : buildings_size + position + steps;
   }
 
-  position = new_pos;
   buildings[position]->removePlayer(shared_from_this());
   buildings[new_pos]->addPlayer(shared_from_this());
+  position = new_pos;
 
   std::cout << std::format("Moved {} steps to {}\n", steps,
-                           buildings[new_pos]->getName());
+                           buildings[position]->getName());
 
   // Take action on building landed upon
-  auto &building = buildings[new_pos];
+  auto &building = buildings[position];
   building->processEvent(shared_from_this());
 }
 
@@ -92,6 +96,10 @@ int Player::getTurnsInTims() const { return turns_in_tims; }
 
 void Player::setTurnsInTims(int turns) { turns_in_tims = turns; }
 
+int Player::getDoublesRolled() const { return doubles_rolled; }
+
+void Player::setDoublesRolled(int n) { doubles_rolled = n; }
+
 const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
 Player::getProperties() const {
   return properties;
@@ -106,11 +114,15 @@ Player::getProperty(const std::string &name) const {
   return nullptr;
 }
 
-void Player::addProperty(std::shared_ptr<OwnableBuilding> property) {
+void Player::addProperty(const std::shared_ptr<OwnableBuilding> &property) {
   properties[property->getName()] = property;
   if (std::dynamic_pointer_cast<ResidenceBuilding>(property)) {
     num_residences++;
   }
+}
+
+void Player::removeProperty(const std::shared_ptr<OwnableBuilding> &property) {
+  properties.erase(property->getName());
 }
 
 void Player::displayAssets() const {

@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "UnownableBuilding.h"
 #include "../Player.h"
+#include "UnownableBuilding.h"
 
 class GoToTims : public UnownableBuilding {
 public:

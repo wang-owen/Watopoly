@@ -12,7 +12,7 @@ int OwnableBuilding::getCost() const { return cost; }
 
 bool OwnableBuilding::hasOwner() const { return has_owner; }
 
-void OwnableBuilding::setOwner(std::shared_ptr<Player> player) {
+void OwnableBuilding::setOwner(const std::shared_ptr<Player> &player) {
   owner = player;
   has_owner = player ? true : false;
 }
@@ -46,7 +46,7 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
       }
 
       switch (std::tolower(answer)) {
-      case 'y':
+      case 'y': {
         // Attempt to purchase property
         // Check player balance
         if (player->getBalance() < property_cost) {
@@ -61,13 +61,14 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
                                  player->getName(), getName(), property_cost);
         error = false;
         break;
+      }
 
-      case 'n':
+      case 'n': {
         error = false;
         break;
+      }
 
       default:
-        // Loop
         continue;
       }
     }
@@ -84,5 +85,5 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
                                fee - reduced_funds);
     }
   }
-  std::cout << std::format("New balance: ${}\n", player->getBalance());
+  player->displayBalance();
 }

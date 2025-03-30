@@ -18,6 +18,29 @@ public:
 
   static const int MAX_IMPROVEMENTS = 5;
 
+  static std::vector<std::string> getBlockBuildings(MonopolyBlock block) {
+    switch (block) {
+    case MonopolyBlock::Arts1:
+      return {"AL", "ML"};
+    case MonopolyBlock::Arts2:
+      return {"ECH", "PAS", "HH"};
+    case MonopolyBlock::Eng:
+      return {"RCH", "DWE", "CPH"};
+    case MonopolyBlock::Health:
+      return {"LHI", "BMH", "OPT"};
+    case MonopolyBlock::Env:
+      return {"EV1", "EV2", "EV3"};
+    case MonopolyBlock::Sci1:
+      return {"B1", "B2"};
+    case MonopolyBlock::Sci2:
+      return {"EIT", "ESC", "C2"};
+    case MonopolyBlock::Math:
+      return {"MC", "DC"};
+    default:
+      return {};
+    }
+  }
+
   int getFee() const override { return tuition[num_improvements]; }
 
   int getImprovementCost() const { return improvement_cost; }

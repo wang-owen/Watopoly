@@ -14,16 +14,17 @@
 // #include "Commands/ImproveCommand.h"
 // #include "Commands/MortgageCommand.h"
 #include "Commands/SaveCommand.h"
-// #include "Commands/TradeCommand.h"
+#include "Commands/TradeCommand.h"
 // #include "Commands/UnmortgageCommand.h"
 
-CommandCenter::CommandCenter() : context{std::make_shared<CommandContext>()} {
+CommandCenter::CommandCenter(bool testing)
+    : context{std::make_shared<CommandContext>()} {
   context->board = std::make_shared<Board>();
+  context->testing = testing;
 
   commands.emplace(RollCommand::NAME, std::make_unique<RollCommand>(context));
   commands.emplace(NextCommand::NAME, std::make_unique<NextCommand>(context));
-  // commands.emplace(TradeCommand::NAME,
-  // std::make_unique<TradeCommand>(context));
+  commands.emplace(TradeCommand::NAME, std::make_unique<TradeCommand>(context));
   // commands.emplace(ImproveCommand::NAME,
   //                  std::make_unique<ImproveCommand>(context));
   // commands.emplace(MortgageCommand::NAME,
@@ -88,7 +89,6 @@ bool CommandCenter::execute() {
     return false;
   }
   commands[command]->execute(params);
-  context->board->displayBoard();
 
   int num_active = 0;
   for (auto &player : context->players) {
