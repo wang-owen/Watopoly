@@ -13,40 +13,33 @@ const std::string RollCommand::NAME = "roll";
 RollCommand::RollCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool RollCommand::execute(std::vector<std::string> params) {
+void RollCommand::execute(const std::vector<std::string> & /*params*/) {
   if (auto ctx = context.lock()) {
     auto &player = ctx->cur_player;
     if (player->hasRolled()) {
       std::cout << "You have already rolled this turn!\n";
-      return true;
+      return;
     }
 
     // Generate dice roll
-    int steps = 0;
-    for (auto n : Dice::roll(6, 2)) {
-      steps += n;
+    auto rolls = Dice::roll(6, 2);
+    int steps = rolls[0] + rolls[1];
+
+    // Player is stuck in DC Tims Line
+    if (player->getTurnsInTims()) {
+      if (rolls[0] == rolls[1]) {
+        std::cout << "You rolled doubles! You have left the DC Tims Line.\n";
+        player->setTurnsInTims(0);
+      } else {
+        std::cout
+            << "You failed to roll doubles, you remain in the DC Tims Line.\n";
+      }
+      return;
     }
-    auto &buildings = ctx->board->getBuildings();
-    auto buildings_size = static_cast<int>(buildings.size());
 
-    int cur_pos = player->getPosition();
-    int new_pos = (cur_pos + steps < buildings_size)
-                      ? cur_pos + steps
-                      : cur_pos + steps - buildings_size;
-
-    player->setPosition(new_pos);
-    buildings[cur_pos]->removePlayer(player);
-    buildings[new_pos]->addPlayer(player);
+    player->move(steps, ctx->board->getBuildings());
     player->toggleRolled();
-
-    std::cout << std::format("Moved {} steps to {}\n", steps,
-                             buildings[new_pos]->getName());
-
-    // Take action on building landed upon
-    auto &building = buildings[new_pos];
-    building->processEvent(player);
-    return true;
+    return;
   }
   throw("Failed to acquire player pointer");
-  return false;
 }

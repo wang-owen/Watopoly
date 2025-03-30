@@ -4,7 +4,7 @@
 #include <unordered_set>
 #include <vector>
 
-const enum class PieceType {
+enum class PieceType {
   Goose,
   GRTBus,
   TimHortonsDoughnut,

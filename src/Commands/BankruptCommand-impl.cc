@@ -10,16 +10,15 @@ const std::string BankruptCommand::NAME = "bankrupt";
 BankruptCommand::BankruptCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool BankruptCommand::execute(std::vector<std::string> params) {
+void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
   if (auto ctx = context.lock()) {
     auto &player = ctx->cur_player;
 
     if (player->getDebt() == 0) {
       std::cout << "You cannot declare bankruptcy with zero debt!\n";
-      return true;
+      return;
     }
 
-    auto &players = ctx->players;
     auto &building = ctx->board->getBuildings()[player->getPosition()];
     if (auto b = std::dynamic_pointer_cast<OwnableBuilding>(building)) {
       // Player's assets go to building owner
@@ -45,5 +44,4 @@ bool BankruptCommand::execute(std::vector<std::string> params) {
     // TODO: Call 'next' command
   }
   throw("Failed to acquire player pointer");
-  return false;
 }

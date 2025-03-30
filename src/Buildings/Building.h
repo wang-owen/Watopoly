@@ -21,7 +21,7 @@ public:
 
   std::vector<char> getVisitingPieces() const;
 
-  std::vector<std::weak_ptr<Player>> &getVisitors() const;
+  std::vector<std::weak_ptr<Player>> getVisitors() const;
 
   virtual void processEvent(const std::shared_ptr<Player> &player) = 0;
 

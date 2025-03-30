@@ -5,9 +5,12 @@
 
 class DCTimsLine : public UnownableBuilding {
 public:
-  DCTimsLine() : UnownableBuilding{"DC TIMS LINE"} {}
-  
-  void processEvent(const std::shared_ptr<Player> &player) {}
+  DCTimsLine();
+
+  void processEvent(const std::shared_ptr<Player> &player) override;
+
+private:
+  const int FEE_AMOUNT;
 };
 
 #endif

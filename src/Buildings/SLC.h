@@ -11,10 +11,6 @@ public:
 
 private:
   const std::vector<std::shared_ptr<Building>> &buildings;
-
-  void movePlayer(int steps, const std::shared_ptr<Player> &player);
-
-  void moveToIdx(int i, const std::shared_ptr<Player> &player);
 };
 
 #endif

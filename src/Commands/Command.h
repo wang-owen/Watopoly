@@ -11,7 +11,9 @@ class Command {
 public:
   Command(std::weak_ptr<CommandContext> context);
 
-  virtual bool execute(std::vector<std::string> params) = 0;
+  virtual ~Command() = default;
+
+  virtual void execute(const std::vector<std::string> &params = {}) = 0;
 
 protected:
   std::weak_ptr<CommandContext> context;
