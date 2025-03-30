@@ -58,6 +58,10 @@ public:
 
   void setDoublesRolled(int n);
 
+  bool canRollAgain() const;
+
+  void setCanRollAgain(bool b);
+
   const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
   getProperties() const;
 
@@ -75,7 +79,7 @@ private:
   int balance, debt, position, num_residences, num_cups, turns_in_tims,
       doubles_rolled;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
-  bool active, rolled;
+  bool active, rolled, can_roll_again;
 };
 
 #endif

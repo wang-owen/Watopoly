@@ -7,8 +7,8 @@
 
 Player::Player(const std::string &name, char piece, int balance)
     : name{name}, piece{piece}, balance{balance}, debt{0}, position{0},
-      num_residences{0}, num_cups{0}, turns_in_tims{0}, active{true},
-      rolled{false} {}
+      num_residences{0}, num_cups{0}, turns_in_tims{0}, doubles_rolled{0},
+      active{true}, rolled{false}, can_roll_again{false} {}
 
 void Player::deactivate() { active = false; }
 
@@ -17,6 +17,10 @@ bool Player::isActive() const { return active; }
 bool Player::hasRolled() const { return rolled; }
 
 void Player::setRolled(bool b) { rolled = b; }
+
+bool Player::canRollAgain() const { return can_roll_again; }
+
+void Player::setCanRollAgain(bool b) { can_roll_again = b; }
 
 std::string Player::getName() const { return name; }
 

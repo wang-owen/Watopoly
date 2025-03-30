@@ -34,6 +34,7 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
 
   player->setRolled(false);
   player->setDoublesRolled(0);
+  player->setCanRollAgain(false);
 
   // Transfer control to next active player
   auto num_players = static_cast<int>(players.size());
