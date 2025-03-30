@@ -20,11 +20,15 @@ public:
 
   virtual int getFee() const = 0;
 
+  void toggleMortgaged();
+
+  bool isMortgaged() const;
+
   void processEvent(const std::shared_ptr<Player> &player) override;
 
 protected:
   int cost;
-  bool has_owner;
+  bool has_owner, mortgaged;
   std::weak_ptr<Player> owner;
 };
 

@@ -6,7 +6,7 @@
 #include "OwnableBuilding.h"
 
 OwnableBuilding::OwnableBuilding(const std::string &name, int cost)
-    : Building{name}, cost{cost}, has_owner{false} {}
+    : Building{name}, cost{cost}, has_owner{false}, mortgaged{false} {}
 
 int OwnableBuilding::getCost() const { return cost; }
 
@@ -24,9 +24,11 @@ std::shared_ptr<Player> OwnableBuilding::getOwner() const {
   return nullptr;
 }
 
-void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
-  std::cout << std::format("\nCurrent balance: ${}\n", player->getBalance());
+void OwnableBuilding::toggleMortgaged() { mortgaged = !mortgaged; }
 
+bool OwnableBuilding::isMortgaged() const { return mortgaged; }
+
+void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
   if (!hasOwner()) {
     // Building is available for purchase
     auto property_cost = getCost();
@@ -72,18 +74,21 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
         continue;
       }
     }
+    player->displayBalance();
   } else {
     // Pay fee
-    auto fee = getFee();
-    std::cout << std::format("{} Fee: ${}\n", getName(), fee);
-    auto reduced_funds = player->reduceFunds(fee);
-    getOwner()->increaseFunds(reduced_funds);
-    if (reduced_funds < fee) {
-      // Player lacks sufficient funds
-      player->setDebt(fee - reduced_funds);
-      std::cout << std::format("You lack sufficient funds. You owe ${}\n",
-                               fee - reduced_funds);
+    if (!isMortgaged()) {
+      auto fee = getFee();
+      std::cout << std::format("{} Fee: ${}\n", getName(), fee);
+      auto reduced_funds = player->reduceFunds(fee);
+      getOwner()->increaseFunds(reduced_funds);
+      if (reduced_funds < fee) {
+        // Player lacks sufficient funds
+        player->setDebt(fee - reduced_funds);
+        std::cout << std::format("You lack sufficient funds. You owe ${}\n",
+                                 fee - reduced_funds);
+      }
+      player->displayBalance();
     }
   }
-  player->displayBalance();
 }
