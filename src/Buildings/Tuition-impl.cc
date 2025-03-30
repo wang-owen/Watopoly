@@ -13,12 +13,12 @@ void Tuition::processEvent(const std::shared_ptr<Player> &player) {
   std::cout << "You must pay your tuition. Select one of the following payment "
                "options:\n";
   std::cout << std::format("1. Pay ${}\n", TUITION_AMOUNT);
-  std::cout << std::format("1. Pay {}\% of your total net worth (${})\n",
+  std::cout << std::format("2. Pay {}\% of your total net worth (${})\n",
                            PERCENT_AMOUNT, static_cast<int>(fee));
   std::cout << "\n> ";
 
   int choice = 0;
-  while (!(std::cin >> choice) || choice != 1 || choice != 2) {
+  while (!(std::cin >> choice) || choice < 1 || choice > 2) {
     std::cout << "Invalid input. Try again: ", std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   }
