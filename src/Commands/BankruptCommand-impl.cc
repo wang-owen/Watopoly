@@ -39,8 +39,8 @@ bool BankruptCommand::execute() {
 
       // TODO: Destroy Roll Up the Rim tickets
     }
-    // TODO: Disable player
-    player->disable();
+
+    player->deactivate();
 
     // TODO: Call 'next' command
   }

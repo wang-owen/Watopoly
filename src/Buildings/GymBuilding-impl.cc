@@ -10,9 +10,8 @@ GymBuilding::GymBuilding(const std::string &name)
 int GymBuilding::getFee() const {
   if (has_owner) {
     if (auto o = owner.lock()) {
-      Dice dice{6};
       int fee = 0;
-      for (auto n : dice.roll(2)) {
+      for (auto n : Dice::roll(6, 2)) {
         fee += n;
       }
       auto &properties = o->getProperties();
