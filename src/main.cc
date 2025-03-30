@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
       } else if (name == "BANK") {
         std::cout << "You cannot choose 'BANK' as a name. Try again.\n";
         continue;
-      }      
+      }
 
       // Prompt for piece type
       int numPieces = pm.getNumPieces();
