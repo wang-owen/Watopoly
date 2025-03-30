@@ -4,6 +4,9 @@
 #include <string>
 #include <unordered_set>
 
+class Player;
+class Board;
+
 class Building {
 public:
   Building(const std::string &name);
@@ -12,15 +15,19 @@ public:
 
   std::string getName() const;
 
-  void addPiece(char c);
+  void addPlayer(std::shared_ptr<Player> player);
 
-  void removePiece(char c);
+  void removePlayer(std::shared_ptr<Player> player);
 
-  std::unordered_set<char>& getVisitingPieces();
+  std::vector<char> &getVisitingPieces() const;
+
+  std::vector<std::weak_ptr<Player>> &getVisitors() const;
+
+  virtual void processEvent(const std::shared_ptr<Player> &player) = 0;
 
 private:
   std::string name;
-  std::unordered_set<char> visiting_pieces;
+  std::unordered_map<char, std::weak_ptr<Player>> visitors;
 };
 
 #endif

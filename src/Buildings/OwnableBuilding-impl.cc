@@ -1,3 +1,8 @@
+#include <format>
+#include <iostream>
+#include <sstream>
+
+#include "../Player.h"
 #include "OwnableBuilding.h"
 
 OwnableBuilding::OwnableBuilding(const std::string &name, int cost)
@@ -17,4 +22,67 @@ std::shared_ptr<Player> OwnableBuilding::getOwner() const {
     return o;
   }
   return nullptr;
+}
+
+void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
+  std::cout << std::format("\nCurrent balance: ${}\n", player->getBalance());
+
+  if (!hasOwner()) {
+    // Building is available for purchase
+    auto property_cost = getCost();
+    bool error = true;
+    while (error) {
+      std::cout << std::format("Would you like to purchase {} for ${}? (y/n) ",
+                               getName(), property_cost);
+
+      std::string input, extra;
+      char answer;
+      std::getline(std::cin, input);
+      std::istringstream iss{input};
+
+      if (!(iss >> answer) || (iss >> extra)) {
+        std::cout << "Invalid input. Try again.\n";
+        continue;
+      }
+
+      switch (std::tolower(answer)) {
+      case 'y':
+        // Attempt to purchase property
+        // Check player balance
+        if (player->getBalance() < property_cost) {
+          std::cout << "Insufficient funds.\n";
+        } else {
+          player->reduceFunds(property_cost);
+          setOwner(player);
+          player->addProperty(shared_from_this());
+        }
+
+        std::cout << std::format("\n{} has purchased {} for ${}\n",
+                                 player->getName(), getName(), property_cost);
+        error = false;
+        break;
+
+      case 'n':
+        error = false;
+        break;
+
+      default:
+        // Loop
+        continue;
+      }
+    }
+  } else {
+    // Pay fee
+    auto fee = getFee();
+    std::cout << std::format("{} Fee: ${}\n", getName(), fee);
+    auto reduced_funds = player->reduceFunds(fee);
+    getOwner()->increaseFunds(reduced_funds);
+    if (reduced_funds < fee) {
+      // Player lacks sufficient funds
+      player->setDebt(fee - reduced_funds);
+      std::cout << std::format("You lack sufficient funds. You owe ${}\n",
+                               fee - reduced_funds);
+    }
+  }
+  std::cout << std::format("New balance: ${}\n", player->getBalance());
 }

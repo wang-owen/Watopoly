@@ -5,7 +5,8 @@
 
 class Player;
 
-class OwnableBuilding : public Building {
+class OwnableBuilding : public Building,
+                        public std::enable_shared_from_this<OwnableBuilding> {
 public:
   OwnableBuilding(const std::string &name, int cost);
 
@@ -18,6 +19,8 @@ public:
   std::shared_ptr<Player> getOwner() const;
 
   virtual int getFee() const = 0;
+
+  void processEvent(const std::shared_ptr<Player> &player) override;
 
 protected:
   int cost;
