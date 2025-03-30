@@ -110,11 +110,15 @@ Player::getProperty(const std::string &name) const {
   return nullptr;
 }
 
-void Player::addProperty(std::shared_ptr<OwnableBuilding> property) {
+void Player::addProperty(const std::shared_ptr<OwnableBuilding> &property) {
   properties[property->getName()] = property;
   if (std::dynamic_pointer_cast<ResidenceBuilding>(property)) {
     num_residences++;
   }
+}
+
+void Player::removeProperty(const std::shared_ptr<OwnableBuilding> &property) {
+  properties.erase(property->getName());
 }
 
 void Player::displayAssets() const {

@@ -115,7 +115,9 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
     case 'y': {
       if (!give_is_num && !receive_is_num) {
         give_property->setOwner(recipient);
+        player->removeProperty(give_property);
         recipient->addProperty(give_property);
+        recipient->removeProperty(receive_property);
         receive_property->setOwner(player);
         player->addProperty(receive_property);
       } else if (give_is_num) {
@@ -123,6 +125,7 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
         recipient->increaseFunds(give_amt);
         receive_property->setOwner(player);
         player->addProperty(receive_property);
+        recipient->removeProperty(receive_property);
       } else {
         if (recipient->getBalance() < receive_amt) {
           std::cout << std::format(
@@ -132,6 +135,7 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
         }
         recipient->reduceFunds(receive_amt);
         player->increaseFunds(receive_amt);
+        player->removeProperty(give_property);
         give_property->setOwner(recipient);
         recipient->addProperty(give_property);
       }

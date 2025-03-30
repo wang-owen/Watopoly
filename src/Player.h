@@ -59,7 +59,9 @@ public:
 
   std::shared_ptr<OwnableBuilding> getProperty(const std::string &name) const;
 
-  void addProperty(std::shared_ptr<OwnableBuilding> property);
+  void addProperty(const std::shared_ptr<OwnableBuilding> &property);
+
+  void removeProperty(const std::shared_ptr<OwnableBuilding> &property);
 
   void displayAssets() const;
 
