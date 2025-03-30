@@ -10,7 +10,7 @@ public:
   void processEvent(const std::shared_ptr<Player> &player) override;
 
 private:
-  static const int FEE_AMOUNT = 50;
+  const int FEE_AMOUNT;
 };
 
 #endif

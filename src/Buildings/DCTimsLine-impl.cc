@@ -4,7 +4,7 @@
 #include "../Player.h"
 #include "DCTimsLine.h"
 
-DCTimsLine::DCTimsLine() : UnownableBuilding("DC TIMS LINE") {}
+DCTimsLine::DCTimsLine() : UnownableBuilding("DC TIMS LINE"), FEE_AMOUNT{50} {}
 
 void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
   int turns_in_tims = player->getTurnsInTims();
@@ -36,7 +36,7 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
 
     int choice = 0;
     while (!(std::cin >> choice) ||
-           (turns_in_tims < 3 && choice < 1 || choice > 3) || choice != 1 ||
+           (turns_in_tims < 3 && (choice < 1 || choice > 3)) || choice != 1 ||
            choice != 2) {
       std::cout << "Invalid input. Try again: ", std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -44,7 +44,7 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     switch (choice) {
-    case 1:
+    case 1: {
       if (turns_in_tims < 3 && player->getBalance() < FEE_AMOUNT) {
         std::cout << "You lack sufficient funds.\n";
         continue;
@@ -59,8 +59,9 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
       std::cout << std::format("New balance: ${}\n", player->getBalance());
       error = false;
       break;
+    }
 
-    case 2:
+    case 2: {
       if (player->getCups() == 0) {
         std::cout << "You do not have any Roll up the Rim cups!\n";
         continue;
@@ -69,9 +70,11 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
       player->setTurnsInTims(0);
       std::cout << "You have left the DC Tims Line.\n";
       break;
-    case 3:
+    }
+    case 3: {
       error = false;
       break;
+    }
     }
   }
 }

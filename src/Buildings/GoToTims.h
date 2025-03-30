@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "UnownableBuilding.h"
+#include "../Player.h"
 
 class GoToTims : public UnownableBuilding {
 public:

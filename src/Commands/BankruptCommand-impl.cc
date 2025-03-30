@@ -19,7 +19,6 @@ bool BankruptCommand::execute() {
       return true;
     }
 
-    auto &players = ctx->players;
     auto &building = ctx->board->getBuildings()[player->getPosition()];
     if (auto b = std::dynamic_pointer_cast<OwnableBuilding>(building)) {
       // Player's assets go to building owner

@@ -24,7 +24,7 @@ void Tuition::processEvent(const std::shared_ptr<Player> &player) {
   }
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-  int fee = choice == 1 ? TUITION_AMOUNT : fee;
+  fee = choice == 1 ? TUITION_AMOUNT : fee;
 
   auto reduced_funds = player->reduceFunds(fee);
   if (reduced_funds < fee) {

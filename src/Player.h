@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <vector>
 
+class Building;
 class OwnableBuilding;
 
 class Player : public std::enable_shared_from_this<Player> {
@@ -23,6 +24,8 @@ public:
   std::string getName() const;
 
   char getPiece() const;
+
+  int getPosition() const;
 
   int getBalance() const;
 

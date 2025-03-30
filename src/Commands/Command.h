@@ -9,6 +9,8 @@ class Command {
 public:
   Command(std::weak_ptr<CommandContext> context);
 
+  virtual ~Command() = default;
+
   virtual bool execute() = 0;
 
 protected:

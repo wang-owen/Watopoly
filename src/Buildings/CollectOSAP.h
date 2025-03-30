@@ -4,6 +4,7 @@
 #include <format>
 #include <iostream>
 
+#include "../Player.h"
 #include "UnownableBuilding.h"
 
 class CollectOSAP : public UnownableBuilding {

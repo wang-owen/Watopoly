@@ -1,7 +1,7 @@
 #ifndef GOOSENESTING_H
 #define GOOSENESTING_H
 
-#include "Player.h"
+#include "../Player.h"
 #include "UnownableBuilding.h"
 
 class GooseNesting : public UnownableBuilding {

@@ -22,6 +22,8 @@ std::string Player::getName() const { return name; }
 
 char Player::getPiece() const { return piece; }
 
+int Player::getPosition() const { return position; }
+
 int Player::getBalance() const { return balance; }
 
 int Player::getDebt() const { return debt; }
