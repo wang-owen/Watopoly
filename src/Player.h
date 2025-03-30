@@ -12,9 +12,13 @@ class Player {
 public:
   Player(const std::string &name, char piece, int funds);
 
-  void disable();
+  void deactivate();
 
   bool isActive() const;
+
+  bool hasRolled() const;
+
+  void toggleRolled();
 
   std::string getName() const;
 
@@ -34,6 +38,12 @@ public:
 
   int getPosition() const;
 
+  int getCups() const;
+
+  void addCup();
+
+  void removeCup();
+
   const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
   getProperties() const;
 
@@ -44,9 +54,9 @@ public:
 private:
   std::string name;
   char piece;
-  int balance, debt, position, num_residences;
+  int balance, debt, position, num_residences, num_cups;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
-  bool active;
+  bool active, rolled;
 };
 
 #endif

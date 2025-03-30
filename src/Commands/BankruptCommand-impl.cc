@@ -39,8 +39,8 @@ bool BankruptCommand::execute(std::vector<std::string> params) {
 
       // TODO: Destroy Roll Up the Rim tickets
     }
-    // TODO: Disable player
-    player->disable();
+
+    player->deactivate();
 
     // TODO: Call 'next' command
   }

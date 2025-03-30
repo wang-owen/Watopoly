@@ -19,10 +19,12 @@ bool AllCommand::execute(std::vector<std::string> params) {
         std::cout << std::format("Assets for {}:\n", player->getName());
         std::cout << "----------------\n";
         std::cout << std::format("Cash: ${}\n", player->getBalance());
+        std::cout << std::format("TimsCups: {}\n", player->getCups());
         std::cout << "Properties:\n";
         for (auto &property : player->getProperties()) {
             std::cout << std::format("- {}\n", property.first);
         }
+        std::cout << std::endl;
     }
     return true;
 }

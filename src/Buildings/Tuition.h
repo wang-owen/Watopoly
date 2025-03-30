@@ -6,6 +6,8 @@
 class Tuition : public UnownableBuilding {
 public:
   Tuition() : UnownableBuilding{"TUITION"} {}
+
+  void processEvent(const std::shared_ptr<Player> &player) {}
 };
 
 #endif
