@@ -87,7 +87,7 @@ Board::Board() : active_cups{std::make_shared<int>(0)} {
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "B2", MonopolyBlock::Sci1, 280, 150,
       std::array<int, 6>{24, 120, 360, 850, 1025, 1200}));
-  buildings.emplace_back(std::make_shared<GoToTims>());
+  buildings.emplace_back(std::make_shared<GoToTims>(buildings));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "EIT", MonopolyBlock::Sci2, 300, 200,
       std::array<int, 6>{26, 130, 390, 900, 1100, 1275}));
@@ -196,7 +196,8 @@ void Board::displayBoard() const {
     std::cout << "|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|" << std::endl;
 }
 
-std::string Board::printImprovements(std::shared_ptr<AcademicBuilding> building) const {
+std::string
+Board::printImprovements(std::shared_ptr<AcademicBuilding> building) const {
   int numImprovements = building->getNumImprovements();
   std::string result = "";
   for (int i = 0; i < AcademicBuilding::MAX_IMPROVEMENTS; i++) {
@@ -211,12 +212,13 @@ std::string Board::printImprovements(std::shared_ptr<AcademicBuilding> building)
   return result;
 }
 
-std::string Board::printEmptySquareWithPieces(std::shared_ptr<Building> building) const {
+std::string
+Board::printEmptySquareWithPieces(std::shared_ptr<Building> building) const {
   std::string result = "";
-    for (auto& piece : building->getVisitingPieces()) {
+  for (auto &piece : building->getVisitingPieces()) {
     result += piece;
   }
-    while (result.size() < 7) { // magic number maybe change later
+  while (result.size() < 7) {
     result += " ";
   }
   return result;

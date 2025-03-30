@@ -29,6 +29,10 @@ bool NextCommand::execute() {
       return true;
     }
 
+    if (auto turns = player->getTurnsInTims()) {
+      player->setTurnsInTims(turns + 1);
+    }
+
     player->toggleRolled();
 
     // Transfer control to next active player

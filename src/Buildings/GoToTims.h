@@ -5,9 +5,12 @@
 
 class GoToTims : public UnownableBuilding {
 public:
-  GoToTims() : UnownableBuilding{"GO TO TIMS"} {}
-  
-  void processEvent(const std::shared_ptr<Player> &player) {}
+  GoToTims(const std::vector<std::shared_ptr<Building>> &buildings);
+
+  void processEvent(const std::shared_ptr<Player> &player) override;
+
+private:
+  const std::vector<std::shared_ptr<Building>> &buildings;
 };
 
 #endif
