@@ -19,7 +19,7 @@ public:
 
   void removePlayer(std::shared_ptr<Player> player);
 
-  std::vector<char> &getVisitingPieces() const;
+  std::vector<char> getVisitingPieces() const;
 
   std::vector<std::weak_ptr<Player>> &getVisitors() const;
 

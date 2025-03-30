@@ -14,7 +14,7 @@ void Building::removePlayer(std::shared_ptr<Player> player) {
   visitors.erase(player->getPiece());
 }
 
-std::vector<char> &Building::getVisitingPieces() const {
+std::vector<char> Building::getVisitingPieces() const {
   std::vector<char> pieces;
   for (auto &[piece, _] : visitors) {
     pieces.push_back(piece);
