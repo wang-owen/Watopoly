@@ -60,11 +60,7 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
   std::shared_ptr<OwnableBuilding> give_property = nullptr;
   if (!give_is_num) {
     auto &properties = player->getProperties();
-    std::cerr << receive << '\n';
-    for (auto &property : properties) {
-      std::cout << property.first << "\n";
-    }
-    if (!properties.count(receive)) {
+    if (!properties.count(give)) {
       std::cout << std::format("You do not own {}!\n", give);
       return;
     }
@@ -84,7 +80,7 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
   if (!receive_is_num) {
     auto &properties = recipient->getProperties();
     if (!properties.count(receive)) {
-      std::cout << std::format("You do not own {}!\n", give);
+      std::cout << std::format("You do not own {}!\n", receive);
       return;
     }
 
