@@ -24,195 +24,131 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
     return;
   }
 
-  auto &recipient = params[0];
+  std::shared_ptr<Player> recipient = nullptr;
+  // Check if recipient exists
+  for (auto &p : context->players) {
+    if (p->getName() == params[0]) {
+      recipient = p;
+    }
+  }
+  if (!recipient) {
+    std::cout << "Recipient does not exist!\n";
+    return;
+  }
+
   std::string give = params[1];
   std::string receive = params[2];
   bool give_is_num = std::all_of(give.begin(), give.end(), ::isdigit);
   bool receive_is_num = std::all_of(receive.begin(), receive.end(), ::isdigit);
-  auto &players = context->players;
 
+  int give_amt, receive_amt;
   if (give_is_num && receive_is_num) {
     std::cout << "You cannot trade money for money!\n";
     return;
   } else if (give_is_num) {
-    int give_amt;
     std::istringstream iss{give};
     iss >> give_amt;
-
     if (player->getBalance() < give_amt) {
       std::cout << "You lack sufficient funds for this trade!\n";
       return;
     }
-
-    for (auto &p : players) {
-      auto name = p->getName();
-      if (name == recipient) {
-        auto &recipient_properties = p->getProperties();
-        if (!recipient_properties.contains(receive)) {
-          std::cout << std::format("{} does not own {}!\n", name, receive);
-          return;
-        }
-
-        auto &property = recipient_properties.at(receive);
-        if (auto academic =
-                std::dynamic_pointer_cast<AcademicBuilding>(property)) {
-          if (playerMonopolyHasImprovements(recipient_properties,
-                                            academic->getBlock()))
-            std::cout << "You cannot trade properties that have improvements "
-                         "in its monopoly!\n";
-        }
-
-        while (true) {
-          std::cout << std::format("{}: {} is offering to give you ${} in "
-                                   "exchange for {}. Accept? (y/n) ",
-                                   name, player->getName(), give_amt, receive);
-          std::string input, extra;
-          char answer;
-          std::getline(std::cin, input);
-          std::istringstream iss{input};
-
-          if (!(iss >> answer) || (iss >> extra)) {
-            std::cout << "Invalid input. Try again.\n";
-            continue;
-          }
-
-          switch (std::tolower(answer)) {
-          case 'y': {
-            player->reduceFunds(give_amt);
-            p->increaseFunds(give_amt);
-            property->setOwner(player);
-            return;
-          }
-          case 'n': {
-            std::cout << "Trade offer declined.\n";
-            return;
-          }
-          default:
-            continue;
-          }
-        }
-      }
-    }
-    std::cout << "Recipient does not exist!\n";
   } else if (receive_is_num) {
-    int receive_amt;
     std::istringstream iss{receive};
     iss >> receive_amt;
+  }
 
-    for (auto &p : players) {
-      auto name = p->getName();
-      if (name == recipient) {
-        auto &properties = player->getProperties();
-        if (!properties.contains(receive)) {
-          std::cout << std::format("You do not own {}!\n", give);
-          return;
-        }
+  std::shared_ptr<OwnableBuilding> give_property = nullptr;
+  if (!give_is_num) {
+    auto &properties = player->getProperties();
+    std::cerr << receive << '\n';
+    for (auto &property : properties) {
+      std::cout << property.first << "\n";
+    }
+    if (!properties.count(receive)) {
+      std::cout << std::format("You do not own {}!\n", give);
+      return;
+    }
 
-        auto &property = properties.at(give);
-        if (auto academic =
-                std::dynamic_pointer_cast<AcademicBuilding>(property)) {
-          if (playerMonopolyHasImprovements(properties, academic->getBlock()))
-            std::cout << "You cannot trade properties that have improvements "
-                         "in its monopoly!\n";
-        }
-
-        while (true) {
-          std::cout << std::format("{}: {} is offering to give you {} in "
-                                   "exchange for ${}. Accept? (y/n) ",
-                                   name, player->getName(), give, receive_amt);
-          std::string input, extra;
-          char answer;
-          std::getline(std::cin, input);
-          std::istringstream iss{input};
-
-          if (!(iss >> answer) || (iss >> extra)) {
-            std::cout << "Invalid input. Try again.\n";
-            continue;
-          }
-
-          switch (std::tolower(answer)) {
-          case 'y': {
-            player->increaseFunds(receive_amt);
-            p->reduceFunds(receive_amt);
-            property->setOwner(p);
-            return;
-          }
-          case 'n': {
-            std::cout << "Trade offer declined.\n";
-            return;
-          }
-          default:
-            continue;
-          }
-        }
+    give_property = properties.at(give);
+    if (auto academic =
+            std::dynamic_pointer_cast<AcademicBuilding>(give_property)) {
+      if (playerMonopolyHasImprovements(properties, academic->getBlock())) {
+        std::cout << "You cannot trade properties that have improvements "
+                     "in its monopoly!\n";
+        return;
       }
     }
-    std::cout << "Recipient does not exist!\n";
-  } else {
-    for (auto &p : players) {
-      auto name = p->getName();
-      if (name == recipient) {
-        auto &player_properties = player->getProperties();
-        if (!player_properties.contains(receive)) {
-          std::cout << std::format("You do not own {}!\n", give);
-          return;
-        }
+  }
 
-        auto &recipient_properties = p->getProperties();
-        if (!recipient_properties.contains(receive)) {
-          std::cout << std::format("{} does not own {}!\n", name, give);
-          return;
-        }
+  std::shared_ptr<OwnableBuilding> receive_property = nullptr;
+  if (!receive_is_num) {
+    auto &properties = recipient->getProperties();
+    if (!properties.count(receive)) {
+      std::cout << std::format("You do not own {}!\n", give);
+      return;
+    }
 
-        auto &player_property = player_properties.at(give);
-        if (auto academic =
-                std::dynamic_pointer_cast<AcademicBuilding>(player_property)) {
-          if (playerMonopolyHasImprovements(player_properties,
-                                            academic->getBlock()))
-            std::cout << "You cannot trade properties that have improvements "
-                         "in its monopoly!\n";
-        }
-
-        auto &recipient_property = recipient_properties.at(receive);
-        if (auto academic = std::dynamic_pointer_cast<AcademicBuilding>(
-                recipient_property)) {
-          if (playerMonopolyHasImprovements(recipient_properties,
-                                            academic->getBlock()))
-            std::cout << "You cannot trade properties that have improvements "
-                         "in its monopoly!\n";
-        }
-
-        while (true) {
-          std::cout << std::format("{}: {} is offering to give you {} in "
-                                   "exchange for {}. Accept? (y/n) ",
-                                   name, player->getName(), give, receive);
-          std::string input, extra;
-          char answer;
-          std::getline(std::cin, input);
-          std::istringstream iss{input};
-
-          if (!(iss >> answer) || (iss >> extra)) {
-            std::cout << "Invalid input. Try again.\n";
-            continue;
-          }
-
-          switch (std::tolower(answer)) {
-          case 'y': {
-            player_property->setOwner(p);
-            recipient_property->setOwner(player);
-            return;
-          }
-          case 'n': {
-            std::cout << "Trade offer declined.\n";
-            return;
-          }
-          default:
-            continue;
-          }
-        }
+    receive_property = properties.at(receive);
+    if (auto academic =
+            std::dynamic_pointer_cast<AcademicBuilding>(receive_property)) {
+      if (playerMonopolyHasImprovements(properties, academic->getBlock())) {
+        std::cout << "You cannot trade properties that have improvements "
+                     "in its monopoly!\n";
+        return;
       }
     }
-    std::cout << "Recipient does not exist!\n";
+  }
+
+  while (true) {
+    std::cout << std::format("{}: {} is offering to give you {} in "
+                             "exchange for {}. Accept? (y/n) ",
+                             recipient->getName(), player->getName(),
+                             give_is_num ? "$" + give : give,
+                             receive_is_num ? "$" + receive : receive);
+    std::string input, extra;
+    char answer;
+    std::getline(std::cin, input);
+    std::istringstream iss{input};
+
+    if (!(iss >> answer) || (iss >> extra)) {
+      std::cout << "Invalid input. Try again.\n";
+      continue;
+    }
+
+    switch (std::tolower(answer)) {
+    case 'y': {
+      if (!give_is_num && !receive_is_num) {
+        give_property->setOwner(recipient);
+        recipient->addProperty(give_property);
+        receive_property->setOwner(player);
+        player->addProperty(receive_property);
+      } else if (give_is_num) {
+        player->reduceFunds(give_amt);
+        recipient->increaseFunds(give_amt);
+        receive_property->setOwner(player);
+        player->addProperty(receive_property);
+      } else {
+        if (recipient->getBalance() < receive_amt) {
+          std::cout << std::format(
+              "{} lacks sufficient funds for this trade!\n",
+              recipient->getName());
+          return;
+        }
+        recipient->reduceFunds(receive_amt);
+        player->increaseFunds(receive_amt);
+        give_property->setOwner(recipient);
+        recipient->addProperty(give_property);
+      }
+      std::cout << "Trade accepted!\n";
+      return;
+    }
+    case 'n': {
+      std::cout << "Trade offer declined.\n";
+      return;
+    }
+    default:
+      continue;
+    }
   }
 }
 
