@@ -7,15 +7,11 @@
 
 const std::string AllCommand::NAME = "all";
 
-AllCommand::AllCommand(std::weak_ptr<CommandContext> context)
+AllCommand::AllCommand(std::shared_ptr<CommandContext> context)
     : Command{context} {}
 
 void AllCommand::execute(const std::vector<std::string> & /*params*/) {
-  if (auto ctx = context.lock()) {
-    for (auto &player : ctx->players) {
-      player->displayAssets();
-    }
-  } else {
-    throw("Failed to acquire player pointer");
+  for (auto &player : context->players) {
+    player->displayAssets();
   }
 }

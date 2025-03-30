@@ -89,7 +89,6 @@ bool CommandCenter::execute() {
     return false;
   }
   commands[command]->execute(params);
-  context->board->displayBoard();
 
   int num_active = 0;
   for (auto &player : context->players) {

@@ -26,6 +26,10 @@ int Player::getPosition() const { return position; }
 
 int Player::getBalance() const { return balance; }
 
+void Player::displayBalance() const {
+  std::cout << std::format("Balance: ${}\n", getBalance());
+}
+
 int Player::getDebt() const { return debt; }
 
 void Player::setDebt(int amount) { debt = amount; }

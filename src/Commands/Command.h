@@ -9,14 +9,14 @@ struct CommandContext;
 
 class Command {
 public:
-  Command(std::weak_ptr<CommandContext> context);
+  Command(std::shared_ptr<CommandContext> context);
 
   virtual ~Command() = default;
 
   virtual void execute(const std::vector<std::string> &params = {}) = 0;
 
 protected:
-  std::weak_ptr<CommandContext> context;
+  std::shared_ptr<CommandContext> context;
 };
 
 #endif

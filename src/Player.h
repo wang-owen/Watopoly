@@ -29,6 +29,8 @@ public:
 
   int getBalance() const;
 
+  void displayBalance() const;
+
   int getDebt() const;
 
   void setDebt(int amount);

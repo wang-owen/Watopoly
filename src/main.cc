@@ -49,13 +49,13 @@ int main(int argc, char *argv[]) {
     // Prompt for name and piece type
     while (true) {
       // Prompt for name
-      std::cout << std::format(
-          "\nPlayer {} - Enter name (alphanumeric, one word): ", n);
+      std::cout << std::format("\nPlayer {} - Enter name (alpha, one word): ",
+                               n);
       std::getline(std::cin, input);
 
       std::istringstream iss(input);
       if (!(iss >> name) || name.empty() ||
-          !std::all_of(name.begin(), name.end(), ::isalnum) || (iss >> extra)) {
+          !std::all_of(name.begin(), name.end(), ::isalpha) || (iss >> extra)) {
         std::cout << "Invalid input. Try again.\n";
         continue;
       } else if (taken_names.contains(name)) {
