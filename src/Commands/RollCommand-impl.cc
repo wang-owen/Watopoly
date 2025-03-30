@@ -41,6 +41,7 @@ void RollCommand::execute(const std::vector<std::string> & /*params*/) {
     if (rolls[0] == rolls[1] && player->getNumDoubles() == 2) {
       std::cout << "You rolled doubles three times in a row! You are stuck in the DC Tims Line.\n";
       player->setNumDoubles(0);
+      player->toggleRolled();
       player->setTurnsInTims(1);
       player->moveToIdx(10, ctx->board->getBuildings());
       return;
