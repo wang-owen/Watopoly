@@ -8,7 +8,7 @@
 
 class OwnableBuilding;
 
-class Player {
+class Player : public std::enable_shared_from_this<Player> {
 public:
   Player(const std::string &name, char piece, int funds);
 
@@ -34,15 +34,20 @@ public:
 
   int reduceFunds(int amount);
 
-  void setPosition(int n);
+  void move(int steps, const std::vector<std::shared_ptr<Building>> &buildings);
 
-  int getPosition() const;
+  void moveToIdx(int i,
+                 const std::vector<std::shared_ptr<Building>> &buildings);
 
   int getCups() const;
 
   void addCup();
 
   void removeCup();
+
+  int getTurnsInTims() const;
+
+  void setTurnsInTims(int turns);
 
   const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
   getProperties() const;
@@ -54,7 +59,7 @@ public:
 private:
   std::string name;
   char piece;
-  int balance, debt, position, num_residences, num_cups;
+  int balance, debt, position, num_residences, num_cups, turns_in_tims;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
   bool active, rolled;
 };
