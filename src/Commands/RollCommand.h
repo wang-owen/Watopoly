@@ -9,7 +9,7 @@ public:
 
   explicit RollCommand(std::weak_ptr<CommandContext> context);
 
-  void execute(const std::vector<std::string> & /*params*/ = {}) override;
+  void execute(const std::vector<std::string> &params) override;
 };
 
 #endif

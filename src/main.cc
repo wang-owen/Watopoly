@@ -15,8 +15,15 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  bool testing = false;
+  for (int i = 1; i < argc; i++) {
+    if (std::string(argv[i]) == std::string("-testing")) {
+      testing = true;
+    }
+  }
+  
   // Initialize command center
-  CommandCenter cmd{};
+  CommandCenter cmd{testing};
 
   const int STARTING_FUNDS = 1500;
   const int MIN_PLAYERS = 2;

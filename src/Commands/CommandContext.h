@@ -8,6 +8,7 @@
 #include "../Player.h"
 
 struct CommandContext {
+  bool testing;
   std::shared_ptr<Board> board;
   std::vector<std::shared_ptr<Player>> players;
   std::shared_ptr<Player> cur_player;

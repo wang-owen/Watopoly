@@ -14,7 +14,7 @@ class Player;
 
 class CommandCenter {
 public:
-  CommandCenter();
+  CommandCenter(bool testing);
 
   void addPlayer(const std::string &name, char piece, int funds);
 

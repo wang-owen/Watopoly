@@ -17,9 +17,10 @@
 // #include "Commands/TradeCommand.h"
 // #include "Commands/UnmortgageCommand.h"
 
-CommandCenter::CommandCenter() : context{std::make_shared<CommandContext>()} {
+CommandCenter::CommandCenter(bool testing) : context{std::make_shared<CommandContext>()} {
   context->board = std::make_shared<Board>();
-
+  context->testing = testing;
+  
   commands.emplace(RollCommand::NAME, std::make_unique<RollCommand>(context));
   commands.emplace(NextCommand::NAME, std::make_unique<NextCommand>(context));
   // commands.emplace(TradeCommand::NAME,
