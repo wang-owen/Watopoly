@@ -112,3 +112,15 @@ void Player::addProperty(std::shared_ptr<OwnableBuilding> property) {
     num_residences++;
   }
 }
+
+void Player::displayAssets() const {
+  std::cout << std::format("{}'s assets:\n", name);
+  std::cout << "----------------\n";
+  std::cout << std::format("Cash: ${}\n", balance);
+  std::cout << std::format("Roll Up the Rim cups: {}\n", num_cups);
+  std::cout << "Properties:\n";
+  for (auto &property : properties) {
+    std::cout << std::format("- {}\n", property.first);
+  }
+  std::cout << "\n";
+}

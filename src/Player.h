@@ -59,6 +59,8 @@ public:
 
   void addProperty(std::shared_ptr<OwnableBuilding> property);
 
+  void displayAssets() const;
+
 private:
   std::string name;
   char piece;
