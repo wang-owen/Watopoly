@@ -61,15 +61,15 @@ void Player::move(int steps,
                                      : buildings_size + position + steps;
   }
 
-  position = new_pos;
   buildings[position]->removePlayer(shared_from_this());
   buildings[new_pos]->addPlayer(shared_from_this());
+  position = new_pos;
 
   std::cout << std::format("Moved {} steps to {}\n", steps,
-                           buildings[new_pos]->getName());
+                           buildings[position]->getName());
 
   // Take action on building landed upon
-  auto &building = buildings[new_pos];
+  auto &building = buildings[position];
   building->processEvent(shared_from_this());
 }
 
