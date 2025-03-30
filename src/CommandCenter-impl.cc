@@ -11,7 +11,7 @@
 #include "Commands/NextCommand.h"
 #include "Commands/RollCommand.h"
 #include "Player.h"
-// #include "Commands/ImproveCommand.h"
+#include "Commands/ImproveCommand.h"
 // #include "Commands/MortgageCommand.h"
 // #include "Commands/SaveCommand.h"
 #include "Commands/TradeCommand.h"
@@ -25,8 +25,7 @@ CommandCenter::CommandCenter(bool testing)
   commands.emplace(RollCommand::NAME, std::make_unique<RollCommand>(context));
   commands.emplace(NextCommand::NAME, std::make_unique<NextCommand>(context));
   commands.emplace(TradeCommand::NAME, std::make_unique<TradeCommand>(context));
-  // commands.emplace(ImproveCommand::NAME,
-  //                  std::make_unique<ImproveCommand>(context));
+  commands.emplace(ImproveCommand::NAME, std::make_unique<ImproveCommand>(context));
   // commands.emplace(MortgageCommand::NAME,
   //                  std::make_unique<MortgageCommand>(context));
   // commands.emplace(UnmortgageCommand::NAME,

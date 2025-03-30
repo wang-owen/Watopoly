@@ -47,6 +47,16 @@ public:
 
   int getNumImprovements() const { return num_improvements; }
 
+  void addImprovement() { num_improvements++; };
+
+  void removeImprovement() { num_improvements--; };
+
+  void setNumImprovements(int num) {
+    if (num >= 0 && num <= MAX_IMPROVEMENTS) {
+      num_improvements = num;
+    }
+  }
+
   MonopolyBlock getBlock() const { return block; }
 
 private:
