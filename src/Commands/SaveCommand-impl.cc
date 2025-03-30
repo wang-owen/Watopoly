@@ -38,7 +38,7 @@ bool SaveCommand::execute(std::vector<std::string> params) {
         second line represents the player is in the DC Tims line and num is the number of turns they’ve been there. The value of num
         must be between 0 and 2, inclusive
         */
-        savefile << player->getName() << " " << player->getPiece() << " "
+        savefile << player->getName() << " " << player->getPiece() << " " << player->getCups() << " "
                  << player->getBalance() << " " << player->getPosition() << std::endl;
     }
 
