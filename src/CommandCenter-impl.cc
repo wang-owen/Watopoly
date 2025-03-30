@@ -12,10 +12,10 @@
 #include "Commands/RollCommand.h"
 #include "Player.h"
 // #include "Commands/ImproveCommand.h"
-// #include "Commands/MortgageCommand.h"
+#include "Commands/MortgageCommand.h"
 #include "Commands/SaveCommand.h"
 #include "Commands/TradeCommand.h"
-// #include "Commands/UnmortgageCommand.h"
+#include "Commands/UnmortgageCommand.h"
 
 CommandCenter::CommandCenter(bool testing)
     : context{std::make_shared<CommandContext>()} {
@@ -27,10 +27,10 @@ CommandCenter::CommandCenter(bool testing)
   commands.emplace(TradeCommand::NAME, std::make_unique<TradeCommand>(context));
   // commands.emplace(ImproveCommand::NAME,
   //                  std::make_unique<ImproveCommand>(context));
-  // commands.emplace(MortgageCommand::NAME,
-  //                  std::make_unique<MortgageCommand>(context));
-  // commands.emplace(UnmortgageCommand::NAME,
-  //                  std::make_unique<UnmortgageCommand>(context));
+  commands.emplace(MortgageCommand::NAME,
+                   std::make_unique<MortgageCommand>(context));
+  commands.emplace(UnmortgageCommand::NAME,
+                   std::make_unique<UnmortgageCommand>(context));
   commands.emplace(BankruptCommand::NAME,
                    std::make_unique<BankruptCommand>(context));
   commands.emplace(AssetsCommand::NAME,
