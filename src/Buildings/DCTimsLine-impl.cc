@@ -35,9 +35,9 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
     std::cout << "\n> ";
 
     int choice = 0;
-    while (!(std::cin >> choice) ||
-           (turns_in_tims < 3 && (choice < 1 || choice > 3)) || choice != 1 ||
-           choice != 2) {
+    while (!(std::cin >> choice) || choice < 1 ||
+           (turns_in_tims < 3 && choice > 3) ||
+           (turns_in_tims >= 3 && choice > 2)) {
       std::cout << "Invalid input. Try again: ", std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
