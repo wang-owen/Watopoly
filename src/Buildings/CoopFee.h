@@ -5,9 +5,12 @@
 
 class CoopFee : public UnownableBuilding {
 public:
-  CoopFee() : UnownableBuilding{"COOP FEE"} {}
-  
-  void processEvent(const std::shared_ptr<Player> &player) {}
+  CoopFee();
+
+  void processEvent(const std::shared_ptr<Player> &player);
+
+private:
+  static const int FEE_AMOUNT = 150;
 };
 
 #endif
