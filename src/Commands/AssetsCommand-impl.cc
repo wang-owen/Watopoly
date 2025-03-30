@@ -20,6 +20,7 @@ bool AssetsCommand::execute() {
     std::cout << std::format("Assets for {}:\n", cur_player->getName());
     std::cout << "----------------\n";
     std::cout << std::format("Cash: ${}\n", cur_player->getBalance());
+    std::cout << std::format("TimsCups: {}\n", cur_player->getCups());
     std::cout << "Properties:\n";
     for (auto &property : cur_player->getProperties()) {
         std::cout << std::format("- {}\n", property.first);
