@@ -5,7 +5,12 @@
 
 class CollectOSAP : public UnownableBuilding {
 public:
-  CollectOSAP() : UnownableBuilding{"COLLECT OSAP"} {}
+  CollectOSAP();
+
+  void processEvent(const std::shared_ptr<Player> &player) override;
+
+private:
+  static const int OSAP_AMOUNT = 200;
 };
 
 #endif
