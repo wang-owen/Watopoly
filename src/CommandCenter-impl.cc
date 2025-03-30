@@ -13,7 +13,7 @@
 #include "Player.h"
 // #include "Commands/ImproveCommand.h"
 // #include "Commands/MortgageCommand.h"
-// #include "Commands/SaveCommand.h"
+#include "Commands/SaveCommand.h"
 // #include "Commands/TradeCommand.h"
 // #include "Commands/UnmortgageCommand.h"
 
@@ -35,8 +35,7 @@ CommandCenter::CommandCenter() : context{std::make_shared<CommandContext>()} {
   commands.emplace(AssetsCommand::NAME,
                    std::make_unique<AssetsCommand>(context));
   commands.emplace(AllCommand::NAME, std::make_unique<AllCommand>(context));
-  // commands.emplace(SaveCommand::NAME,
-  // std::make_unique<SaveCommand>(context));
+  commands.emplace(SaveCommand::NAME, std::make_unique<SaveCommand>(context));
 }
 
 void CommandCenter::addPlayer(const std::string &name, char piece, int funds) {

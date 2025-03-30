@@ -14,10 +14,10 @@ const std::string SaveCommand::NAME = "save";
 SaveCommand::SaveCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool SaveCommand::execute(std::vector<std::string> params) {
+void SaveCommand::execute(const std::vector<std::string> &params) {
     auto ctx = context.lock();
     if (!ctx) {
-        return false;
+        return;
     }
     std::string filename = params[0];
     if (!filename.ends_with(".txt")) {
@@ -26,21 +26,42 @@ bool SaveCommand::execute(std::vector<std::string> params) {
     std::ofstream savefile(filename);
 
     savefile << ctx->players.size() << std::endl;
-    for (auto &player : ctx->players) {
-        // TODO add TimsCups when that implemention is complete
-        // TODO implement DC Tims Line position
-        /*  
-        If a player is on square 10 (DC Tims Line), their line will look
-        like one of the following:
-        player char TimsCups money 10 0
-        player char TimsCups money 10 1 num
-        The first line represents that the player’s position is the DC Tims Line but they are not actually in the DC Tims Line. The
-        second line represents the player is in the DC Tims line and num is the number of turns they’ve been there. The value of num
-        must be between 0 and 2, inclusive
-        */
+
+    for (int i = ctx->cur_player_idx; i < ctx->players.size(); i++) {
+        auto player = ctx->players[i];
         savefile << player->getName() << " " << player->getPiece() << " " << player->getCups() << " "
-                 << player->getBalance() << " " << player->getPosition() << std::endl;
+                 << player->getBalance() << " " << player->getPosition();
+        if (player->getPosition() == 10) {
+            if (player->getTurnsInTims()) {
+                savefile << "1 " << player->getTurnsInTims() - 1 << "\n";
+            } else {
+                savefile << " 0";
+            }
+        }
     }
+    for (int i = 0; i < ctx->cur_player_idx; i++) {
+        auto player = ctx->players[i];
+        savefile << player->getName() << " " << player->getPiece() << " " << player->getCups() << " "
+                 << player->getBalance() << " " << player->getPosition();
+        
+        if (player->getPosition() == 10) {
+            if (player->getTurnsInTims()) {
+                savefile << "1 " << player->getTurnsInTims() - 1 << "\n";
+            } else {
+                savefile << " 0";
+            }
+        }
+        savefile << "\n";
+    }
+    // for (auto &player : ctx->players) {
+    //     savefile << player->getName() << " " << player->getPiece() << " " << player->getCups() << " "
+    //              << player->getBalance() << " " << player->getPosition();
+    //     if (player->getTurnsInTims()) {
+    //         savefile << "1 " << player->getTurnsInTims() - 1 << "\n";
+    //     } else {
+    //         savefile << " 0\n";
+    //     }
+    // }
 
     for (auto building : ctx->board->getBuildings()) {
         if (auto b = std::dynamic_pointer_cast<AcademicBuilding>(building)) {
@@ -66,10 +87,9 @@ bool SaveCommand::execute(std::vector<std::string> params) {
             } else {
                 savefile << "BANK ";
             }  
-            savefile << "0" << std::endl;
+            savefile << "0\n";
         }
     }
     savefile.close();
-    return true;
 }
 
