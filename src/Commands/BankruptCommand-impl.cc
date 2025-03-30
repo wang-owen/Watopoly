@@ -22,7 +22,7 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
   if (auto b = std::dynamic_pointer_cast<OwnableBuilding>(building)) {
     // Player's assets go to building owner
     auto owner = b->getOwner();
-    for (auto &[name, property] : player->getProperties()) {
+    for (auto &[_, property] : player->getProperties()) {
       // TODO: Determine if 'improvements' transfer over
       property->setOwner(owner);
       owner->addProperty(property);
@@ -30,7 +30,7 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
     // TODO: Transfer Roll Up the Rim tickets to owner
   } else {
     // Player's assets go to bank
-    for (auto &[name, property] : player->getProperties()) {
+    for (auto &[_, property] : player->getProperties()) {
       property->setOwner(nullptr);
       // TODO: Auction properties to all players
     }

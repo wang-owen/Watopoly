@@ -14,7 +14,7 @@ public:
 
   bool hasOwner() const;
 
-  void setOwner(std::shared_ptr<Player> player);
+  void setOwner(const std::shared_ptr<Player> &player);
 
   std::shared_ptr<Player> getOwner() const;
 

@@ -12,7 +12,7 @@ int OwnableBuilding::getCost() const { return cost; }
 
 bool OwnableBuilding::hasOwner() const { return has_owner; }
 
-void OwnableBuilding::setOwner(std::shared_ptr<Player> player) {
+void OwnableBuilding::setOwner(const std::shared_ptr<Player> &player) {
   owner = player;
   has_owner = player ? true : false;
 }
