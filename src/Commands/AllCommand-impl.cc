@@ -15,6 +15,7 @@ void AllCommand::execute(const std::vector<std::string> & /*params*/) {
     for (auto &player : ctx->players) {
       player->displayAssets();
     }
+  } else {
+    throw("Failed to acquire player pointer");
   }
-  throw("Failed to acquire player pointer");
 }
