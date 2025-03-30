@@ -13,12 +13,12 @@ const std::string RollCommand::NAME = "roll";
 RollCommand::RollCommand(std::weak_ptr<CommandContext> context)
     : Command{context} {}
 
-bool RollCommand::execute() {
+void RollCommand::execute(const std::vector<std::string> & /*params*/) {
   if (auto ctx = context.lock()) {
     auto &player = ctx->cur_player;
     if (player->hasRolled()) {
       std::cout << "You have already rolled this turn!\n";
-      return true;
+      return;
     }
 
     // Generate dice roll
@@ -34,13 +34,12 @@ bool RollCommand::execute() {
         std::cout
             << "You failed to roll doubles, you remain in the DC Tims Line.\n";
       }
-      return true;
+      return;
     }
 
     player->move(steps, ctx->board->getBuildings());
     player->toggleRolled();
-    return true;
+    return;
   }
   throw("Failed to acquire player pointer");
-  return false;
 }

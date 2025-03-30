@@ -9,7 +9,7 @@ public:
 
   explicit AssetsCommand(std::weak_ptr<CommandContext> context);
 
-  bool execute() override;
+  void execute(const std::vector<std::string> & /*params*/ = {}) override;
 };
 
 #endif

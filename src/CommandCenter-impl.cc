@@ -88,7 +88,17 @@ bool CommandCenter::execute() {
   if (!context->cur_player) {
     return false;
   }
-  bool running = commands[command]->execute();
+  commands[command]->execute(params);
   context->board->displayBoard();
-  return running;
+
+  int num_active = 0;
+  for (auto &player : context->players) {
+    if (player->isActive()) {
+      num_active++;
+    }
+    if (num_active > 1) {
+      return true;
+    }
+  }
+  return false;
 }

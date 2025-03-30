@@ -11,7 +11,7 @@
 int main(int argc, char *argv[]) {
   // Verify arguments
   if (argc > 3) {
-    std::cerr << std::format("Usage: {} [-load file] [-testing] \n", argv[0]);
+    std::cerr << std::format("Usage: {} [-load file] [-testing]\n", argv[0]);
     return 1;
   }
 

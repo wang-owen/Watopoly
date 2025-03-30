@@ -2,6 +2,8 @@
 #define COMMAND_H
 
 #include <memory>
+#include <string>
+#include <vector>
 
 struct CommandContext;
 
@@ -11,7 +13,7 @@ public:
 
   virtual ~Command() = default;
 
-  virtual bool execute() = 0;
+  virtual void execute(const std::vector<std::string> &params = {}) = 0;
 
 protected:
   std::weak_ptr<CommandContext> context;
