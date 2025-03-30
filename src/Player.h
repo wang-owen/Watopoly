@@ -52,6 +52,10 @@ public:
 
   void setTurnsInTims(int turns);
 
+  int getNumDoubles() const;
+
+  void setNumDoubles(int num);
+
   const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
   getProperties() const;
 
@@ -64,7 +68,7 @@ public:
 private:
   std::string name;
   char piece;
-  int balance, debt, position, num_residences, num_cups, turns_in_tims;
+  int balance, debt, position, num_residences, num_cups, turns_in_tims, num_doubles;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
   bool active, rolled;
 };

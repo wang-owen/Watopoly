@@ -37,8 +37,24 @@ void RollCommand::execute(const std::vector<std::string> & /*params*/) {
       return;
     }
 
+    // player goes to DC Tims Line if they roll doubles three times in a row
+    if (rolls[0] == rolls[1] && player->getNumDoubles() == 2) {
+      std::cout << "You rolled doubles three times in a row! You are stuck in the DC Tims Line.\n";
+      player->setNumDoubles(0);
+      player->setTurnsInTims(1);
+      player->moveToIdx(10, ctx->board->getBuildings());
+      return;
+    } 
+
     player->move(steps, ctx->board->getBuildings());
-    player->toggleRolled();
+
+    if (rolls[0] == rolls[1]) {
+      std::cout << "You rolled doubles! You get to roll again.\n";
+      player->setNumDoubles(player->getNumDoubles() + 1);
+    } else {
+      player->setNumDoubles(0);
+      player->toggleRolled();
+    }
     return;
   }
   throw("Failed to acquire player pointer");

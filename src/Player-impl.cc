@@ -92,6 +92,10 @@ int Player::getTurnsInTims() const { return turns_in_tims; }
 
 void Player::setTurnsInTims(int turns) { turns_in_tims = turns; }
 
+int Player::getNumDoubles() const { return num_doubles; }
+
+void Player::setNumDoubles(int num) { num_doubles = num; }
+
 const std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> &
 Player::getProperties() const {
   return properties;
