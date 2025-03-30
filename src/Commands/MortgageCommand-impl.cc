@@ -10,7 +10,7 @@
 const std::string MortgageCommand::NAME = "mortgage";
 
 MortgageCommand::MortgageCommand(std::shared_ptr<CommandContext> context)
-    : Command{context} {}
+    : Command{context}, MORTGAGE_PERCENT{0.5} {}
 
 void MortgageCommand::execute(const std::vector<std::string> &params) {
   if (params.size() != 1) {
@@ -39,7 +39,7 @@ void MortgageCommand::execute(const std::vector<std::string> &params) {
     }
   }
 
-  auto amt = property->getCost() / 2;
+  auto amt = property->getCost() * MORTGAGE_PERCENT;
   while (true) {
     std::cout << std::format("Do you want to mortgage {} for ${}? (y/n)",
                              property->getName(), amt);

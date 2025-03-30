@@ -10,6 +10,9 @@ public:
   explicit MortgageCommand(std::shared_ptr<CommandContext> context);
 
   void execute(const std::vector<std::string> &params) override;
+
+private:
+  const int MORTGAGE_PERCENT;
 };
 
 #endif
