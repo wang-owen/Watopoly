@@ -70,6 +70,7 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> player) {
       player->removeCup();
       player->setTurnsInTims(0);
       std::cout << "You have left the DC Tims Line.\n";
+      error = false;
       break;
     }
     case 3: {
