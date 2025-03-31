@@ -1,5 +1,6 @@
 #include <format>
 #include <iostream>
+#include <sstream>
 
 #include "../Buildings/OwnableBuilding.h"
 #include "BankruptCommand.h"
@@ -25,6 +26,52 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
     for (auto &[_, property] : player->getProperties()) {
       property->setOwner(owner);
       owner->addProperty(property);
+      if (property->isMortgaged()) {
+        int fee = property->getCost() * 0.1;
+        std::cout << std::format(
+            "{} must pay 10\% (${}) of the property cost!\n", owner->getName(),
+            fee);
+        int reduced_funds = owner->reduceFunds(fee);
+        owner->displayBalance();
+        if (reduced_funds < fee) {
+          owner->setDebt(fee - reduced_funds);
+          std::cout << std::format("You lack sufficient funds. You owe ${}\n",
+                                   fee - reduced_funds);
+        } else {
+          int unmortgage_cost = property->getCost() * 0.5;
+          while (true) {
+            std::cout << std::format(
+                "Would you like to unmortgage the property for ${}? (y/n) ",
+                property->getCost() * 0.5);
+
+            std::string input, extra;
+            char answer;
+            std::getline(std::cin, input);
+            std::istringstream iss{input};
+
+            if (!(iss >> answer) || (iss >> extra)) {
+              std::cout << "Invalid input. Try again.\n";
+              continue;
+            }
+
+            switch (std::tolower(answer)) {
+            case 'y': {
+              if (owner->getBalance() < unmortgage_cost) {
+                std::cout << "Insufficient funds.\n";
+                break;
+              }
+              owner->reduceFunds(unmortgage_cost);
+              owner->displayBalance();
+            }
+            case 'n': {
+              break;
+            }
+            default:
+              continue;
+            }
+          }
+        }
+      }
     }
     // Transfer Roll Up the Rim tickets to owner
     for (int n = 0; n < player->getCups(); n++) {
@@ -33,6 +80,9 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
   } else {
     // Player's assets go to bank
     for (auto &[_, property] : player->getProperties()) {
+      if (property->isMortgaged()) {
+        property->toggleMortgaged();
+      }
       property->auctionProperty(player, context->players);
     }
   }
