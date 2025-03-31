@@ -95,15 +95,29 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
 
   // Transfer control to next active player
   auto num_players = static_cast<int>(context->players.size());
-  do {
-    context->cur_player_idx = (context->cur_player_idx + 1 < num_players)
-                                  ? context->cur_player_idx + 1
-                                  : 0;
-    player = context->players[context->cur_player_idx];
-  } while (!player->isActive());
 
-  context->board->displayBoard();
+  int active_players = 0;
+  std::string active_player;
+  for (auto &p : context->players) {
+    if (p->isActive()) {
+      active_players++;
+      active_player = p->getName();
+    }
+  }
 
-  std::cout << "\n"
-            << context->cur_player->getName() << "'s turn:\n--------------\n";
+  if (active_players > 1) {
+    do {
+      context->cur_player_idx = (context->cur_player_idx + 1 < num_players)
+                                    ? context->cur_player_idx + 1
+                                    : 0;
+      player = context->players[context->cur_player_idx];
+    } while (!player->isActive());
+
+    context->board->displayBoard();
+
+    std::cout << "\n"
+              << context->cur_player->getName() << "'s turn:\n--------------\n";
+  } else {
+    std::cout << "\n" << active_player << " is the winner!\n";
+  }
 }
