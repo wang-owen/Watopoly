@@ -36,22 +36,12 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
 
   // Transfer control to next active player
   auto num_players = static_cast<int>(players.size());
-
-  auto &cur_player = context->cur_player = nullptr;
-  int active_players = 0;
-  for (auto &player : players) {
-    if (!cur_player && player->isActive()) {
-      cur_player = player;
-      player_idx = (player_idx + 1 < num_players) ? player_idx + 1 : 0;
-    }
-    if (player->isActive()) {
-      active_players++;
-    }
-  }
+  do {
+    player_idx = (player_idx + 1 < num_players) ? player_idx + 1 : 0;
+    player = players[player_idx];
+  } while (!player->isActive());
 
   context->board->displayBoard();
 
-  if (active_players > 1) {
-    std::cout << "\n" << player->getName() << "'s turn:\n--------------\n";
-  }
+  std::cout << "\n" << player->getName() << "'s turn:\n--------------\n";
 }
