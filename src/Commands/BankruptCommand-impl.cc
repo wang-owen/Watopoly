@@ -84,9 +84,6 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
     }
 
     // Destroy Roll Up the Rim cups
-    for (int n = 0; n < player->getCups(); n++) {
-      player->removeCup();
-    }
     *context->active_cups -= player->getCups();
   }
 
