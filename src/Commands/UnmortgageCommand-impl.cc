@@ -5,7 +5,7 @@
 #include "CommandContext.h"
 #include "UnmortgageCommand.h"
 
-const std::string UnmortgageCommand::NAME = "mortgage";
+const std::string UnmortgageCommand::NAME = "unmortgage";
 
 UnmortgageCommand::UnmortgageCommand(std::shared_ptr<CommandContext> context)
     : Command{context}, UNMORTGAGE_PERCENT{0.6} {}
@@ -23,7 +23,7 @@ void UnmortgageCommand::execute(const std::vector<std::string> &params) {
   }
 
   auto &property = player->getProperties().at(params[0]);
-  if (property->isMortgaged()) {
+  if (!(property->isMortgaged())) {
     std::cout << property->getName() << " is not mortgaged!\n";
     return;
   }
@@ -45,6 +45,10 @@ void UnmortgageCommand::execute(const std::vector<std::string> &params) {
 
     switch (std::tolower(answer)) {
     case 'y': {
+      if (player->getBalance() < amt) {
+        std::cout << "You lack sufficient funds.\n";
+        return;
+      }
       property->toggleMortgaged();
       player->reduceFunds(amt);
       std::cout << "You have unmortgaged " << property->getName() << " for $"

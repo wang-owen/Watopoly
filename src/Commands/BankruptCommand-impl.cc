@@ -37,7 +37,8 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
                     << fee - reduced_funds << "\n";
         } else {
           int unmortgage_cost = property->getCost() * 0.5;
-          while (true) {
+          bool error = true;
+          while (error) {
             std::cout << "Would you like to unmortgage the property for $"
                       << property->getCost() * 0.5 << "? (y/n) ";
 
@@ -59,8 +60,11 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
               }
               owner->reduceFunds(unmortgage_cost);
               owner->displayBalance();
+              error = false;
+              break;
             }
             case 'n': {
+              error = false;
               break;
             }
             default:
