@@ -66,7 +66,11 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
       } else {
         savefile << "BANK ";
       }
-      savefile << b->getNumImprovements() << "\n";
+      if (b->isMortgaged()) {
+        savefile << "-1\n";
+      } else {
+        savefile << b->getNumImprovements() << "\n";
+      }
     } else if (auto b =
                    std::dynamic_pointer_cast<ResidenceBuilding>(building)) {
       savefile << b->getName() << " ";
@@ -75,7 +79,11 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
       } else {
         savefile << "BANK ";
       }
-      savefile << "0\n";
+      if (b->isMortgaged()) {
+        savefile << "-1\n";
+      } else {
+        savefile << "0\n";
+      }
     } else if (auto b = std::dynamic_pointer_cast<GymBuilding>(building)) {
       savefile << b->getName() << " ";
       if (b->hasOwner()) {
@@ -83,7 +91,11 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
       } else {
         savefile << "BANK ";
       }
-      savefile << "0\n";
+      if (b->isMortgaged()) {
+        savefile << "-1\n";
+      } else {
+        savefile << "0\n";
+      }
     }
   }
   savefile.close();
