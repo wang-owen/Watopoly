@@ -1,7 +1,7 @@
-#include <iostream>
+module NextCommand;
 
-#include "CommandContext.h"
-#include "NextCommand.h"
+import <iostream>;
+import CommandContext;
 
 const std::string NextCommand::NAME = "next";
 

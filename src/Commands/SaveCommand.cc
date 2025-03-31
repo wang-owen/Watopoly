@@ -1,9 +1,8 @@
-#ifndef SAVECOMMAND_H
-#define SAVECOMMAND_H
+export module SaveCommand;
 
-#include "Command.h"
+import Command;
 
-class SaveCommand : public Command {
+export class SaveCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -12,4 +11,3 @@ public:
   void execute(const std::vector<std::string> &params) override;
 };
 
-#endif

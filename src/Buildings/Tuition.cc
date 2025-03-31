@@ -1,9 +1,8 @@
-#ifndef TUITION_H
-#define TUITION_H
+export module Tuition;
 
-#include "UnownableBuilding.h"
+import UnownableBuilding;
 
-class Tuition : public UnownableBuilding {
+export class Tuition : public UnownableBuilding {
 public:
   Tuition();
 
@@ -13,4 +12,3 @@ private:
   const double PERCENT_AMOUNT;
 };
 
-#endif

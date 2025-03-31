@@ -1,6 +1,7 @@
-#include "../Dice.h"
-#include "../Player.h"
-#include "GymBuilding.h"
+module GymBuilding;
+
+import Dice;
+import Player;
 
 const std::vector<std::string> GymBuilding::GYM_NAMES = {"PAC", "CIF"};
 

@@ -1,9 +1,8 @@
-#ifndef ASSETSCOMMAND_H
-#define ASSETSCOMMAND_H
+export module AssetsCommand;
 
-#include "Command.h"
+import Command;
 
-class AssetsCommand : public Command {
+export class AssetsCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -12,4 +11,3 @@ public:
   void execute(const std::vector<std::string> & /*params*/ = {}) override;
 };
 
-#endif

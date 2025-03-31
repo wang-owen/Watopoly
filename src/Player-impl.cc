@@ -1,8 +1,8 @@
-#include <iostream>
+module Player;
 
-#include "Buildings/OwnableBuilding.h"
-#include "Buildings/ResidenceBuilding.h"
-#include "Player.h"
+import <iostream>;
+import OwnableBuilding;
+import ResidenceBuilding;
 
 Player::Player(const std::string &name, char piece, int balance)
     : name{name}, piece{piece}, balance{balance}, debt{0}, position{0},

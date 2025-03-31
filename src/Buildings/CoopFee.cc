@@ -1,9 +1,8 @@
-#ifndef COOPFEE_H
-#define COOPFEE_H
+export module CoopFee;
 
-#include "UnownableBuilding.h"
+import UnownableBuilding;
 
-class CoopFee : public UnownableBuilding {
+export class CoopFee : public UnownableBuilding {
 public:
   CoopFee() : UnownableBuilding("COOP FEE"), FEE_AMOUNT{150} {}
 
@@ -16,4 +15,3 @@ private:
   const int FEE_AMOUNT;
 };
 
-#endif

@@ -1,8 +1,8 @@
-#include <iostream>
-#include <sstream>
+module AssetsCommand;
+import <iostream>;
+import <sstream>;
 
-#include "AssetsCommand.h"
-#include "CommandContext.h"
+import CommandContext;
 
 const std::string AssetsCommand::NAME = "assets";
 

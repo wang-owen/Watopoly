@@ -1,13 +1,12 @@
-#ifndef COMMAND_H
-#define COMMAND_H
+export module Command;
 
-#include <memory>
-#include <string>
-#include <vector>
+import <memory>;
+import <string>;
+import <vector>;
 
 struct CommandContext;
 
-class Command {
+export class Command {
 public:
   Command(std::shared_ptr<CommandContext> context);
 
@@ -19,4 +18,3 @@ protected:
   std::shared_ptr<CommandContext> context;
 };
 
-#endif

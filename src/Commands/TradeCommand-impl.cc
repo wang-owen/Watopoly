@@ -1,11 +1,11 @@
-#include <algorithm>
-#include <iostream>
-#include <sstream>
+module TradeCommand;
 
-#include "../Buildings/Building.h"
-#include "../Player.h"
-#include "CommandContext.h"
-#include "TradeCommand.h"
+import <algorithm>;
+import <iostream>;
+import <sstream>;
+import Building;
+import Player;
+import CommandContext;
 
 const std::string TradeCommand::NAME = "trade";
 

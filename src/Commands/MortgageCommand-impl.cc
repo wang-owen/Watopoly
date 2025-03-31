@@ -1,10 +1,10 @@
-#include <iostream>
-#include <sstream>
+module MortgageCommand;
 
-#include "../Buildings/AcademicBuilding.h"
-#include "../Buildings/OwnableBuilding.h"
-#include "CommandContext.h"
-#include "MortgageCommand.h"
+import <iostream>;
+import <sstream>;
+import AcademicBuilding;
+import OwnableBuilding;
+import CommandContext;
 
 const std::string MortgageCommand::NAME = "mortgage";
 

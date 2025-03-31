@@ -1,9 +1,9 @@
-#include <iostream>
+module RollUpTheRimDecorator;
 
-#include "../Board.h"
-#include "../Dice.h"
-#include "../Player.h"
-#include "RollUpTheRimDecorator.h"
+import <iostream>
+import Board;
+import Dice;
+import Player;
 
 RollUpTheRimDecorator::RollUpTheRimDecorator(
     std::unique_ptr<UnownableBuilding> building,

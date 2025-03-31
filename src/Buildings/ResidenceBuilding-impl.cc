@@ -1,6 +1,6 @@
-#include "../Board.h"
-#include "../Player.h"
-#include "ResidenceBuilding.h"
+module ResidenceBuilding;
+import Board;
+import Player;
 
 const std::vector<std::string> ResidenceBuilding::RESIDENCE_NAMES = {
     "MKV", "UWP", "V1", "REV"};

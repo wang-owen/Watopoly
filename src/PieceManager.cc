@@ -1,8 +1,7 @@
-#ifndef PIECEMANAGER_H
-#define PIECEMANAGER_H
+export module PieceManager;
 
-#include <unordered_set>
-#include <vector>
+import <unordered_set>;
+import <vector>;
 
 enum class PieceType {
   Goose,
@@ -15,7 +14,7 @@ enum class PieceType {
   PinkTie
 };
 
-class PieceManager {
+export class PieceManager {
 public:
   PieceManager();
 
@@ -32,5 +31,3 @@ private:
   static const std::vector<PieceType> PIECE_TYPES;
   std::unordered_set<PieceType> available_pieces;
 };
-
-#endif

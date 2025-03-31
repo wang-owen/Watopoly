@@ -1,20 +1,20 @@
-#include <iostream>
+module Board;
 
-#include "Board.h"
-#include "Buildings/AcademicBuilding.h"
-#include "Buildings/Building.h"
-#include "Buildings/CollectOSAP.h"
-#include "Buildings/CoopFee.h"
-#include "Buildings/DCTimsLine.h"
-#include "Buildings/GoToTims.h"
-#include "Buildings/GooseNesting.h"
-#include "Buildings/GymBuilding.h"
-#include "Buildings/NeedlesHall.h"
-#include "Buildings/ResidenceBuilding.h"
-#include "Buildings/RollUpTheRimDecorator.h"
-#include "Buildings/SLC.h"
-#include "Buildings/Tuition.h"
-#include "Player.h"
+import <iostream>;
+import AcademicBuilding;
+import Building;
+import CollectOSAP;
+import CoopFee;
+import DCTimsLine;
+import GoToTims;
+import GooseNesting;
+import GymBuilding;
+import NeedlesHall;
+import ResidenceBuilding;
+import RollUpTheRimDecorator;
+import SLC;
+import Tuition;
+import Player;
 
 Board::Board(const std::vector<std::shared_ptr<Player>> &players,
              std::shared_ptr<int> active_cups) {

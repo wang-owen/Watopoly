@@ -1,11 +1,9 @@
-#ifndef UNOWNABLEBUILDING_H
-#define UNOWNABLEBUILDING_H
+export module UnownableBuilding;
 
-#include "Building.h"
+import Building;
 
-class UnownableBuilding : public Building {
+export class UnownableBuilding : public Building {
 public:
   UnownableBuilding(const std::string &name) : Building{name} {}
 };
 
-#endif

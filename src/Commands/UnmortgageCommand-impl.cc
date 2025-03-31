@@ -1,9 +1,9 @@
-#include <iostream>
-#include <sstream>
+module UnmortgageCommand;
 
-#include "../Buildings/OwnableBuilding.h"
-#include "CommandContext.h"
-#include "UnmortgageCommand.h"
+import <iostream>;
+import <sstream>;
+import OwnableBuilding;
+import CommandContext;
 
 const std::string UnmortgageCommand::NAME = "unmortgage";
 

@@ -1,10 +1,10 @@
-#include <iostream>
-#include <random>
-#include <vector>
+module SLC;
 
-#include "../Dice.h"
-#include "../Player.h"
-#include "SLC.h"
+import <iostream>;
+import <random>;
+import <vector>;
+import Dice;
+import Player;
 
 SLC::SLC(const std::vector<std::shared_ptr<Building>> &buildings)
     : UnownableBuilding{"SLC"}, buildings{buildings} {}

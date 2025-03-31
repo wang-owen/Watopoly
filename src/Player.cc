@@ -1,15 +1,13 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+export module Player;
 
-#include <memory>
-#include <string>
-#include <unordered_map>
-#include <vector>
+import <memory>;
+import <string>;
+import <unordered_map>;
+import <vector>;
+import Building;
+import OwnableBuilding;
 
-class Building;
-class OwnableBuilding;
-
-class Player : public std::enable_shared_from_this<Player> {
+export class Player : public std::enable_shared_from_this<Player> {
 public:
   Player(const std::string &name, char piece, int funds);
 
@@ -85,4 +83,3 @@ private:
   std::shared_ptr<Player> owes_to;
 };
 
-#endif

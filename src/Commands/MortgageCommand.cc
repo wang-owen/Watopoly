@@ -1,9 +1,8 @@
-#ifndef MORTGAGECOMMAND_H
-#define MORTGAGECOMMAND_H
+export module MortgageCommand;
 
-#include "Command.h"
+import Command;
 
-class MortgageCommand : public Command {
+export class MortgageCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -15,4 +14,3 @@ private:
   const double MORTGAGE_PERCENT;
 };
 
-#endif

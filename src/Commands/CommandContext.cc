@@ -1,13 +1,11 @@
-#ifndef COMMANDCONTEXT_H
-#define COMMANDCONTEXT_H
+export module CommandContext;
 
-#include <memory>
-#include <vector>
+import <memory>;
+import <vector>;
+import Board;
+import Player;
 
-#include "../Board.h"
-#include "../Player.h"
-
-struct CommandContext {
+export struct CommandContext {
   bool testing;
   std::shared_ptr<Board> board;
   std::vector<std::shared_ptr<Player>> players;
@@ -16,4 +14,3 @@ struct CommandContext {
   std::shared_ptr<int> active_cups;
 };
 
-#endif

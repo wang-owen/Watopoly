@@ -1,12 +1,12 @@
-#include <iostream>
-#include <sstream>
+module RollCommand;
 
-#include "../Buildings/Building.h"
-#include "../Buildings/OwnableBuilding.h"
-#include "../Buildings/UnownableBuilding.h"
-#include "../Dice.h"
-#include "CommandContext.h"
-#include "RollCommand.h"
+import <iostream>;
+import <sstream>;
+import Building;
+import OwnableBuilding;
+import UnownableBuilding;
+import Dice;
+import CommandContext;
 
 const std::string RollCommand::NAME = "roll";
 

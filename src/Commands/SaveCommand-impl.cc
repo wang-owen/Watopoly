@@ -1,13 +1,13 @@
-#include <fstream>
-#include <iostream>
-#include <sstream>
+module SaveCommand;
 
-#include "../Buildings/AcademicBuilding.h"
-#include "../Buildings/Building.h"
-#include "../Buildings/GymBuilding.h"
-#include "../Buildings/ResidenceBuilding.h"
-#include "CommandContext.h"
-#include "SaveCommand.h"
+import <fstream>;
+import <iostream>;
+import <sstream>;
+import AcademicBuilding;
+import Building;
+import GymBuilding;
+import ResidenceBuilding;
+import CommandContext;
 
 const std::string SaveCommand::NAME = "save";
 

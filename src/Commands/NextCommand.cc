@@ -1,9 +1,8 @@
-#ifndef NEXTCOMMAND_H
-#define NEXTCOMMAND_H
+export module NextCommand;
 
-#include "Command.h"
+import Command;
 
-class NextCommand : public Command {
+export class NextCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -12,4 +11,3 @@ public:
   void execute(const std::vector<std::string> & /*params*/ = {}) override;
 };
 
-#endif

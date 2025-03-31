@@ -1,8 +1,8 @@
-#include <iostream>
+module NeedlesHall;
 
-#include "../Dice.h"
-#include "../Player.h"
-#include "NeedlesHall.h"
+import <iostream>
+import Dice;
+import Player;
 
 NeedlesHall::NeedlesHall() : UnownableBuilding{"NeedlesHall"} {}
 

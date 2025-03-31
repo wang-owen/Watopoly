@@ -1,4 +1,4 @@
-#include "Dice.h"
+module Dice;
 
 std::mt19937 Dice::gen(std::random_device{}());
 

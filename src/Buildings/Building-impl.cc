@@ -1,6 +1,7 @@
-#include "../Board.h"
-#include "../Player.h"
-#include "Building.h"
+module Building;
+
+import Board;
+import Player;
 
 Building::Building(const std::string &name) : name{name} {}
 

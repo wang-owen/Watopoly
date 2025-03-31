@@ -1,6 +1,5 @@
-#include <iostream>
-
-#include "PieceManager.h"
+module PieceManager;
+import <iostream>;
 
 const std::vector<std::pair<char, std::string>> PieceManager::PIECES = {
     {'G', "Goose"},     {'B', "GRT Bus"}, {'D', "Tim Hortons Doughnut"},

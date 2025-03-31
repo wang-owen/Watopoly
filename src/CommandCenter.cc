@@ -1,18 +1,14 @@
-#ifndef COMMANDCENTER_H
-#define COMMANDCENTER_H
+export module CommandCenter;
 
-#include <memory>
-#include <string>
-#include <unordered_map>
-#include <vector>
+import <memory>;
+import <string>;
+import <unordered_map>;
+import <vector>;
+import Command;
+import CommandContext;
+import Player;
 
-#include "Commands/Command.h"
-
-struct CommandContext;
-
-class Player;
-
-class CommandCenter {
+export class CommandCenter {
 public:
   CommandCenter(bool testing = false);
 
@@ -37,4 +33,3 @@ private:
   std::shared_ptr<CommandContext> context;
 };
 
-#endif

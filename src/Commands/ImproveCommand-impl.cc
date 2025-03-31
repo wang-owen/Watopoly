@@ -1,9 +1,8 @@
-#include <iostream>
-#include <sstream>
-
-#include "../Buildings/AcademicBuilding.h"
-#include "CommandContext.h"
-#include "ImproveCommand.h"
+module ImproveCommand;
+import <iostream>;
+import <sstream>;
+import AcademicBuilding;
+import CommandContext;
 
 const std::string ImproveCommand::NAME = "improve";
 

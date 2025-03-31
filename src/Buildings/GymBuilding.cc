@@ -1,11 +1,9 @@
-#ifndef GYMBUILDING_H
-#define GYMBUILDING_H
+export module GymBuilding;
 
-#include "OwnableBuilding.h"
+import OwnableBuilding;
+import Player;
 
-class Player;
-
-class GymBuilding : public OwnableBuilding {
+export class GymBuilding : public OwnableBuilding {
 public:
   static const std::vector<std::string> GYM_NAMES;
 
@@ -17,5 +15,3 @@ public:
 private:
   static const int PURCHASE_COST = 150;
 };
-
-#endif

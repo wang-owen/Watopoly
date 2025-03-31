@@ -1,11 +1,9 @@
-#ifndef OWNABLEBUILDING_H
-#define OWNABLEBUILDING_H
+export module OwnableBuilding;
 
-#include "Building.h"
+import Player;
+import Building;
 
-class Player;
-
-class OwnableBuilding : public Building,
+export class OwnableBuilding : public Building,
                         public std::enable_shared_from_this<OwnableBuilding> {
 public:
   OwnableBuilding(const std::string &name, int cost,
@@ -39,4 +37,3 @@ private:
   const std::vector<std::shared_ptr<Player>> &players;
 };
 
-#endif

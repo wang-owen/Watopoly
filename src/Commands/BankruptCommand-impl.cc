@@ -1,9 +1,9 @@
-#include <iostream>
-#include <sstream>
+module BankruptCommand;
 
-#include "../Buildings/OwnableBuilding.h"
-#include "BankruptCommand.h"
-#include "CommandContext.h"
+import <iostream>;
+import <sstream>;
+import OwnableBuilding;
+import CommandContext;
 
 const std::string BankruptCommand::NAME = "bankrupt";
 

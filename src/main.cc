@@ -1,13 +1,12 @@
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <limits>
-#include <sstream>
-#include <string>
-#include <unordered_set>
-
-#include "CommandCenter.h"
-#include "PieceManager.h"
+import <algorithm>;
+import <fstream>;
+import <iostream>;
+import <limits>;
+import <sstream>;
+import <string>;
+import <unordered_set>;
+import CommandCenter;
+import PieceManager;
 
 std::string initNewGame(CommandCenter &cmd) {
   const int STARTING_FUNDS = 1500;

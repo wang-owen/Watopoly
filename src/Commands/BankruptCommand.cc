@@ -1,11 +1,10 @@
-#ifndef BANKRUPT_H
-#define BANKRUPT_H
+export module BankruptCommand;
 
-#include "Command.h"
+import Command;
 
 class OwnableBuilding;
 
-class BankruptCommand : public Command {
+export class BankruptCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -14,4 +13,3 @@ public:
   void execute(const std::vector<std::string> & /*params*/ = {}) override;
 };
 
-#endif

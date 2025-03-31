@@ -1,10 +1,9 @@
-#ifndef GOOSENESTING_H
-#define GOOSENESTING_H
+export module GooseNesting;
 
-#include "../Player.h"
-#include "UnownableBuilding.h"
+import Player;
+import UnownableBuilding;
 
-class GooseNesting : public UnownableBuilding {
+export class GooseNesting : public UnownableBuilding {
 public:
   GooseNesting() : UnownableBuilding{"GOOSE NESTING"} {}
 
@@ -18,4 +17,3 @@ public:
   }
 };
 
-#endif

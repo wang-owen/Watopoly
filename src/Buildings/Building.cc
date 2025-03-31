@@ -1,15 +1,14 @@
-#ifndef BUILDING_H
-#define BUILDING_H
+export module Building;
 
-#include <memory>
-#include <string>
-#include <unordered_map>
-#include <vector>
+import <memory>;
+import <string>;
+import <unordered_map>;
+import <vector>;
 
-class Player;
-class Board;
+import Board;
+import Player;
 
-class Building {
+export class Building {
 public:
   Building(const std::string &name);
 
@@ -32,4 +31,3 @@ private:
   std::unordered_map<char, std::shared_ptr<Player>> visitors;
 };
 
-#endif

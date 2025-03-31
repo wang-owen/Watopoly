@@ -1,9 +1,8 @@
-#ifndef ROLLCOMMAND_H
-#define ROLLCOMMAND_H
+export module RollCommand;
 
-#include "Command.h"
+import Command;
 
-class RollCommand : public Command {
+export class RollCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -12,4 +11,3 @@ public:
   void execute(const std::vector<std::string> &params = {}) override;
 };
 
-#endif

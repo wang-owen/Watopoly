@@ -1,10 +1,10 @@
-#include <algorithm>
-#include <iostream>
-#include <limits>
-#include <sstream>
+module OwnableBuilding;
 
-#include "../Player.h"
-#include "OwnableBuilding.h"
+import <algorithm>;
+import <iostream>;
+import <limits>;
+import <sstream>;
+import Player;
 
 OwnableBuilding::OwnableBuilding(
     const std::string &name, int cost,

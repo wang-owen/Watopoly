@@ -1,9 +1,8 @@
-#ifndef UNMORTGAGECOMMAND_H
-#define UNMORTGAGECOMMAND_H
+export module UnmortgageCommand;
 
-#include "Command.h"
+import Command;
 
-class UnmortgageCommand : public Command {
+export class UnmortgageCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -14,5 +13,3 @@ public:
 private:
   const double UNMORTGAGE_PERCENT;
 };
-
-#endif

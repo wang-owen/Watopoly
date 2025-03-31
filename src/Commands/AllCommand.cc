@@ -1,9 +1,8 @@
-#ifndef ALLCOMMAND_H
-#define ALLCOMMAND_H
+export module AllCommand;
 
-#include "Command.h"
+import Command;
 
-class AllCommand : public Command {
+export class AllCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -12,4 +11,3 @@ public:
   void execute(const std::vector<std::string> & /*params*/ = {}) override;
 };
 
-#endif

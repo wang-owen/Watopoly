@@ -1,13 +1,11 @@
-#ifndef NEEDLESHALL_H
-#define NEEDLESHALL_H
+export module NeedlesHall;
 
-#include "UnownableBuilding.h"
+import UnownableBuilding;
 
-class NeedlesHall : public UnownableBuilding {
+export class NeedlesHall : public UnownableBuilding {
 public:
   NeedlesHall();
 
   void processEvent(const std::shared_ptr<Player> player) override;
 };
 
-#endif

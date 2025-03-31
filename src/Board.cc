@@ -1,14 +1,12 @@
-#ifndef BOARD_H
-#define BOARD_H
+export module Board;
 
-#include <memory>
-#include <vector>
+import <memory>;
+import <vector>;
+import Building;
+import AcademicBuilding;
+import Player;
 
-class Building;
-class AcademicBuilding;
-class Player;
-
-class Board {
+export class Board {
 public:
   Board(const std::vector<std::shared_ptr<Player>> &players,
         std::shared_ptr<int> active_cups);
@@ -28,5 +26,3 @@ public:
 private:
   std::vector<std::shared_ptr<Building>> buildings;
 };
-
-#endif

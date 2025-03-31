@@ -1,10 +1,9 @@
-#ifndef DICE_H
-#define DICE_H
+export module Dice;
 
-#include <random>
-#include <vector>
+import <random>;
+import <vector>;
 
-class Dice {
+export class Dice {
 public:
   Dice() = delete;
 
@@ -18,4 +17,3 @@ private:
   static std::mt19937 gen;
 };
 
-#endif

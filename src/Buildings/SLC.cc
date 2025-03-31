@@ -1,9 +1,8 @@
-#ifndef SLC_H
-#define SLC_H
+export module SLC;
 
-#include "UnownableBuilding.h"
+import UnownableBuilding;
 
-class SLC : public UnownableBuilding {
+export class SLC : public UnownableBuilding {
 public:
   SLC(const std::vector<std::shared_ptr<Building>> &buildings);
 
@@ -13,4 +12,3 @@ private:
   const std::vector<std::shared_ptr<Building>> &buildings;
 };
 
-#endif

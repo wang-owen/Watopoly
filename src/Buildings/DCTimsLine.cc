@@ -1,9 +1,8 @@
-#ifndef DCTIMSLINE_H
-#define DCTIMSLINE_H
+export module DCTimsLine;
 
-#include "UnownableBuilding.h"
+import UnownableBuilding;
 
-class DCTimsLine : public UnownableBuilding {
+export class DCTimsLine : public UnownableBuilding {
 public:
   DCTimsLine();
 
@@ -13,4 +12,3 @@ private:
   const int FEE_AMOUNT;
 };
 
-#endif

@@ -1,12 +1,10 @@
-#ifndef TRADECOMMAND_H
-#define TRADECOMMAND_H
+export module TradeCommand;
 
-#include "../Buildings/AcademicBuilding.h"
-#include "Command.h"
+import AcademicBuilding;
+import Command;
+import OwnableBuilding;
 
-class OwnableBuilding;
-
-class TradeCommand : public Command {
+export class TradeCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -20,5 +18,3 @@ private:
           &properties,
       MonopolyBlock block) const;
 };
-
-#endif

@@ -1,8 +1,9 @@
-#include <iostream>
-#include <limits>
+module DCTimsLine;
 
-#include "../Player.h"
-#include "DCTimsLine.h"
+import <iostream>;
+import <limits>;
+
+import Player;
 
 DCTimsLine::DCTimsLine() : UnownableBuilding("DC TIMS LINE"), FEE_AMOUNT{50} {}
 

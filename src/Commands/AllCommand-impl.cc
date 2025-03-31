@@ -1,8 +1,8 @@
-#include <iostream>
-#include <sstream>
+module AllCommand;
 
-#include "AllCommand.h"
-#include "CommandContext.h"
+import <iostream>;
+import <sstream>;
+import CommandContext;
 
 const std::string AllCommand::NAME = "all";
 

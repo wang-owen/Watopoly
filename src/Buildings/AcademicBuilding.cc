@@ -1,12 +1,11 @@
-#ifndef ACADEMICBUILDING_H
-#define ACADEMICBUILDING_H
+export module AcademicBuilding;
 
-#include "../Player.h"
-#include "OwnableBuilding.h"
+import Player;
+import OwnableBuilding;
 
 enum class MonopolyBlock { Arts1, Arts2, Eng, Health, Env, Sci1, Sci2, Math };
 
-class AcademicBuilding : public OwnableBuilding {
+export class AcademicBuilding : public OwnableBuilding {
 public:
   AcademicBuilding(const std::string &name, MonopolyBlock block,
                    int purchase_cost, int improvement_cost,
@@ -68,4 +67,3 @@ private:
   int num_improvements;
 };
 
-#endif

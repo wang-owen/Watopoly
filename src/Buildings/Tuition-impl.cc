@@ -1,10 +1,11 @@
-#include <iostream>
-#include <limits>
+module Tuition;
 
-#include "../Buildings/AcademicBuilding.h"
-#include "../Buildings/OwnableBuilding.h"
-#include "../Player.h"
-#include "Tuition.h"
+import <iostream>;
+import <limits>;
+import AcademicBuilding;
+import OwnableBuilding;
+import Player;
+
 
 Tuition::Tuition()
     : UnownableBuilding{"TUITION"}, TUITION_AMOUNT{300}, PERCENT_AMOUNT{0.1} {}

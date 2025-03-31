@@ -1,11 +1,9 @@
-#ifndef RESIDENCEBUILDING_H
-#define RESIDENCEBUILDING_H
+export module ResidenceBuilding;
 
-#include "OwnableBuilding.h"
+import OwnableBuilding;
+import Player;
 
-class Player;
-
-class ResidenceBuilding : public OwnableBuilding {
+export class ResidenceBuilding : public OwnableBuilding {
 public:
   static const std::vector<std::string> RESIDENCE_NAMES;
 
@@ -18,4 +16,3 @@ private:
   static const int PURCHASE_COST = 200;
 };
 
-#endif

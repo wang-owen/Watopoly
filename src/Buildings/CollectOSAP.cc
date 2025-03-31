@@ -1,12 +1,10 @@
-#ifndef COLLECTOSAP_H
-#define COLLECTOSAP_H
+export module CollectOSAP;
 
-#include <iostream>
+import <iostream>;
+import Player;
+import UnownableBuilding;
 
-#include "../Player.h"
-#include "UnownableBuilding.h"
-
-class CollectOSAP : public UnownableBuilding {
+export class CollectOSAP : public UnownableBuilding {
 public:
   CollectOSAP() : UnownableBuilding{"COLLECT OSAP"}, OSAP_AMOUNT{200} {}
 
@@ -20,4 +18,3 @@ private:
   const int OSAP_AMOUNT;
 };
 
-#endif

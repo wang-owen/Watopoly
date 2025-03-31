@@ -1,20 +1,20 @@
-#include <iostream>
-#include <sstream>
+module CommandCenter;
 
-#include "Buildings/Building.h"
-#include "CommandCenter.h"
-#include "Commands/AllCommand.h"
-#include "Commands/AssetsCommand.h"
-#include "Commands/BankruptCommand.h"
-#include "Commands/CommandContext.h"
-#include "Commands/ImproveCommand.h"
-#include "Commands/MortgageCommand.h"
-#include "Commands/NextCommand.h"
-#include "Commands/RollCommand.h"
-#include "Commands/SaveCommand.h"
-#include "Commands/TradeCommand.h"
-#include "Commands/UnmortgageCommand.h"
-#include "Player.h"
+import <iostream>;
+import <sstream>;
+import Building;
+import AllCommand;
+import AssetsCommand;
+import BankruptCommand;
+import CommandContext;
+import ImproveCommand;
+import MortgageCommand;
+import NextCommand;
+import RollCommand;
+import SaveCommand;
+import TradeCommand;
+import UnmortgageCommand;
+import Player;
 
 CommandCenter::CommandCenter(bool testing)
     : context{std::make_shared<CommandContext>()} {

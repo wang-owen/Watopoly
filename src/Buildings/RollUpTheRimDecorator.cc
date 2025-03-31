@@ -1,9 +1,8 @@
-#ifndef ROLLUPTHERIM_H
-#define ROLLUPTHERIM_H
+export module RollUpTheRimDecorator;
 
-#include "UnownableBuilding.h"
+import UnownableBuilding;
 
-class RollUpTheRimDecorator : public UnownableBuilding {
+export class RollUpTheRimDecorator : public UnownableBuilding {
 public:
   RollUpTheRimDecorator(std::unique_ptr<UnownableBuilding> building,
                         std::shared_ptr<int> active_cups);
@@ -16,4 +15,3 @@ private:
   std::shared_ptr<int> active_cups;
 };
 
-#endif

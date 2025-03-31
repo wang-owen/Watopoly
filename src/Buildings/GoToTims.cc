@@ -1,12 +1,11 @@
-#ifndef GOTOTIMS_H
-#define GOTOTIMS_H
+export module GoToTims;
 
-#include <iostream>
+import <iostream>;
 
-#include "../Player.h"
-#include "UnownableBuilding.h"
+import Player;
+import UnownableBuilding;
 
-class GoToTims : public UnownableBuilding {
+export class GoToTims : public UnownableBuilding {
 public:
   GoToTims(const std::vector<std::shared_ptr<Building>> &buildings)
       : UnownableBuilding{"GO TO TIMS"}, buildings{buildings} {}
@@ -21,4 +20,3 @@ private:
   const std::vector<std::shared_ptr<Building>> &buildings;
 };
 
-#endif

@@ -1,9 +1,8 @@
-#ifndef IMPROVECOMMAND_H
-#define IMPROVECOMMAND_H
+module ImproveCommand;
 
-#include "Command.h"
+import Command;
 
-class ImproveCommand : public Command {
+export class ImproveCommand : public Command {
 public:
   static const std::string NAME;
 
@@ -12,4 +11,3 @@ public:
   void execute(const std::vector<std::string> &params) override;
 };
 
-#endif
