@@ -69,6 +69,8 @@ int Player::reduceFunds(int amount) {
 
 void Player::move(int steps,
                   const std::vector<std::shared_ptr<Building>> &buildings) {
+  auto ptr = shared_from_this();
+
   auto buildings_size = static_cast<int>(buildings.size());
 
   int new_pos;
@@ -82,7 +84,13 @@ void Player::move(int steps,
   }
 
   buildings[position]->removePiece(piece);
-  buildings[new_pos]->addPlayer(shared_from_this());
+
+  // Check if player has passed Collect OSAP
+  if (new_pos > 0 && position + steps >= buildings_size) {
+    buildings[0]->processEvent(ptr);
+  }
+
+  buildings[new_pos]->addPlayer(ptr);
   position = new_pos;
 
   std::cout << "Moved " << steps << " steps to "
@@ -90,7 +98,7 @@ void Player::move(int steps,
 
   // Take action on building landed upon
   auto &building = buildings[position];
-  building->processEvent(shared_from_this());
+  building->processEvent(ptr);
 }
 
 void Player::moveToIdx(
