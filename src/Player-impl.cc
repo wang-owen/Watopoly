@@ -40,7 +40,22 @@ int Player::getDebt() const { return debt; }
 
 void Player::setDebt(int amount) { debt = amount; }
 
-void Player::increaseFunds(int amount) { balance += amount; }
+void Player::increaseFunds(int amount) {
+  if (debt > 0) {
+    if (amount <= debt) {
+      debt -= amount;
+      std::cout << std::format("You have paid off ${} of your debt. You have "
+                               "${} of debt remaining.\n",
+                               amount, debt);
+      return;
+    } else {
+      amount -= debt;
+      debt = 0;
+      std::cout << "You have paid off your debt!\n";
+    }
+  }
+  balance += amount;
+}
 
 int Player::reduceFunds(int amount) {
   // Returns the amount reduced
