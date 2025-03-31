@@ -44,6 +44,9 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
   }
   for (int i = 0; i < context->cur_player_idx; i++) {
     auto player = context->players[i];
+    if (!(player->isActive())) {
+      continue;
+    }
     savefile << player->getName() << " " << player->getPiece() << " "
              << player->getCups() << " " << player->getBalance() << " "
              << player->getPosition();
