@@ -8,7 +8,8 @@ class Player;
 class OwnableBuilding : public Building,
                         public std::enable_shared_from_this<OwnableBuilding> {
 public:
-  OwnableBuilding(const std::string &name, int cost);
+  OwnableBuilding(const std::string &name, int cost,
+                  const std::vector<std::shared_ptr<Player>> &players);
 
   int getCost() const;
 
@@ -24,12 +25,18 @@ public:
 
   bool isMortgaged() const;
 
+  void auctionProperty(const std::shared_ptr<Player> &player,
+                       std::vector<std::shared_ptr<Player>> players);
+
   void processEvent(const std::shared_ptr<Player> &player) override;
 
 protected:
   int cost;
   bool has_owner, mortgaged;
-  std::weak_ptr<Player> owner;
+  std::shared_ptr<Player> owner;
+
+private:
+  const std::vector<std::shared_ptr<Player>> &players;
 };
 
 #endif

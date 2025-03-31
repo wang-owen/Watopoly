@@ -1,18 +1,18 @@
 #ifndef ACADEMICBUILDING_H
 #define ACADEMICBUILDING_H
 
+#include "../Player.h"
 #include "OwnableBuilding.h"
 
 enum class MonopolyBlock { Arts1, Arts2, Eng, Health, Env, Sci1, Sci2, Math };
-
-class Player;
 
 class AcademicBuilding : public OwnableBuilding {
 public:
   AcademicBuilding(const std::string &name, MonopolyBlock block,
                    int purchase_cost, int improvement_cost,
-                   const std::array<int, 6> &tuition)
-      : OwnableBuilding{name, purchase_cost}, block{block},
+                   const std::array<int, 6> &tuition,
+                   const std::vector<std::shared_ptr<Player>> &players)
+      : OwnableBuilding{name, purchase_cost, players}, block{block},
         improvement_cost{improvement_cost}, tuition{tuition},
         num_improvements{0} {}
 

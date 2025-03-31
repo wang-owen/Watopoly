@@ -27,7 +27,7 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
   std::shared_ptr<Player> recipient = nullptr;
   // Check if recipient exists
   for (auto &p : context->players) {
-    if (p->getName() == params[0]) {
+    if (p->isActive() && p->getName() == params[0]) {
       recipient = p;
     }
   }

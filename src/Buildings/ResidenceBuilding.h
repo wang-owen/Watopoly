@@ -3,11 +3,14 @@
 
 #include "OwnableBuilding.h"
 
+class Player;
+
 class ResidenceBuilding : public OwnableBuilding {
 public:
   static const std::vector<std::string> RESIDENCE_NAMES;
 
-  ResidenceBuilding(const std::string &name);
+  ResidenceBuilding(const std::string &name,
+                    const std::vector<std::shared_ptr<Player>> &players);
 
   int getFee() const override;
 
