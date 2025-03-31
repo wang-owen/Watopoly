@@ -15,7 +15,7 @@ int OwnableBuilding::getCost() const { return cost; }
 
 bool OwnableBuilding::hasOwner() const { return has_owner; }
 
-void OwnableBuilding::setOwner(const std::shared_ptr<Player> &player) {
+void OwnableBuilding::setOwner(const std::shared_ptr<Player> player) {
   owner = player;
   has_owner = player ? true : false;
 }
@@ -27,7 +27,7 @@ void OwnableBuilding::toggleMortgaged() { mortgaged = !mortgaged; }
 bool OwnableBuilding::isMortgaged() const { return mortgaged; }
 
 void OwnableBuilding::auctionProperty(
-    const std::shared_ptr<Player> &player,
+    const std::shared_ptr<Player> player,
     std::vector<std::shared_ptr<Player>> players) {
   std::cout << std::format("{} is being auctioned!\n", getName());
   std::cout << "-----------------------\n";
@@ -121,7 +121,7 @@ void OwnableBuilding::auctionProperty(
   }
 }
 
-void OwnableBuilding::processEvent(const std::shared_ptr<Player> &player) {
+void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
   if (!hasOwner()) {
     // Building is available for purchase
     auto property_cost = getCost();

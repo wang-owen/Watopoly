@@ -17,7 +17,7 @@
 #include "Commands/UnmortgageCommand.h"
 #include "Player.h"
 
-CommandCenter::CommandCenter(bool testing, std::string load_file)
+CommandCenter::CommandCenter(bool testing)
     : context{std::make_shared<CommandContext>()} {
   context->board = std::make_shared<Board>(context->players);
   context->testing = testing;
@@ -68,12 +68,16 @@ void CommandCenter::loadPlayer(const std::string &name, char piece, int funds,
 
 void CommandCenter::loadProperty(const std::string &name,
                                  const std::string &owner, int improvements) {
+  if (owner == "BANK") {
+    return;
+  }
   for (auto &building : context->board->getBuildings()) {
     if (building->getName() == name) {
       if (auto property =
               std::dynamic_pointer_cast<OwnableBuilding>(building)) {
         for (auto &player : context->players) {
           if (player->getName() == owner) {
+            player->addProperty(property);
             property->setOwner(player);
             if (improvements == -1) {
               property->toggleMortgaged();

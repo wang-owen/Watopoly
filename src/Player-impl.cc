@@ -67,7 +67,7 @@ void Player::move(int steps,
                                      : buildings_size + position + steps;
   }
 
-  buildings[position]->removePlayer(shared_from_this());
+  buildings[position]->removePiece(piece);
   buildings[new_pos]->addPlayer(shared_from_this());
   position = new_pos;
 
@@ -82,7 +82,7 @@ void Player::move(int steps,
 void Player::moveToIdx(
     int i, const std::vector<std::shared_ptr<Building>> &buildings) {
   position = i;
-  buildings[position]->removePlayer(shared_from_this());
+  buildings[position]->removePiece(piece);
   buildings[i]->addPlayer(shared_from_this());
 
   std::cout << std::format("Moved to {}\n", buildings[i]->getName());

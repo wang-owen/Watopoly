@@ -85,7 +85,7 @@ std::string initNewGame(CommandCenter &cmd) {
   return first_player;
 }
 
-std::string loadSavedGame(CommandCenter &cmd, std::string &filename) {
+std::string loadSavedGame(CommandCenter &cmd, const std::string &filename) {
   std::ifstream infile(filename);
   if (!infile) {
     std::cerr << "ERROR: Could not open file " << filename << std::endl;
@@ -141,7 +141,7 @@ std::string loadSavedGame(CommandCenter &cmd, std::string &filename) {
 
 int main(int argc, char *argv[]) {
   // Verify arguments
-  if (argc > 4) { // Maximum valid arguments: program name + 2 flags + file
+  if (argc > 4) {
     std::cerr << std::format("Usage: {} [-load file] [-testing]\n", argv[0]);
     return 1;
   }
@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
   }
 
   // Initialize command center
-  CommandCenter cmd{testing, load_file};
+  CommandCenter cmd{testing};
 
   std::string first_player;
   if (load_file.empty()) {

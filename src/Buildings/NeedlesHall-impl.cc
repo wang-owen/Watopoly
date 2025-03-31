@@ -6,7 +6,7 @@
 
 NeedlesHall::NeedlesHall() : UnownableBuilding{"NeedlesHall"} {}
 
-void NeedlesHall::processEvent(const std::shared_ptr<Player> &player) {
+void NeedlesHall::processEvent(const std::shared_ptr<Player> player) {
   std::vector<double> probabilities = {1.0 / 18, 1.0 / 9, 1.0 / 6, 1.0 / 3,
                                        1.0 / 6,  1.0 / 9, 1.0 / 18};
 

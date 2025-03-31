@@ -10,7 +10,7 @@
 SLC::SLC(const std::vector<std::shared_ptr<Building>> &buildings)
     : UnownableBuilding{"SLC"}, buildings{buildings} {}
 
-void SLC::processEvent(const std::shared_ptr<Player> &player) {
+void SLC::processEvent(const std::shared_ptr<Player> player) {
   std::vector<double> probabilities = {1.0 / 8, 1.0 / 6, 1.0 / 6,  1.0 / 8,
                                        1.0 / 6, 1.0 / 6, 1.0 / 24, 1.0 / 24};
 

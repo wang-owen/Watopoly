@@ -6,7 +6,7 @@
 
 DCTimsLine::DCTimsLine() : UnownableBuilding("DC TIMS LINE"), FEE_AMOUNT{50} {}
 
-void DCTimsLine::processEvent(const std::shared_ptr<Player> &player) {
+void DCTimsLine::processEvent(const std::shared_ptr<Player> player) {
   int turns_in_tims = player->getTurnsInTims();
   if (turns_in_tims == 0) {
     return;

@@ -15,7 +15,7 @@ public:
 
   bool hasOwner() const;
 
-  void setOwner(const std::shared_ptr<Player> &player);
+  void setOwner(const std::shared_ptr<Player> player);
 
   std::shared_ptr<Player> getOwner() const;
 
@@ -25,10 +25,10 @@ public:
 
   bool isMortgaged() const;
 
-  void auctionProperty(const std::shared_ptr<Player> &player,
+  void auctionProperty(const std::shared_ptr<Player> player,
                        std::vector<std::shared_ptr<Player>> players);
 
-  void processEvent(const std::shared_ptr<Player> &player) override;
+  void processEvent(const std::shared_ptr<Player> player) override;
 
 protected:
   const int cost;

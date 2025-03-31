@@ -7,7 +7,7 @@ class NeedlesHall : public UnownableBuilding {
 public:
   NeedlesHall();
 
-  void processEvent(const std::shared_ptr<Player> &player) override;
+  void processEvent(const std::shared_ptr<Player> player) override;
 };
 
 #endif

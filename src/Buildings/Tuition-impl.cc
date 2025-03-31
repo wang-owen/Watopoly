@@ -7,7 +7,7 @@
 Tuition::Tuition()
     : UnownableBuilding{"TUITION"}, TUITION_AMOUNT{300}, PERCENT_AMOUNT{10} {}
 
-void Tuition::processEvent(const std::shared_ptr<Player> &player) {
+void Tuition::processEvent(const std::shared_ptr<Player> player) {
   int fee = player->getBalance() * (PERCENT_AMOUNT / 100);
 
   std::cout << "You must pay your tuition. Select one of the following payment "

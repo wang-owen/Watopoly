@@ -6,12 +6,12 @@ Building::Building(const std::string &name) : name{name} {}
 
 std::string Building::getName() const { return name; }
 
-void Building::addPlayer(std::shared_ptr<Player> player) {
+void Building::addPlayer(const std::shared_ptr<Player> player) {
   visitors.insert(std::make_pair(player->getPiece(), player));
 }
 
-void Building::removePlayer(std::shared_ptr<Player> player) {
-  visitors.erase(player->getPiece());
+void Building::removePiece(char piece) {
+  visitors.erase(piece);
 }
 
 std::vector<char> Building::getVisitingPieces() const {

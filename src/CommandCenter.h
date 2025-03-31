@@ -14,7 +14,7 @@ class Player;
 
 class CommandCenter {
 public:
-  CommandCenter(bool testing = false, std::string load_file = "");
+  CommandCenter(bool testing = false);
 
   void addPlayer(const std::string &name, char piece, int funds);
 

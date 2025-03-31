@@ -15,15 +15,15 @@ public:
 
   std::string getName() const;
 
-  void addPlayer(std::shared_ptr<Player> player);
+  void addPlayer(const std::shared_ptr<Player> player);
 
-  void removePlayer(std::shared_ptr<Player> player);
+  void removePiece(char piece);
 
   std::vector<char> getVisitingPieces() const;
 
   std::vector<std::shared_ptr<Player>> getVisitors() const;
 
-  virtual void processEvent(const std::shared_ptr<Player> &player) = 0;
+  virtual void processEvent(const std::shared_ptr<Player> player) = 0;
 
 private:
   std::string name;

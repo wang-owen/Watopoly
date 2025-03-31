@@ -1,3 +1,4 @@
+#include <format>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -15,13 +16,18 @@ SaveCommand::SaveCommand(std::shared_ptr<CommandContext> context)
     : Command{context} {}
 
 void SaveCommand::execute(const std::vector<std::string> &params) {
+  if (params.size() != 1) {
+    std::cout << "Usage: save <filename>\n";
+    return;
+  }
+
   std::string filename = params[0];
   if (!filename.ends_with(".txt")) {
     filename += ".txt";
   }
   std::ofstream savefile(filename);
 
-  savefile << context->players.size() << std::endl;
+  savefile << context->players.size() << "\n";
 
   for (int i = context->cur_player_idx; i < context->players.size(); i++) {
     auto player = context->players[i];
@@ -30,11 +36,12 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
              << player->getPosition();
     if (player->getPosition() == 10) {
       if (player->getTurnsInTims()) {
-        savefile << "1 " << player->getTurnsInTims() - 1 << "\n";
+        savefile << "1 " << player->getTurnsInTims() - 1;
       } else {
         savefile << " 0";
       }
     }
+    savefile << "\n";
   }
   for (int i = 0; i < context->cur_player_idx; i++) {
     auto player = context->players[i];
@@ -44,7 +51,7 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
 
     if (player->getPosition() == 10) {
       if (player->getTurnsInTims()) {
-        savefile << "1 " << player->getTurnsInTims() - 1 << "\n";
+        savefile << "1 " << player->getTurnsInTims() - 1;
       } else {
         savefile << " 0";
       }
@@ -60,7 +67,7 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
       } else {
         savefile << "BANK ";
       }
-      savefile << b->getNumImprovements() << std::endl;
+      savefile << b->getNumImprovements() << "\n";
     } else if (auto b =
                    std::dynamic_pointer_cast<ResidenceBuilding>(building)) {
       savefile << b->getName() << " ";
@@ -69,7 +76,7 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
       } else {
         savefile << "BANK ";
       }
-      savefile << "0" << std::endl;
+      savefile << "0\n";
     } else if (auto b = std::dynamic_pointer_cast<GymBuilding>(building)) {
       savefile << b->getName() << " ";
       if (b->hasOwner()) {
@@ -81,4 +88,6 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
     }
   }
   savefile.close();
+
+  std::cout << std::format("Successfully saved to {}\n", filename);
 }
