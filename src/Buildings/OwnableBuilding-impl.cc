@@ -112,6 +112,14 @@ void OwnableBuilding::auctionProperty(
   } while (players.size() > 1);
 
   if (players.size() == 1) {
+    if (current_bid == 0) {
+      if (has_owner) {
+        owner->removeProperty(shared_from_this());
+      }
+      std::cout << "No bidders. Property remains unsold.\n";
+      return;
+    }
+
     std::cout << players.front()->getName() << " wins the bid with $"
               << current_bid << "!\n";
 
