@@ -1,4 +1,3 @@
-#include <format>
 #include <iostream>
 #include <sstream>
 
@@ -20,13 +19,13 @@ void MortgageCommand::execute(const std::vector<std::string> &params) {
 
   auto &player = context->cur_player;
   if (!player->getProperties().count(params[0])) {
-    std::cout << std::format("You do not own {}!\n", params[0]);
+    std::cout << "You do not own " << params[0] << "!\n";
     return;
   }
 
   auto &property = player->getProperties().at(params[0]);
   if (property->isMortgaged()) {
-    std::cout << std::format("{} is already mortgaged!\n", property->getName());
+    std::cout << property->getName() << " is already mortgaged!\n";
     return;
   }
 
@@ -41,8 +40,8 @@ void MortgageCommand::execute(const std::vector<std::string> &params) {
 
   auto amt = property->getCost() * MORTGAGE_PERCENT;
   while (true) {
-    std::cout << std::format("Do you want to mortgage {} for ${}? (y/n)",
-                             property->getName(), amt);
+    std::cout << "Do you want to mortgage " << property->getName() << " for $"
+              << amt << "? (y/n)";
 
     std::string input, extra;
     char answer;
@@ -58,8 +57,8 @@ void MortgageCommand::execute(const std::vector<std::string> &params) {
     case 'y': {
       property->toggleMortgaged();
       player->increaseFunds(amt);
-      std::cout << std::format("You have mortgaged {} for ${}.\n",
-                               property->getName(), amt);
+      std::cout << "You have mortgaged " << property->getName() << " for $"
+                << amt << ".\n";
       return;
     }
     case 'n': {

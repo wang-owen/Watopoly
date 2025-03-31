@@ -1,5 +1,6 @@
-#include <format>
+#include <algorithm>
 #include <iostream>
+#include <limits>
 #include <sstream>
 
 #include "../Player.h"
@@ -29,8 +30,7 @@ bool OwnableBuilding::isMortgaged() const { return mortgaged; }
 void OwnableBuilding::auctionProperty(
     const std::shared_ptr<Player> player,
     std::vector<std::shared_ptr<Player>> players) {
-  std::cout << std::format("{} is being auctioned!\n", getName());
-  std::cout << "-----------------------\n";
+  std::cout << getName() << " is being auctioned!\n-----------------------\n";
 
   players.erase(std::remove(players.begin(), players.end(), player),
                 players.end());
@@ -42,7 +42,7 @@ void OwnableBuilding::auctionProperty(
       const std::shared_ptr<Player> &p = players[i];
       bool valid_input = false;
       while (!valid_input) {
-        std::cout << std::format("{}'s turn:\n", p->getName());
+        std::cout << p->getName() << "'s turn:\n";
         std::cout << "1. Raise\n";
         std::cout << "2. Withdraw\n";
         std::cout << "Enter your choice: ";
@@ -127,8 +127,8 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
     auto property_cost = getCost();
     bool error = true;
     while (error) {
-      std::cout << std::format("Would you like to purchase {} for ${}? (y/n) ",
-                               getName(), property_cost);
+      std::cout << "Would you like to purchase " << getName() << " for $"
+                << property_cost << "? (y/n) ";
 
       std::string input, extra;
       char answer;
@@ -152,8 +152,9 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
           player->addProperty(shared_from_this());
         }
 
-        std::cout << std::format("\n{} has purchased {} for ${}\n",
-                                 player->getName(), getName(), property_cost);
+        std::cout << "\n"
+                  << player->getName() << " has purchased " << getName()
+                  << " for $" << property_cost << "\n";
         error = false;
         break;
       }
@@ -173,14 +174,14 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
     // Pay fee
     if (!isMortgaged()) {
       auto fee = getFee();
-      std::cout << std::format("{} Fee: ${}\n", getName(), fee);
+      std::cout << getName() << " Fee: $" << fee << "\n";
       auto reduced_funds = player->reduceFunds(fee);
       getOwner()->increaseFunds(reduced_funds);
       if (reduced_funds < fee) {
         // Player lacks sufficient funds
         player->setDebt(fee - reduced_funds);
-        std::cout << std::format("You lack sufficient funds. You owe ${}\n",
-                                 fee - reduced_funds);
+        std::cout << "You lack sufficient funds. You owe $"
+                  << fee - reduced_funds << "\n";
       }
       player->displayBalance();
     }

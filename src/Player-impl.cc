@@ -1,4 +1,3 @@
-#include <format>
 #include <iostream>
 
 #include "Buildings/OwnableBuilding.h"
@@ -33,7 +32,7 @@ void Player::setPosition(int pos) { position = pos; }
 int Player::getBalance() const { return balance; }
 
 void Player::displayBalance() const {
-  std::cout << std::format("Balance: ${}\n", getBalance());
+  std::cout << "Balance: $" << balance << "\n";
 }
 
 int Player::getDebt() const { return debt; }
@@ -44,9 +43,9 @@ void Player::increaseFunds(int amount) {
   if (debt > 0) {
     if (amount <= debt) {
       debt -= amount;
-      std::cout << std::format("You have paid off ${} of your debt. You have "
-                               "${} of debt remaining.\n",
-                               amount, debt);
+      std::cout << "You have paid off $" << amount
+                << " of your debt. You have $" << debt
+                << " of debt remaining.\n";
       return;
     } else {
       amount -= debt;
@@ -86,8 +85,8 @@ void Player::move(int steps,
   buildings[new_pos]->addPlayer(shared_from_this());
   position = new_pos;
 
-  std::cout << std::format("Moved {} steps to {}\n", steps,
-                           buildings[position]->getName());
+  std::cout << "Moved " << steps << " steps to "
+            << buildings[position]->getName() << "\n";
 
   // Take action on building landed upon
   auto &building = buildings[position];
@@ -100,7 +99,7 @@ void Player::moveToIdx(
   buildings[i]->addPlayer(shared_from_this());
   position = i;
 
-  std::cout << std::format("Moved to {}\n", buildings[i]->getName());
+  std::cout << "Moved to " << buildings[i]->getName() << "\n";
 
   // Take action on building landed upon
   auto &building = buildings[i];
@@ -147,13 +146,12 @@ void Player::removeProperty(const std::shared_ptr<OwnableBuilding> &property) {
 }
 
 void Player::displayAssets() const {
-  std::cout << std::format("{}'s assets:\n", name);
-  std::cout << "----------------\n";
-  std::cout << std::format("Cash: ${}\n", balance);
-  std::cout << std::format("Roll Up the Rim cups: {}\n", num_cups);
+  std::cout << name << "'s assets:\n----------------\n";
+  std::cout << "Cash: $" << balance << "\n";
+  std::cout << "Roll Up the Rim cups: " << num_cups << "\n";
   std::cout << "Properties:\n";
   for (auto &property : properties) {
-    std::cout << std::format("- {}\n", property.first);
+    std::cout << "- " << property.first << "\n";
   }
   std::cout << "\n";
 }

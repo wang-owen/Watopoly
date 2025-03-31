@@ -1,4 +1,3 @@
-#include <format>
 #include <iostream>
 #include <sstream>
 
@@ -109,8 +108,8 @@ void CommandCenter::displayPlayers() const {
   for (size_t i = 0; i < context->players.size(); i++) {
     auto &player = context->players[i];
     if (player->isActive()) {
-      std::cout << std::format("- {} ({})\n", player->getName(),
-                               player->getPiece());
+      std::cout << "- " << player->getName() << " (" << player->getPiece()
+                << ")\n";
     }
   }
 }
@@ -128,7 +127,7 @@ bool CommandCenter::scan() {
   std::istringstream iss{input};
   params.clear();
   if (iss >> command && !(commands.contains(command))) {
-    std::cout << std::format("command not found: {}\n", input);
+    std::cout << "command not found: " << input << "\n";
     return false;
   }
   std::string param;

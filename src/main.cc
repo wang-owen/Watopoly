@@ -1,4 +1,4 @@
-#include <format>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -16,13 +16,12 @@ std::string initNewGame(CommandCenter &cmd) {
 
   // Prompt for player count
   int numPlayers = 0;
-  std::cout << std::format("Enter number of players ({}-{}): ", MIN_PLAYERS,
-                           MAX_PLAYERS);
+  std::cout << "Enter number of players (" << MIN_PLAYERS << "-" << MAX_PLAYERS
+            << "): ";
   while (!(std::cin >> numPlayers) || numPlayers < MIN_PLAYERS ||
          numPlayers > MAX_PLAYERS) {
-    std::cout << std::format(
-        "Invalid input. Please enter an integer between {} and {}: ",
-        MIN_PLAYERS, MAX_PLAYERS);
+    std::cout << "Invalid input. Please enter an integer between "
+              << MIN_PLAYERS << " and " << MAX_PLAYERS << ": ";
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   }
@@ -42,8 +41,7 @@ std::string initNewGame(CommandCenter &cmd) {
     // Prompt for name and piece type
     while (true) {
       // Prompt for name
-      std::cout << std::format("\nPlayer {} - Enter name (alpha, one word): ",
-                               n);
+      std::cout << "\nPlayer " << n << " - Enter name (alpha, one word): ";
       std::getline(std::cin, input);
 
       std::istringstream iss(input);
@@ -60,14 +58,13 @@ std::string initNewGame(CommandCenter &cmd) {
       }
 
       // Prompt for piece type
-      int numPieces = pm.getNumPieces();
-      std::cout << std::format("{} - Enter piece selection (1-{}): ", name,
-                               numPieces);
-      while (!(std::cin >> pieceNum) || pieceNum < 1 || pieceNum > numPieces ||
+      int num_pieces = pm.getNumPieces();
+      std::cout << name << " - Enter piece selection (1-" << num_pieces
+                << "): ";
+      while (!(std::cin >> pieceNum) || pieceNum < 1 || pieceNum > num_pieces ||
              !pm.isAvailable(pieceNum)) {
-        std::cout << std::format(
-            "Invalid input. Please enter an integer between 1 and {}: ",
-            numPieces);
+        std::cout << "Invalid input. Please enter an integer between 1 and "
+                  << num_pieces << ": ";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       }
@@ -142,7 +139,7 @@ std::string loadSavedGame(CommandCenter &cmd, const std::string &filename) {
 int main(int argc, char *argv[]) {
   // Verify arguments
   if (argc > 4) {
-    std::cerr << std::format("Usage: {} [-load file] [-testing]\n", argv[0]);
+    std::cerr << "Usage: " << argv[0] << " [-load file] [-testing]\n";
     return 1;
   }
 
@@ -158,15 +155,13 @@ int main(int argc, char *argv[]) {
       if (i + 1 < argc) {
         load_file = argv[++i];
       } else {
-        std::cerr << std::format("Error: Missing filename after -load.\nUsage: "
-                                 "{} [-load file] [-testing]\n",
-                                 argv[0]);
+        std::cerr << "Error: Missing filename after -load.\n";
+        std::cerr << "Usage: " << argv[0] << " [-load file] [-testing]\n";
         return 1;
       }
     } else {
-      std::cerr << std::format("Error: Unrecognized argument '{}'.\nUsage: {} "
-                               "[-load file] [-testing]\n",
-                               arg, argv[0]);
+      std::cerr << "Error: Unrecognized argument '" << arg << "'.\n";
+      std::cerr << "Usage: " << argv[0] << " [-load file] [-testing]\n";
       return 1;
     }
   }
@@ -189,7 +184,7 @@ int main(int argc, char *argv[]) {
   cmd.displayPlayers();
   std::cout << "\n";
 
-  std::cout << std::format("\n{}'s turn:\n--------------\n", first_player);
+  std::cout << "\n" << first_player << "'s turn:\n--------------\n";
 
   // Gameplay loop
   bool running = true;

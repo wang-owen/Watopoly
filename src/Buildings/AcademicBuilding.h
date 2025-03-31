@@ -10,7 +10,7 @@ class AcademicBuilding : public OwnableBuilding {
 public:
   AcademicBuilding(const std::string &name, MonopolyBlock block,
                    int purchase_cost, int improvement_cost,
-                   const std::array<int, 6> &tuition,
+                   const std::vector<int> &tuition,
                    const std::vector<std::shared_ptr<Player>> &players)
       : OwnableBuilding{name, purchase_cost, players}, block{block},
         improvement_cost{improvement_cost}, tuition{tuition},
@@ -64,7 +64,7 @@ public:
 private:
   MonopolyBlock block;
   const int improvement_cost;
-  std::array<int, 6> tuition;
+  std::vector<int> tuition;
   int num_improvements;
 };
 

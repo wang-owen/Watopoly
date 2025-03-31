@@ -8,8 +8,7 @@ public:
   CoopFee() : UnownableBuilding("COOP FEE"), FEE_AMOUNT{150} {}
 
   void processEvent(const std::shared_ptr<Player> player) {
-    std::cout << std::format("Immediately pay ${} to the School.\n",
-                             FEE_AMOUNT);
+    std::cout << "Immediately pay the Coop fee of $" << FEE_AMOUNT << ".\n";
     player->reduceFunds(FEE_AMOUNT);
   }
 

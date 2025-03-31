@@ -1,4 +1,3 @@
-#include <format>
 #include <iostream>
 #include <sstream>
 
@@ -19,7 +18,7 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
 
   auto &player = context->cur_player;
   if (!player->getProperties().count(params[0])) {
-    std::cout << std::format("You do not own {}!\n", params[0]);
+    std::cout << "You do not own " << params[0] << "!\n";
     return;
   }
 
@@ -30,13 +29,13 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
       // Buy
       if (building->getNumImprovements() >=
           AcademicBuilding::MAX_IMPROVEMENTS) {
-        std::cout << std::format(
-            "{} already has the maximum number of improvements!\n", name);
+        std::cout << name
+                  << " already has the maximum number of improvements!\n";
         return;
       }
 
       auto cost = building->getImprovementCost();
-      std::cout << std::format("Improvement cost: ${}. Purchase? (y/n)", cost);
+      std::cout << "Improvement cost: $" << cost << ". Purchase? (y/n)";
       while (true) {
         std::string input, extra;
         char answer;
@@ -56,11 +55,10 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
           }
           player->reduceFunds(cost);
           building->improve();
-          
+
           context->board->displayBoard();
-          std::cout << std::format("{} has been improved!\n", name);
-          std::cout << std::format("New tuition cost: ${}\n",
-                                   building->getFee());
+          std::cout << name << " has been improved!\n";
+          std::cout << "New tuition cost: $" << building->getFee() << "\n";
           return;
         }
         case 'n': {
@@ -73,12 +71,12 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
     } else {
       // Sell
       if (building->getNumImprovements() == 0) {
-        std::cout << std::format("{} already has no improvements!\n", name);
+        std::cout << name << " already has no improvements!\n";
         return;
       }
 
       auto cost = building->getImprovementCost() / 2;
-      std::cout << std::format("Improvement cost: ${}. Sell? (y/n)", cost);
+      std::cout << "Improvement cost: $" << cost << ". Sell? (y/n)";
       while (true) {
         std::string input, extra;
         char answer;
@@ -94,11 +92,10 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
         case 'y': {
           player->increaseFunds(cost);
           building->impair();
-          
+
           context->board->displayBoard();
-          std::cout << std::format("{} has lost an improvement.\n", name);
-          std::cout << std::format("New tuition cost: ${}\n",
-                                   building->getFee());
+          std::cout << name << " has lost an improvement.\n";
+          std::cout << "New tuition cost: $" << building->getFee() << "\n";
           return;
         }
         case 'n': {

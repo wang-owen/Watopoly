@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdexcept>
 
 #include "PieceManager.h"
 
@@ -20,9 +19,8 @@ void PieceManager::displayPieces() {
   std::cout << "Available pieces:\n";
   std::cout << "-----------------\n";
   for (size_t i = 1; i <= PIECE_TYPES.size(); i++) {
-    std::cout << std::format("{} - {} ({})\n",
-                             (isAvailable(i) ? std::to_string(i) : "X"),
-                             PIECES[i - 1].second, PIECES[i - 1].first);
+    std::cout << (isAvailable(i) ? std::to_string(i) : "X") << " - "
+              << PIECES[i - 1].second << " (" << PIECES[i - 1].first << ")\n";
   }
 }
 
@@ -39,5 +37,5 @@ char PieceManager::selectPiece(int n) {
     available_pieces.erase(PIECE_TYPES[n - 1]);
     return PIECES[n - 1].first;
   }
-  throw std::runtime_error("Piece not available!");
+  throw("Piece not available!");
 }

@@ -1,4 +1,3 @@
-#include <format>
 #include <iostream>
 
 #include "CommandContext.h"
@@ -21,10 +20,9 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
 
   if (auto debt = player->getDebt() > 0) {
     // Player has existing debt,
-    std::cout << std::format(
-        "{} still owes ${}! You cannot end your turn until paying off "
-        "your existing debts or declaring bankrupcy.\n",
-        player->getName(), debt);
+    std::cout << player->getName() << " still owes $" << debt
+              << "! You cannot end your turn until paying off "
+                 "your existing debts or declaring bankrupcy.\n";
     return;
   }
 
@@ -45,5 +43,5 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
 
   context->board->displayBoard();
 
-  std::cout << std::format("\n{}'s turn:\n--------------\n", player->getName());
+  std::cout << "\n" << player->getName() << "'s turn:\n--------------\n";
 }

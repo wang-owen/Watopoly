@@ -1,4 +1,3 @@
-#include <format>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -89,5 +88,5 @@ void SaveCommand::execute(const std::vector<std::string> &params) {
   }
   savefile.close();
 
-  std::cout << std::format("Successfully saved to {}\n", filename);
+  std::cout << "Successfully saved to " << filename << "\n";
 }

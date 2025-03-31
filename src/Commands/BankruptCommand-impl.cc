@@ -1,4 +1,3 @@
-#include <format>
 #include <iostream>
 #include <sstream>
 
@@ -28,21 +27,19 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
       owner->addProperty(property);
       if (property->isMortgaged()) {
         int fee = property->getCost() * 0.1;
-        std::cout << std::format(
-            "{} must pay 10\% (${}) of the property cost!\n", owner->getName(),
-            fee);
+        std::cout << owner->getName() << " must pay 10\% ($" << fee
+                  << ") of the property cost!\n";
         int reduced_funds = owner->reduceFunds(fee);
         owner->displayBalance();
         if (reduced_funds < fee) {
           owner->setDebt(fee - reduced_funds);
-          std::cout << std::format("You lack sufficient funds. You owe ${}\n",
-                                   fee - reduced_funds);
+          std::cout << "You lack sufficient funds. You owe $"
+                    << fee - reduced_funds << "\n";
         } else {
           int unmortgage_cost = property->getCost() * 0.5;
           while (true) {
-            std::cout << std::format(
-                "Would you like to unmortgage the property for ${}? (y/n) ",
-                property->getCost() * 0.5);
+            std::cout << "Would you like to unmortgage the property for $"
+                      << property->getCost() * 0.5 << "? (y/n) ";
 
             std::string input, extra;
             char answer;
@@ -100,6 +97,6 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
 
   context->board->displayBoard();
 
-  std::cout << std::format("\n {}'s turn:\n--------------\n",
-                           context->cur_player->getName());
+  std::cout << "\n"
+            << context->cur_player->getName() << "'s turn:\n--------------\n";
 }

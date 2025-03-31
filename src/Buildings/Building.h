@@ -1,8 +1,10 @@
 #ifndef BUILDING_H
 #define BUILDING_H
 
+#include <memory>
 #include <string>
-#include <unordered_set>
+#include <unordered_map>
+#include <vector>
 
 class Player;
 class Board;

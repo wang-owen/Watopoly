@@ -1,5 +1,5 @@
-#include <format>
 #include <iostream>
+#include <limits>
 
 #include "../Player.h"
 #include "DCTimsLine.h"
@@ -13,22 +13,20 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> player) {
   }
 
   if (turns_in_tims < 3) {
-    std::cout << std::format("You are stuck in the DC Tims Line! Pay ${} or "
-                             "use a Roll Up the Rim cup to get out.\n",
-                             FEE_AMOUNT);
+    std::cout << "You are stuck in the DC Tims Line! Pay $" << FEE_AMOUNT
+              << " or use a Roll Up the Rim cup to get out.\n ";
   } else {
-    std::cout << std::format("You have been in the DC Tims Line for three "
-                             "turns! You must pay ${} or "
-                             "use a Roll Up the Rim cup to get out.\n",
-                             FEE_AMOUNT);
+    std::cout << "You have been in the DC Tims Line for three "
+                 "turns! You must pay $"
+              << FEE_AMOUNT << " or use a Roll Up the Rim cup to get out.\n";
   }
 
   bool error = true;
   while (error) {
     std::cout << "Would you like to pay the fee or use a cup?\n";
-    std::cout << std::format("1. Pay ${}\n", FEE_AMOUNT);
-    std::cout << std::format("2. Use a Roll Up the Rim cup ({} remaining)\n",
-                             player->getCups());
+    std::cout << "1. Pay $" << FEE_AMOUNT << "\n";
+    std::cout << "2. Use a Roll Up the Rim cup (" << player->getCups()
+              << " remaining)\n";
     if (turns_in_tims < 3) {
       std::cout << "3. Do nothing\n";
     }
@@ -53,8 +51,8 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> player) {
       if (reduced_funds < FEE_AMOUNT) {
         // Player lacks sufficient funds
         player->setDebt(FEE_AMOUNT - reduced_funds);
-        std::cout << std::format("You lack sufficient funds. You owe ${}\n",
-                                 FEE_AMOUNT - reduced_funds);
+        std::cout << "You lack sufficient funds. You owe $"
+                  << FEE_AMOUNT - reduced_funds << "\n";
       } else {
         std::cout << "You have left the DC Tims Line.\n";
       }

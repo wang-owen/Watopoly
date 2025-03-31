@@ -1,4 +1,4 @@
-#include <format>
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
@@ -61,7 +61,7 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
   if (!give_is_num) {
     auto &properties = player->getProperties();
     if (!properties.count(give)) {
-      std::cout << std::format("You do not own {}!\n", give);
+      std::cout << "You do not own " << give << "!\n";
       return;
     }
 
@@ -80,7 +80,7 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
   if (!receive_is_num) {
     auto &properties = recipient->getProperties();
     if (!properties.count(receive)) {
-      std::cout << std::format("You do not own {}!\n", receive);
+      std::cout << "You do not own " << receive << "!\n";
       return;
     }
 
@@ -96,11 +96,11 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
   }
 
   while (true) {
-    std::cout << std::format("{}: {} is offering to give you {} in "
-                             "exchange for {}. Accept? (y/n) ",
-                             recipient->getName(), player->getName(),
-                             give_is_num ? "$" + give : give,
-                             receive_is_num ? "$" + receive : receive);
+    std::cout << recipient->getName() << ": " << player->getName()
+              << " is offering to give you "
+              << (give_is_num ? "$" + give : give) << " in exchange for "
+              << (receive_is_num ? "$" + receive : receive)
+              << ". Accept? (y/n)";
     std::string input, extra;
     char answer;
     std::getline(std::cin, input);
@@ -128,9 +128,8 @@ void TradeCommand::execute(const std::vector<std::string> &params) {
         recipient->removeProperty(receive_property);
       } else {
         if (recipient->getBalance() < receive_amt) {
-          std::cout << std::format(
-              "{} lacks sufficient funds for this trade!\n",
-              recipient->getName());
+          std::cout << recipient->getName()
+                    << " lacks sufficient funds for this trade!\n";
           return;
         }
         recipient->reduceFunds(receive_amt);

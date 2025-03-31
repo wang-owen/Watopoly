@@ -1,5 +1,5 @@
-#include <format>
 #include <iostream>
+#include <limits>
 
 #include "../Player.h"
 #include "Tuition.h"
@@ -12,9 +12,8 @@ void Tuition::processEvent(const std::shared_ptr<Player> player) {
 
   std::cout << "You must pay your tuition. Select one of the following payment "
                "options:\n";
-  std::cout << std::format("1. Pay ${}\n", TUITION_AMOUNT);
-  std::cout << std::format("2. Pay {}\% of your total net worth (${})\n",
-                           PERCENT_AMOUNT, static_cast<int>(fee));
+  std::cout << "1. Pay $" << TUITION_AMOUNT << "\n";
+  std::cout << "2. Pay 10\% of your total net worth ($" << fee << ")\n";
   std::cout << "\n> ";
 
   int choice = 0;
@@ -30,8 +29,8 @@ void Tuition::processEvent(const std::shared_ptr<Player> player) {
   if (reduced_funds < fee) {
     // Player lacks sufficient funds
     player->setDebt(fee - reduced_funds);
-    std::cout << std::format("You lack sufficient funds. You owe ${}\n",
-                             fee - reduced_funds);
+    std::cout << "You lack sufficient funds. You owe $" << fee - reduced_funds
+              << "\n";
   }
   player->displayBalance();
 }
