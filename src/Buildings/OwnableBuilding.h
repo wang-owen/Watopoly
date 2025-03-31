@@ -31,7 +31,7 @@ public:
   void processEvent(const std::shared_ptr<Player> &player) override;
 
 protected:
-  int cost;
+  const int cost;
   bool has_owner, mortgaged;
   std::shared_ptr<Player> owner;
 

@@ -47,11 +47,23 @@ public:
 
   int getNumImprovements() const { return num_improvements; }
 
+  void improve() {
+    if (num_improvements + 1 <= MAX_IMPROVEMENTS) {
+      num_improvements++;
+    }
+  }
+
+  void impair() {
+    if (num_improvements - 1 >= 0) {
+      num_improvements--;
+    }
+  }
+
   MonopolyBlock getBlock() const { return block; }
 
 private:
   MonopolyBlock block;
-  int improvement_cost;
+  const int improvement_cost;
   std::array<int, 6> tuition;
   int num_improvements;
 };
