@@ -87,7 +87,7 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
       }
 
       auto cost = building->getImprovementCost() / 2;
-      std::cout << "Improvement cost: $" << cost << ". Sell? (y/n)";
+      std::cout << "Improvement refund: $" << cost << ". Sell? (y/n)";
       while (true) {
         std::string input, extra;
         char answer;

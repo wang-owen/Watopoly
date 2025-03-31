@@ -13,17 +13,17 @@ void DCTimsLine::processEvent(const std::shared_ptr<Player> player) {
   }
 
   if (turns_in_tims < 3) {
-    std::cout << "You are stuck in the DC Tims Line! Pay $" << FEE_AMOUNT
+    std::cout << "\nYou are stuck in the DC Tims Line! Pay $" << FEE_AMOUNT
               << " or use a Roll Up the Rim cup to get out.\n ";
   } else {
-    std::cout << "You have been in the DC Tims Line for three "
+    std::cout << "\nYou have been in the DC Tims Line for three "
                  "turns! You must pay $"
               << FEE_AMOUNT << " or use a Roll Up the Rim cup to get out.\n";
   }
 
   bool error = true;
   while (error) {
-    std::cout << "Would you like to pay the fee or use a cup?\n";
+    std::cout << "\nWould you like to pay the fee or use a cup?\n";
     std::cout << "1. Pay $" << FEE_AMOUNT << "\n";
     std::cout << "2. Use a Roll Up the Rim cup (" << player->getCups()
               << " remaining)\n";

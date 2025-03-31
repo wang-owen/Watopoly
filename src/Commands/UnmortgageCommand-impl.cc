@@ -31,7 +31,7 @@ void UnmortgageCommand::execute(const std::vector<std::string> &params) {
   auto amt = property->getCost() * UNMORTGAGE_PERCENT;
   while (true) {
     std::cout << "Do you want to mortgage " << property->getName() << " for $"
-              << amt << "? (y/n)";
+              << amt << "? (y/n) ";
 
     std::string input, extra;
     char answer;

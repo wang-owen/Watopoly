@@ -174,7 +174,7 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
     player->displayBalance();
   } else {
     // Pay fee
-    if (!isMortgaged()) {
+    if (owner != player && !isMortgaged()) {
       auto fee = getFee();
       std::cout << getName() << " Fee: $" << fee << "\n";
       auto reduced_funds = player->reduceFunds(fee);
