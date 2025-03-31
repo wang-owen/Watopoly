@@ -25,8 +25,8 @@ public:
 
   bool isMortgaged() const;
 
-  void auctionProperty(const std::shared_ptr<Player> player,
-                       std::vector<std::shared_ptr<Player>> players);
+  void auctionProperty(std::vector<std::shared_ptr<Player>> players,
+                       const std::shared_ptr<Player> player = nullptr);
 
   void processEvent(const std::shared_ptr<Player> player) override;
 

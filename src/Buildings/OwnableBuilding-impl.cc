@@ -28,12 +28,14 @@ void OwnableBuilding::toggleMortgaged() { mortgaged = !mortgaged; }
 bool OwnableBuilding::isMortgaged() const { return mortgaged; }
 
 void OwnableBuilding::auctionProperty(
-    const std::shared_ptr<Player> player,
-    std::vector<std::shared_ptr<Player>> players) {
+    std::vector<std::shared_ptr<Player>> players,
+    const std::shared_ptr<Player> player) {
   std::cout << getName() << " is being auctioned!\n-----------------------\n";
 
-  players.erase(std::remove(players.begin(), players.end(), player),
-                players.end());
+  if (player) {
+    players.erase(std::remove(players.begin(), players.end(), player),
+                  players.end());
+  }
 
   int current_bid = 0;
   // Loop until only one bidder remains.
@@ -160,7 +162,7 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
       }
 
       case 'n': {
-        auctionProperty(player, players);
+        auctionProperty(players);
         error = false;
         break;
       }

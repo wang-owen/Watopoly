@@ -80,7 +80,7 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
       if (property->isMortgaged()) {
         property->toggleMortgaged();
       }
-      property->auctionProperty(player, context->players);
+      property->auctionProperty(context->players, player);
     }
 
     // Destroy Roll Up the Rim cups
