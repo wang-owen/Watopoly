@@ -1,19 +1,32 @@
 #include <iostream>
 #include <limits>
 
+#include "../Buildings/AcademicBuilding.h"
+#include "../Buildings/OwnableBuilding.h"
 #include "../Player.h"
 #include "Tuition.h"
 
 Tuition::Tuition()
-    : UnownableBuilding{"TUITION"}, TUITION_AMOUNT{300}, PERCENT_AMOUNT{10} {}
+    : UnownableBuilding{"TUITION"}, TUITION_AMOUNT{300}, PERCENT_AMOUNT{0.1} {}
 
 void Tuition::processEvent(const std::shared_ptr<Player> player) {
-  int fee = player->getBalance() * (PERCENT_AMOUNT / 100);
+  // Calculate net worth
+  int fee = player->getBalance();
+  for (auto &building : player->getProperties()) {
+    fee += building.second->getCost();
+    if (auto academic_building =
+            std::dynamic_pointer_cast<AcademicBuilding>(building.second)) {
+      fee += academic_building->getNumImprovements() *
+             academic_building->getImprovementCost();
+    }
+  }
+  fee *= PERCENT_AMOUNT;
 
   std::cout << "You must pay your tuition. Select one of the following payment "
                "options:\n";
   std::cout << "1. Pay $" << TUITION_AMOUNT << "\n";
-  std::cout << "2. Pay 10\% of your total net worth ($" << fee << ")\n";
+  std::cout << "2. Pay " << PERCENT_AMOUNT * 100
+            << "\% of your total net worth ($" << fee << ")\n";
   std::cout << "\n> ";
 
   int choice = 0;
