@@ -22,8 +22,8 @@ std::vector<char> Building::getVisitingPieces() const {
   return pieces;
 }
 
-std::vector<std::weak_ptr<Player>> Building::getVisitors() const {
-  std::vector<std::weak_ptr<Player>> players;
+std::vector<std::shared_ptr<Player>> Building::getVisitors() const {
+  std::vector<std::shared_ptr<Player>> players;
   for (auto &[_, player] : visitors) {
     players.push_back(player);
   }

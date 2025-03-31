@@ -3,6 +3,8 @@
 
 #include "Command.h"
 
+class OwnableBuilding;
+
 class BankruptCommand : public Command {
 public:
   static const std::string NAME;

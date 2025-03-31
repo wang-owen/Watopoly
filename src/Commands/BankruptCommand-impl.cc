@@ -23,22 +23,33 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
     // Player's assets go to building owner
     auto owner = b->getOwner();
     for (auto &[_, property] : player->getProperties()) {
-      // TODO: Determine if 'improvements' transfer over
       property->setOwner(owner);
       owner->addProperty(property);
     }
-    // TODO: Transfer Roll Up the Rim tickets to owner
+    // Transfer Roll Up the Rim tickets to owner
+    for (int n = 0; n < player->getCups(); n++) {
+      owner->addCup();
+    }
   } else {
     // Player's assets go to bank
     for (auto &[_, property] : player->getProperties()) {
-      property->setOwner(nullptr);
-      // TODO: Auction properties to all players
+      property->auctionProperty(player, context->players);
     }
-
-    // TODO: Destroy Roll Up the Rim tickets
   }
 
   player->deactivate();
 
-  // TODO: Call 'next' command
+  // Transfer control to next active player
+  auto num_players = static_cast<int>(context->players.size());
+  do {
+    context->cur_player_idx = (context->cur_player_idx + 1 < num_players)
+                                  ? context->cur_player_idx + 1
+                                  : 0;
+    player = context->players[context->cur_player_idx];
+  } while (!player->isActive());
+
+  context->board->displayBoard();
+
+  std::cout << std::format("\nPlayer {} turn:\n--------------\n",
+                           context->cur_player_idx + 1);
 }

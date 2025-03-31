@@ -12,7 +12,7 @@ public:
   void execute(const std::vector<std::string> &params) override;
 
 private:
-  const int UNMORTGAGE_PERCENT;
+  const double UNMORTGAGE_PERCENT;
 };
 
 #endif

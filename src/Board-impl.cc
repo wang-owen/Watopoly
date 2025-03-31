@@ -14,8 +14,10 @@
 #include "Buildings/RollUpTheRimDecorator.h"
 #include "Buildings/SLC.h"
 #include "Buildings/Tuition.h"
+#include "Player.h"
 
-Board::Board() : active_cups{std::make_shared<int>(0)} {
+Board::Board(const std::vector<std::shared_ptr<Player>> &players)
+    : active_cups{std::make_shared<int>(0)} {
   buildings.reserve(40);
   auto slc = std::make_shared<RollUpTheRimDecorator>(
       std::make_unique<SLC>(buildings), active_cups);
@@ -26,87 +28,87 @@ Board::Board() : active_cups{std::make_shared<int>(0)} {
   buildings.emplace_back(std::make_shared<CollectOSAP>());
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "AL", MonopolyBlock::Arts1, 40, 50,
-      std::array<int, 6>{2, 10, 30, 90, 160, 250}));
+      std::array<int, 6>{2, 10, 30, 90, 160, 250}, players));
   buildings.emplace_back(slc);
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "ML", MonopolyBlock::Arts1, 60, 50,
-      std::array<int, 6>{4, 20, 60, 180, 320, 450}));
+      std::array<int, 6>{4, 20, 60, 180, 320, 450}, players));
   buildings.emplace_back(std::make_shared<Tuition>());
-  buildings.emplace_back(std::make_shared<ResidenceBuilding>("MKV"));
+  buildings.emplace_back(std::make_shared<ResidenceBuilding>("MKV", players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "ECH", MonopolyBlock::Arts2, 100, 50,
-      std::array<int, 6>{6, 30, 90, 270, 400, 550}));
+      std::array<int, 6>{6, 30, 90, 270, 400, 550}, players));
   buildings.emplace_back(needles_hall);
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "PAS", MonopolyBlock::Arts2, 100, 50,
-      std::array<int, 6>{6, 30, 90, 270, 400, 550}));
+      std::array<int, 6>{6, 30, 90, 270, 400, 550}, players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "HH", MonopolyBlock::Arts2, 120, 50,
-      std::array<int, 6>{8, 40, 100, 300, 450, 600}));
+      std::array<int, 6>{8, 40, 100, 300, 450, 600}, players));
   buildings.emplace_back(std::make_shared<DCTimsLine>());
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "RCH", MonopolyBlock::Eng, 140, 100,
-      std::array<int, 6>{10, 50, 150, 450, 625, 750}));
-  buildings.emplace_back(std::make_shared<GymBuilding>("PAC"));
+      std::array<int, 6>{10, 50, 150, 450, 625, 750}, players));
+  buildings.emplace_back(std::make_shared<GymBuilding>("PAC", players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "DWE", MonopolyBlock::Eng, 140, 100,
-      std::array<int, 6>{10, 50, 150, 450, 625, 750}));
+      std::array<int, 6>{10, 50, 150, 450, 625, 750}, players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "CPH", MonopolyBlock::Eng, 160, 100,
-      std::array<int, 6>{12, 60, 180, 500, 700, 900}));
-  buildings.emplace_back(std::make_shared<ResidenceBuilding>("UWP"));
+      std::array<int, 6>{12, 60, 180, 500, 700, 900}, players));
+  buildings.emplace_back(std::make_shared<ResidenceBuilding>("UWP", players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "LHI", MonopolyBlock::Health, 180, 100,
-      std::array<int, 6>{14, 70, 200, 550, 750, 950}));
+      std::array<int, 6>{14, 70, 200, 550, 750, 950}, players));
   buildings.emplace_back(slc);
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "BMH", MonopolyBlock::Health, 180, 100,
-      std::array<int, 6>{14, 70, 200, 550, 750, 950}));
+      std::array<int, 6>{14, 70, 200, 550, 750, 950}, players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "OPT", MonopolyBlock::Health, 200, 100,
-      std::array<int, 6>{16, 80, 220, 600, 800, 1000}));
+      std::array<int, 6>{16, 80, 220, 600, 800, 1000}, players));
   buildings.emplace_back(std::make_shared<GooseNesting>());
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "EV1", MonopolyBlock::Env, 220, 150,
-      std::array<int, 6>{18, 90, 250, 700, 875, 1050}));
+      std::array<int, 6>{18, 90, 250, 700, 875, 1050}, players));
   buildings.emplace_back(needles_hall);
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "EV2", MonopolyBlock::Env, 220, 150,
-      std::array<int, 6>{18, 90, 250, 700, 875, 1050}));
+      std::array<int, 6>{18, 90, 250, 700, 875, 1050}, players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "EV3", MonopolyBlock::Env, 240, 150,
-      std::array<int, 6>{20, 100, 300, 750, 925, 1100}));
-  buildings.emplace_back(std::make_shared<ResidenceBuilding>("V1"));
+      std::array<int, 6>{20, 100, 300, 750, 925, 1100}, players));
+  buildings.emplace_back(std::make_shared<ResidenceBuilding>("V1", players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "PHYS", MonopolyBlock::Sci1, 260, 150,
-      std::array<int, 6>{22, 110, 330, 800, 975, 1150}));
+      std::array<int, 6>{22, 110, 330, 800, 975, 1150}, players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "B1", MonopolyBlock::Sci1, 260, 150,
-      std::array<int, 6>{22, 110, 330, 800, 975, 1150}));
-  buildings.emplace_back(std::make_shared<GymBuilding>("CIF"));
+      std::array<int, 6>{22, 110, 330, 800, 975, 1150}, players));
+  buildings.emplace_back(std::make_shared<GymBuilding>("CIF", players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "B2", MonopolyBlock::Sci1, 280, 150,
-      std::array<int, 6>{24, 120, 360, 850, 1025, 1200}));
+      std::array<int, 6>{24, 120, 360, 850, 1025, 1200}, players));
   buildings.emplace_back(std::make_shared<GoToTims>(buildings));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "EIT", MonopolyBlock::Sci2, 300, 200,
-      std::array<int, 6>{26, 130, 390, 900, 1100, 1275}));
+      std::array<int, 6>{26, 130, 390, 900, 1100, 1275}, players));
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "ESC", MonopolyBlock::Sci2, 300, 200,
-      std::array<int, 6>{26, 130, 390, 900, 1100, 1275}));
+      std::array<int, 6>{26, 130, 390, 900, 1100, 1275}, players));
   buildings.emplace_back(slc);
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "C2", MonopolyBlock::Sci2, 320, 200,
-      std::array<int, 6>{28, 150, 450, 1000, 1200, 1400}));
-  buildings.emplace_back(std::make_shared<ResidenceBuilding>("REV"));
+      std::array<int, 6>{28, 150, 450, 1000, 1200, 1400}, players));
+  buildings.emplace_back(std::make_shared<ResidenceBuilding>("REV", players));
   buildings.emplace_back(needles_hall);
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "MC", MonopolyBlock::Math, 350, 200,
-      std::array<int, 6>{35, 175, 500, 1100, 1300, 1500}));
+      std::array<int, 6>{35, 175, 500, 1100, 1300, 1500}, players));
   buildings.emplace_back(std::make_shared<CoopFee>());
   buildings.emplace_back(std::make_shared<AcademicBuilding>(
       "DC", MonopolyBlock::Math, 400, 200,
-      std::array<int, 6>{50, 200, 600, 1400, 1700, 2000}));
+      std::array<int, 6>{50, 200, 600, 1400, 1700, 2000}, players));
 }
 
 void Board::displayBoard() const {

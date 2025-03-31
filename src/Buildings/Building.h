@@ -21,13 +21,13 @@ public:
 
   std::vector<char> getVisitingPieces() const;
 
-  std::vector<std::weak_ptr<Player>> getVisitors() const;
+  std::vector<std::shared_ptr<Player>> getVisitors() const;
 
   virtual void processEvent(const std::shared_ptr<Player> &player) = 0;
 
 private:
   std::string name;
-  std::unordered_map<char, std::weak_ptr<Player>> visitors;
+  std::unordered_map<char, std::shared_ptr<Player>> visitors;
 };
 
 #endif

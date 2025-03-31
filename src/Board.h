@@ -6,10 +6,11 @@
 
 class Building;
 class AcademicBuilding;
+class Player;
 
 class Board {
 public:
-  Board();
+  Board(const std::vector<std::shared_ptr<Player>> &players);
 
   constexpr static const int MAX_CUPS = 4;
 
