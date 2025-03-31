@@ -18,7 +18,9 @@
 
 CommandCenter::CommandCenter(bool testing)
     : context{std::make_shared<CommandContext>()} {
-  context->board = std::make_shared<Board>(context->players);
+  context->active_cups = std::make_shared<int>(0);
+  context->board =
+      std::make_shared<Board>(context->players, context->active_cups);
   context->testing = testing;
 
   commands.emplace(RollCommand::NAME, std::make_unique<RollCommand>(context));

@@ -16,8 +16,8 @@
 #include "Buildings/Tuition.h"
 #include "Player.h"
 
-Board::Board(const std::vector<std::shared_ptr<Player>> &players)
-    : active_cups{std::make_shared<int>(0)} {
+Board::Board(const std::vector<std::shared_ptr<Player>> &players,
+             std::shared_ptr<int> active_cups) {
   buildings.reserve(40);
   auto slc = std::make_shared<RollUpTheRimDecorator>(
       std::make_unique<SLC>(buildings), active_cups);
@@ -112,90 +112,188 @@ Board::Board(const std::vector<std::shared_ptr<Player>> &players)
 }
 
 void Board::displayBoard() const {
-    std::cout << "_________________________________________________________________________________________\n";
-    std::cout << "|Goose  |       |NEEDLES|       |       |V1     |       |       |CIF    |       |GO TO  |\n";
+  std::cout << "_______________________________________________________________"
+               "__________________________\n";
+  std::cout << "|Goose  |       |NEEDLES|       |       |V1     |       |      "
+               " |CIF    |       |GO TO  |\n";
   std::cout << "|Nesting|"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[21]))
-        << "|HALL   |" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[23])) << "|"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[24])) << "|       |"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[26])) << "|"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[27])) << "|       |"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[29])) << "|TIMS   |\n";
-    std::cout << "|       |EV1    |       |EV2    |EV3    |       |PHYS   |B1     |       |B2     |       |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[20]) << "|" << printEmptySquareWithPieces(buildings[21]) << "|" 
-        << printEmptySquareWithPieces(buildings[22]) << "|" << printEmptySquareWithPieces(buildings[23]) 
-        << "|" << printEmptySquareWithPieces(buildings[24]) << "|" << printEmptySquareWithPieces(buildings[25]) 
-        << "|" << printEmptySquareWithPieces(buildings[26]) << "|" << printEmptySquareWithPieces(buildings[27]) 
-        << "|" << printEmptySquareWithPieces(buildings[28]) << "|" << printEmptySquareWithPieces(buildings[29]) 
-        << "|" << printEmptySquareWithPieces(buildings[30]) << "|\n";
-    std::cout << "|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|\n";
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[21]))
+            << "|HALL   |"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[23]))
+            << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[24]))
+            << "|       |"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[26]))
+            << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[27]))
+            << "|       |"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[29]))
+            << "|TIMS   |\n";
+  std::cout << "|       |EV1    |       |EV2    |EV3    |       |PHYS   |B1    "
+               " |       |B2     |       |\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[20]) << "|"
+            << printEmptySquareWithPieces(buildings[21]) << "|"
+            << printEmptySquareWithPieces(buildings[22]) << "|"
+            << printEmptySquareWithPieces(buildings[23]) << "|"
+            << printEmptySquareWithPieces(buildings[24]) << "|"
+            << printEmptySquareWithPieces(buildings[25]) << "|"
+            << printEmptySquareWithPieces(buildings[26]) << "|"
+            << printEmptySquareWithPieces(buildings[27]) << "|"
+            << printEmptySquareWithPieces(buildings[28]) << "|"
+            << printEmptySquareWithPieces(buildings[29]) << "|"
+            << printEmptySquareWithPieces(buildings[30]) << "|\n";
+  std::cout << "|_______|_______|_______|_______|_______|_______|_______|______"
+               "_|_______|_______|_______|\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
-    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[19])) << "|" << std::string(71, ' ') 
-        << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[31])) << "|\n";
+  std::cout << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[19]))
+            << "|" << std::string(71, ' ') << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[31]))
+            << "|\n";
   std::cout << "|OPT    |" << std::string(71, ' ') << "|EIT    |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[19]) << "|" << std::string(71, ' ') 
-        << "|" << printEmptySquareWithPieces(buildings[31]) << "|\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[19]) << "|"
+            << std::string(71, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[31]) << "|\n";
   std::cout << "|_______|" << std::string(71, ' ') << "|_______|\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
-    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[18])) << "|" << std::string(71, ' ') 
-        << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[32])) << "|\n";
+  std::cout << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[18]))
+            << "|" << std::string(71, ' ') << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[32]))
+            << "|\n";
   std::cout << "|BMH    |" << std::string(71, ' ') << "|ESC    |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[18]) << "|" << std::string(71, ' ') 
-        << "|" << printEmptySquareWithPieces(buildings[32]) << "|\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[18]) << "|"
+            << std::string(71, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[32]) << "|\n";
   std::cout << "|_______|" << std::string(71, ' ') << "|_______|\n";
   std::cout << "|SLC    |" << std::string(71, ' ') << "|SLC    |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[17]) << "|" << std::string(71, ' ') 
-        << "|" << printEmptySquareWithPieces(buildings[33]) << "|\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[17]) << "|"
+            << std::string(71, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[33]) << "|\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
   std::cout << "|_______|" << std::string(71, ' ') << "|_______|\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
-    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[16])) << "|" << std::string(71, ' ') 
-        << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[34])) << "|\n";
+  std::cout << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[16]))
+            << "|" << std::string(71, ' ') << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[34]))
+            << "|\n";
   std::cout << "|LHI    |" << std::string(71, ' ') << "|C2     |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[16]) << "|" << std::string(13, ' ') << std::string(45, '_') << std::string(13, ' ') 
-        << "|" << printEmptySquareWithPieces(buildings[34]) << "|\n";
-    std::cout << "|_______|" << std::string(12, ' ') << "|" << std::string(45, ' ') << "|" << std::string(12, ' ') << "|_______|\n";
-    std::cout << "|UWP    |" << std::string(12, ' ') << "| #   #  ##  #####  ###  ###   ###  #   #   # |" << std::string(12, ' ') << "|REV    |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[15]) << "|" << std::string(12, ' ') << "| #   # #  #   #   #   # #  # #   # #   #   # |" << std::string(12, ' ') 
-        << "|" << printEmptySquareWithPieces(buildings[35]) << "|\n";
-    std::cout << "|       |" << std::string(12, ' ') << "| # # # ####   #   #   # ###  #   # #    # #  |" << std::string(12, ' ') << "|       |\n";
-    std::cout << "|       |" << std::string(12, ' ') << "| # # # #  #   #   #   # #    #   # #     #   |" << std::string(12, ' ') << "|       |\n";
-    std::cout << "|_______|" << std::string(12, ' ') << "| ##### #  #   #    ###  #     ###  ## #  #   |" << std::string(12, ' ') << "|_______|\n";
-    std::cout << "|       |" << std::string(12, ' ') << "|" << std::string(45, '_') << "|" << std::string(12, ' ') <<"|NEEDLES|\n";
-    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[14])) << "|" << std::string(71, ' ') << "|HALL   |\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[16]) << "|"
+            << std::string(13, ' ') << std::string(45, '_')
+            << std::string(13, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[34]) << "|\n";
+  std::cout << "|_______|" << std::string(12, ' ') << "|"
+            << std::string(45, ' ') << "|" << std::string(12, ' ')
+            << "|_______|\n";
+  std::cout << "|UWP    |" << std::string(12, ' ')
+            << "| #   #  ##  #####  ###  ###   ###  #   #   # |"
+            << std::string(12, ' ') << "|REV    |\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[15]) << "|"
+            << std::string(12, ' ')
+            << "| #   # #  #   #   #   # #  # #   # #   #   # |"
+            << std::string(12, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[35]) << "|\n";
+  std::cout << "|       |" << std::string(12, ' ')
+            << "| # # # ####   #   #   # ###  #   # #    # #  |"
+            << std::string(12, ' ') << "|       |\n";
+  std::cout << "|       |" << std::string(12, ' ')
+            << "| # # # #  #   #   #   # #    #   # #     #   |"
+            << std::string(12, ' ') << "|       |\n";
+  std::cout << "|_______|" << std::string(12, ' ')
+            << "| ##### #  #   #    ###  #     ###  ## #  #   |"
+            << std::string(12, ' ') << "|_______|\n";
+  std::cout << "|       |" << std::string(12, ' ') << "|"
+            << std::string(45, '_') << "|" << std::string(12, ' ')
+            << "|NEEDLES|\n";
+  std::cout << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[14]))
+            << "|" << std::string(71, ' ') << "|HALL   |\n";
   std::cout << "|CPH    |" << std::string(71, ' ') << "|       |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[14]) << "|" << std::string(71, ' ') << "|" << printEmptySquareWithPieces(buildings[36]) << "|\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[14]) << "|"
+            << std::string(71, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[36]) << "|\n";
   std::cout << "|_______|" << std::string(71, ' ') << "|_______|\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
-    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[13])) << "|" << std::string(71, ' ') << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[37])) << "|\n";
+  std::cout << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[13]))
+            << "|" << std::string(71, ' ') << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[37]))
+            << "|\n";
   std::cout << "|DWE    |" << std::string(71, ' ') << "|MC     |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[13]) << "|" << std::string(71, ' ') << "|" << printEmptySquareWithPieces(buildings[37]) << "|\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[13]) << "|"
+            << std::string(71, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[37]) << "|\n";
   std::cout << "|_______|" << std::string(71, ' ') << "|_______|\n";
   std::cout << "|PAC    |" << std::string(71, ' ') << "|COOP   |\n";
   std::cout << "|       |" << std::string(71, ' ') << "|FEE    |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[12]) << "|" << std::string(71, ' ') << "|" << printEmptySquareWithPieces(buildings[38]) << "|\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[12]) << "|"
+            << std::string(71, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[38]) << "|\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
   std::cout << "|_______|" << std::string(71, ' ') << "|_______|\n";
   std::cout << "|       |" << std::string(71, ' ') << "|       |\n";
-    std::cout << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[11])) << "|" << std::string(71, ' ') << "|" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[39])) << "|\n";
+  std::cout << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[11]))
+            << "|" << std::string(71, ' ') << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[39]))
+            << "|\n";
   std::cout << "|RCH    |" << std::string(71, ' ') << "|DC     |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[11]) << "|" << std::string(71, ' ') << "|" << printEmptySquareWithPieces(buildings[39]) << "|\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[11]) << "|"
+            << std::string(71, ' ') << "|"
+            << printEmptySquareWithPieces(buildings[39]) << "|\n";
   std::cout << "|_______|" << std::string(71, '_') << "|_______|\n";
-    std::cout << "|DC Tims|       |       |NEEDLES|       |MKV    |TUITION|       |SLC    |       |COLLECT|\n";
-    std::cout << "|Line   |" << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[9])) << "|"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[8])) << "|HALL   |"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[6])) << "|       |       |"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[3])) << "|       |"
-        << printImprovements(std::dynamic_pointer_cast<AcademicBuilding>(buildings[1])) << "|OSAP   |\n";
-    std::cout << "|       |HH     |PAS    |       |ECH    |       |       |ML     |       |AL     |       |\n";
-    std::cout << "|" << printEmptySquareWithPieces(buildings[10]) << "|" << printEmptySquareWithPieces(buildings[9]) << "|"
-        << printEmptySquareWithPieces(buildings[8]) << "|" << printEmptySquareWithPieces(buildings[7]) << "|"
-        << printEmptySquareWithPieces(buildings[6]) << "|" << printEmptySquareWithPieces(buildings[5]) << "|"
-        << printEmptySquareWithPieces(buildings[4]) << "|" << printEmptySquareWithPieces(buildings[3]) << "|"
-        << printEmptySquareWithPieces(buildings[2]) << "|" << printEmptySquareWithPieces(buildings[1]) << "|"
+  std::cout << "|DC Tims|       |       |NEEDLES|       |MKV    |TUITION|      "
+               " |SLC    |       |COLLECT|\n";
+  std::cout << "|Line   |"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[9]))
+            << "|"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[8]))
+            << "|HALL   |"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[6]))
+            << "|       |       |"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[3]))
+            << "|       |"
+            << printImprovements(
+                   std::dynamic_pointer_cast<AcademicBuilding>(buildings[1]))
+            << "|OSAP   |\n";
+  std::cout << "|       |HH     |PAS    |       |ECH    |       |       |ML    "
+               " |       |AL     |       |\n";
+  std::cout << "|" << printEmptySquareWithPieces(buildings[10]) << "|"
+            << printEmptySquareWithPieces(buildings[9]) << "|"
+            << printEmptySquareWithPieces(buildings[8]) << "|"
+            << printEmptySquareWithPieces(buildings[7]) << "|"
+            << printEmptySquareWithPieces(buildings[6]) << "|"
+            << printEmptySquareWithPieces(buildings[5]) << "|"
+            << printEmptySquareWithPieces(buildings[4]) << "|"
+            << printEmptySquareWithPieces(buildings[3]) << "|"
+            << printEmptySquareWithPieces(buildings[2]) << "|"
+            << printEmptySquareWithPieces(buildings[1]) << "|"
             << printEmptySquareWithPieces(buildings[0]) << "|\n";
-    std::cout << "|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|\n";
+  std::cout << "|_______|_______|_______|_______|_______|_______|_______|______"
+               "_|_______|_______|_______|\n";
 }
 
 std::string

@@ -10,7 +10,8 @@ class Player;
 
 class Board {
 public:
-  Board(const std::vector<std::shared_ptr<Player>> &players);
+  Board(const std::vector<std::shared_ptr<Player>> &players,
+        std::shared_ptr<int> active_cups);
 
   constexpr static const int MAX_CUPS = 4;
 
@@ -26,7 +27,6 @@ public:
 
 private:
   std::vector<std::shared_ptr<Building>> buildings;
-  std::shared_ptr<int> active_cups;
 };
 
 #endif

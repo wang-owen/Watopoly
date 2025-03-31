@@ -13,6 +13,7 @@ struct CommandContext {
   std::vector<std::shared_ptr<Player>> players;
   std::shared_ptr<Player> cur_player;
   int cur_player_idx;
+  std::shared_ptr<int> active_cups;
 };
 
 #endif

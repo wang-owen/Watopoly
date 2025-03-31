@@ -82,6 +82,12 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
       }
       property->auctionProperty(player, context->players);
     }
+
+    // Destroy Roll Up the Rim cups
+    for (int n = 0; n < player->getCups(); n++) {
+      player->removeCup();
+    }
+    *context->active_cups -= player->getCups();
   }
 
   player->deactivate();
