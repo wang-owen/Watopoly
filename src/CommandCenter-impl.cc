@@ -17,7 +17,7 @@
 #include "Commands/UnmortgageCommand.h"
 #include "Player.h"
 
-CommandCenter::CommandCenter(bool testing)
+CommandCenter::CommandCenter(bool testing, std::string load_file)
     : context{std::make_shared<CommandContext>()} {
   context->board = std::make_shared<Board>(context->players);
   context->testing = testing;
@@ -48,14 +48,65 @@ void CommandCenter::addPlayer(const std::string &name, char piece, int funds) {
   }
 }
 
+void CommandCenter::loadPlayer(const std::string &name, char piece, int funds,
+                               int position, int tims_cups, int jail_turns) {
+  context->players.emplace_back(std::make_shared<Player>(name, piece, funds));
+  auto &player = context->players.back();
+  player->setPosition(position);
+  for (int n = 0; n < tims_cups; n++) {
+    player->addCup();
+  }
+  if (jail_turns != -1) {
+    player->setTurnsInTims(jail_turns + 1);
+  }
+  context->board->getBuildings()[position]->addPlayer(player);
+  if (!context->cur_player) {
+    context->cur_player = player;
+    context->cur_player_idx = 0;
+  }
+}
+
+void CommandCenter::loadProperty(const std::string &name,
+                                 const std::string &owner, int improvements) {
+  for (auto &building : context->board->getBuildings()) {
+    if (building->getName() == name) {
+      if (auto property =
+              std::dynamic_pointer_cast<OwnableBuilding>(building)) {
+        for (auto &player : context->players) {
+          if (player->getName() == owner) {
+            property->setOwner(player);
+            if (improvements == -1) {
+              property->toggleMortgaged();
+            } else if (improvements > 0) {
+              if (auto academic_building =
+                      std::dynamic_pointer_cast<AcademicBuilding>(property)) {
+                for (int n = 0; n < improvements; n++) {
+                  academic_building->improve();
+                }
+              } else {
+                throw("ERROR: Saved property is marked with improvements but "
+                      "is not an academic building.");
+              }
+            }
+            return;
+          }
+        }
+        throw("ERROR: Saved property owner does not exist.");
+      } else {
+        throw("ERROR: Saved property is non-ownable.");
+      }
+    }
+  }
+}
+
 void CommandCenter::displayPlayers() const {
   std::cout << "Players:\n";
   std::cout << "--------\n";
   for (size_t i = 0; i < context->players.size(); i++) {
     auto &player = context->players[i];
     if (player->isActive()) {
-      std::cout << std::format("Player {}: {} ({})\n", static_cast<int>(i + 1),
-                               player->getName(), player->getPiece());
+      std::cout << std::format("- {} ({})\n", player->getName(),
+                               player->getPiece());
     }
   }
 }

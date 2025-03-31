@@ -1,6 +1,7 @@
 #include <format>
+#include <fstream>
 #include <iostream>
-#include <memory>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <unordered_set>
@@ -8,23 +9,7 @@
 #include "CommandCenter.h"
 #include "PieceManager.h"
 
-int main(int argc, char *argv[]) {
-  // Verify arguments
-  if (argc > 3) {
-    std::cerr << std::format("Usage: {} [-load file] [-testing]\n", argv[0]);
-    return 1;
-  }
-
-  bool testing = false;
-  if (argc == 2) {
-    if (std::string(argv[1]) == "-testing") {
-      testing = true;
-    }
-  }
-
-  // Initialize command center
-  CommandCenter cmd{testing};
-
+std::string initNewGame(CommandCenter &cmd) {
   const int STARTING_FUNDS = 1500;
   const int MIN_PLAYERS = 2;
   const int MAX_PLAYERS = 6;
@@ -44,6 +29,7 @@ int main(int argc, char *argv[]) {
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
   // Setup player objects
+  std::string first_player;
   PieceManager pm{};
   std::unordered_set<std::string> taken_names;
   for (auto n = 1; n <= numPlayers; n++) {
@@ -75,7 +61,7 @@ int main(int argc, char *argv[]) {
 
       // Prompt for piece type
       int numPieces = pm.getNumPieces();
-      std::cout << std::format("Player {} - Enter piece selection (1-{}): ", n,
+      std::cout << std::format("{} - Enter piece selection (1-{}): ", name,
                                numPieces);
       while (!(std::cin >> pieceNum) || pieceNum < 1 || pieceNum > numPieces ||
              !pm.isAvailable(pieceNum)) {
@@ -92,6 +78,110 @@ int main(int argc, char *argv[]) {
     // Initialize player
     taken_names.insert(name);
     cmd.addPlayer(name, pm.selectPiece(pieceNum), STARTING_FUNDS);
+    if (first_player.empty()) {
+      first_player = name;
+    }
+  }
+  return first_player;
+}
+
+std::string loadSavedGame(CommandCenter &cmd, std::string &filename) {
+  std::ifstream infile(filename);
+  if (!infile) {
+    std::cerr << "ERROR: Could not open file " << filename << std::endl;
+    return "";
+  }
+
+  // Read number of players.
+  std::string first_player;
+  int numPlayers = 0;
+  infile >> numPlayers;
+  infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  // Load each player.
+  for (int i = 0; i < numPlayers; ++i) {
+    std::string name;
+    char piece;
+    int tims_cups;
+    int money;
+    int position;
+
+    infile >> name >> piece >> tims_cups >> money >> position;
+
+    int jail_indicator = 0;
+    int jail_turns = -1;
+    // If the player is in DC Tims Line there is an extra field
+    if (position == 10) {
+      infile >> jail_indicator;
+      if (jail_indicator == 1) {
+        infile >> jail_turns;
+      }
+    }
+    infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    cmd.loadPlayer(name, piece, money, position, tims_cups, jail_turns);
+    if (first_player.empty()) {
+      first_player = name;
+    }
+  }
+
+  // Load property information
+  std::string property_name;
+  while (infile >> property_name) {
+    std::string owner;
+    int improvements;
+    infile >> owner >> improvements;
+    infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    cmd.loadProperty(property_name, owner, improvements);
+  }
+
+  return first_player;
+}
+
+int main(int argc, char *argv[]) {
+  // Verify arguments
+  if (argc > 4) { // Maximum valid arguments: program name + 2 flags + file
+    std::cerr << std::format("Usage: {} [-load file] [-testing]\n", argv[0]);
+    return 1;
+  }
+
+  bool testing = false;
+  std::string load_file;
+
+  for (int i = 1; i < argc; ++i) {
+    std::string arg = argv[i];
+
+    if (arg == "-testing") {
+      testing = true;
+    } else if (arg == "-load") {
+      if (i + 1 < argc) {
+        load_file = argv[++i];
+      } else {
+        std::cerr << std::format("Error: Missing filename after -load.\nUsage: "
+                                 "{} [-load file] [-testing]\n",
+                                 argv[0]);
+        return 1;
+      }
+    } else {
+      std::cerr << std::format("Error: Unrecognized argument '{}'.\nUsage: {} "
+                               "[-load file] [-testing]\n",
+                               arg, argv[0]);
+      return 1;
+    }
+  }
+
+  // Initialize command center
+  CommandCenter cmd{testing, load_file};
+
+  std::string first_player;
+  if (load_file.empty()) {
+    first_player = initNewGame(cmd);
+  } else {
+    first_player = loadSavedGame(cmd, load_file);
+    if (first_player.empty()) {
+      return 1;
+    }
   }
 
   // Display players
@@ -99,7 +189,7 @@ int main(int argc, char *argv[]) {
   cmd.displayPlayers();
   std::cout << "\n";
 
-  std::cout << std::format("\nPlayer 1 turn:\n--------------\n");
+  std::cout << std::format("\n{}'s turn:\n--------------\n", first_player);
 
   // Gameplay loop
   bool running = true;
