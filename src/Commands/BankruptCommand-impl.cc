@@ -50,6 +50,6 @@ void BankruptCommand::execute(const std::vector<std::string> & /*params*/) {
 
   context->board->displayBoard();
 
-  std::cout << std::format("\nPlayer {} turn:\n--------------\n",
-                           context->cur_player_idx + 1);
+  std::cout << std::format("\n {}'s turn:\n--------------\n",
+                           context->cur_player->getName());
 }

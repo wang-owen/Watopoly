@@ -50,13 +50,14 @@ void RollCommand::execute(const std::vector<std::string> &params) {
 
     // Send player to DC Tims Line
     if (player->getDoublesRolled() == 3) {
-      std::cout
-          << "You have rolled doubles thrice. Go straight to DC Tims Line.\n";
       player->setTurnsInTims(1);
       player->moveToIdx(10, context->board->getBuildings());
       player->setDoublesRolled(0);
       player->setCanRollAgain(false);
+
       context->board->displayBoard();
+      std::cout
+          << "You have rolled doubles thrice. Go straight to DC Tims Line.\n";
       return;
     }
 
@@ -68,11 +69,12 @@ void RollCommand::execute(const std::vector<std::string> &params) {
   // Player is stuck in DC Tims Line
   if (player->getTurnsInTims()) {
     if (die1 == die2) {
-      std::cout << "You rolled doubles! You have left the DC Tims Line.\n";
       player->setTurnsInTims(0);
       player->setDoublesRolled(0);
       player->setCanRollAgain(false);
+
       context->board->displayBoard();
+      std::cout << "You rolled doubles! You have left the DC Tims Line.\n";
       return;
     } else {
       std::cout

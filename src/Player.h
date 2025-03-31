@@ -27,6 +27,8 @@ public:
 
   int getPosition() const;
 
+  void setPosition(int pos);
+
   int getBalance() const;
 
   void displayBalance() const;

@@ -28,6 +28,8 @@ char Player::getPiece() const { return piece; }
 
 int Player::getPosition() const { return position; }
 
+void Player::setPosition(int pos) { position = pos; }
+
 int Player::getBalance() const { return balance; }
 
 void Player::displayBalance() const {

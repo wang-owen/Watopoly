@@ -56,10 +56,11 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
           }
           player->reduceFunds(cost);
           building->improve();
+          
+          context->board->displayBoard();
           std::cout << std::format("{} has been improved!\n", name);
           std::cout << std::format("New tuition cost: ${}\n",
                                    building->getFee());
-          context->board->displayBoard();
           return;
         }
         case 'n': {
@@ -93,10 +94,11 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
         case 'y': {
           player->increaseFunds(cost);
           building->impair();
+          
+          context->board->displayBoard();
           std::cout << std::format("{} has lost an improvement.\n", name);
           std::cout << std::format("New tuition cost: ${}\n",
                                    building->getFee());
-          context->board->displayBoard();
           return;
         }
         case 'n': {

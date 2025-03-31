@@ -22,9 +22,9 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
   if (auto debt = player->getDebt() > 0) {
     // Player has existing debt,
     std::cout << std::format(
-        "Player {} still owes ${}! You cannot end your turn until paying off "
+        "{} still owes ${}! You cannot end your turn until paying off "
         "your existing debts or declaring bankrupcy.\n",
-        player_idx + 1, debt);
+        player->getName(), debt);
     return;
   }
 
@@ -45,6 +45,5 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
 
   context->board->displayBoard();
 
-  std::cout << std::format("\nPlayer {} turn:\n--------------\n",
-                           player_idx + 1);
+  std::cout << std::format("\n{}'s turn:\n--------------\n", player->getName());
 }
