@@ -18,9 +18,9 @@ void NextCommand::execute(const std::vector<std::string> & /*params*/) {
     return;
   }
 
-  if (auto debt = player->getDebt() > 0) {
+  if (player->getDebt() > 0) {
     // Player has existing debt,
-    std::cout << player->getName() << " still owes $" << debt
+    std::cout << player->getName() << " still owes $" << player->getDebt()
               << "! You cannot end your turn until paying off "
                  "your existing debts or declaring bankrupcy.\n";
     return;

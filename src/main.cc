@@ -16,8 +16,8 @@ std::string initNewGame(CommandCenter &cmd) {
 
   // Prompt for player count
   int numPlayers = 0;
-  std::cout << "Enter number of players (" << MIN_PLAYERS << "-" << MAX_PLAYERS
-            << "): ";
+  std::cout << "\nEnter number of players (" << MIN_PLAYERS << "-"
+            << MAX_PLAYERS << "): ";
   while (!(std::cin >> numPlayers) || numPlayers < MIN_PLAYERS ||
          numPlayers > MAX_PLAYERS) {
     std::cout << "Invalid input. Please enter an integer between "
@@ -32,7 +32,7 @@ std::string initNewGame(CommandCenter &cmd) {
   PieceManager pm{};
   std::unordered_set<std::string> taken_names;
   for (auto n = 1; n <= numPlayers; n++) {
-    std::cout << std::endl;
+    std::cout << "\n";
     pm.displayPieces();
 
     std::string name, input, extra;
@@ -63,8 +63,12 @@ std::string initNewGame(CommandCenter &cmd) {
                 << "): ";
       while (!(std::cin >> pieceNum) || pieceNum < 1 || pieceNum > num_pieces ||
              !pm.isAvailable(pieceNum)) {
-        std::cout << "Invalid input. Please enter an integer between 1 and "
-                  << num_pieces << ": ";
+        if (!pm.isAvailable(pieceNum)) {
+          std::cout << "Piece already taken. Try again: ";
+        } else {
+          std::cout << "Invalid input. Please enter an integer between 1 and "
+                    << num_pieces << ": ";
+        }
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       }
@@ -179,10 +183,11 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  cmd.displayBoard();
+
   // Display players
   std::cout << "\n\n";
   cmd.displayPlayers();
-  std::cout << "\n";
 
   std::cout << "\n" << first_player << "'s turn:\n--------------\n";
 
@@ -193,7 +198,7 @@ int main(int argc, char *argv[]) {
       continue;
     }
     running = cmd.execute();
-    std::cout << std::endl;
+    std::cout << "\n";
   }
 
   std::cout << "\n==========\nGAME OVER!\n==========" << std::endl;

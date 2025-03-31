@@ -26,6 +26,8 @@ public:
 
   void displayPlayers() const;
 
+  void displayBoard() const;
+
   bool scan();
 
   bool execute();

@@ -116,6 +116,8 @@ void CommandCenter::displayPlayers() const {
   }
 }
 
+void CommandCenter::displayBoard() const { context->board->displayBoard(); }
+
 bool CommandCenter::scan() {
   std::string input;
 
@@ -129,7 +131,7 @@ bool CommandCenter::scan() {
   std::istringstream iss{input};
   params.clear();
   if (iss >> command && !(commands.contains(command))) {
-    std::cout << "command not found: " << input << "\n";
+    std::cout << "command not found: " << input << "\n\n";
     return false;
   }
   std::string param;

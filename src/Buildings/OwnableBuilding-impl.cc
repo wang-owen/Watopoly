@@ -30,7 +30,8 @@ bool OwnableBuilding::isMortgaged() const { return mortgaged; }
 void OwnableBuilding::auctionProperty(
     std::vector<std::shared_ptr<Player>> players,
     const std::shared_ptr<Player> player) {
-  std::cout << getName() << " is being auctioned!\n-----------------------\n";
+  std::cout << "\n"
+            << getName() << " is being auctioned!\n-----------------------\n";
 
   if (player) {
     players.erase(std::remove(players.begin(), players.end(), player),
@@ -80,11 +81,12 @@ void OwnableBuilding::auctionProperty(
           }
           // Accept the bid and update current_bid.
           current_bid = amount;
-          std::cout << p->getName() << " raised the bid to " << current_bid
-                    << ".\n";
+          std::cout << "\n"
+                    << p->getName() << " raised the bid to " << current_bid
+                    << ".\n\n";
           valid_input = true;
         } else if (choice == 2) {
-          std::cout << p->getName() << " has withdrawn.\n";
+          std::cout << "\n" << p->getName() << " has withdrawn.\n\n";
           // Remove the player from active bidders.
           players.erase(players.begin() + i);
           valid_input = true;
@@ -118,6 +120,7 @@ void OwnableBuilding::auctionProperty(
     }
     players.front()->reduceFunds(current_bid);
     players.front()->addProperty(shared_from_this());
+    setOwner(players.front());
   } else {
     std::cout << "Bidding round ended with no active bidders.\n";
   }
@@ -178,10 +181,10 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
       auto fee = getFee();
       std::cout << getName() << " Fee: $" << fee << "\n";
       auto reduced_funds = player->reduceFunds(fee);
-      getOwner()->increaseFunds(reduced_funds);
+      owner->increaseFunds(reduced_funds);
       if (reduced_funds < fee) {
         // Player lacks sufficient funds
-        player->setDebt(fee - reduced_funds, getOwner());
+        player->setDebt(fee - reduced_funds, owner);
         std::cout << "You lack sufficient funds. You owe $"
                   << fee - reduced_funds << "\n";
       }

@@ -104,7 +104,7 @@ void Player::move(int steps,
   position = new_pos;
 
   std::cout << "Moved " << steps << " steps to "
-            << buildings[position]->getName() << "\n";
+            << buildings[position]->getName() << "\n\n";
 
   // Take action on building landed upon
   auto &building = buildings[position];
