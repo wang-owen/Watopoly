@@ -17,7 +17,8 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
   }
 
   auto &player = context->cur_player;
-  if (!player->getProperties().count(params[0])) {
+  auto &player_properties = player->getProperties();
+  if (!player_properties.count(params[0])) {
     std::cout << "You do not own " << params[0] << "!\n";
     return;
   }
@@ -25,6 +26,16 @@ void ImproveCommand::execute(const std::vector<std::string> &params) {
   if (auto building = std::dynamic_pointer_cast<AcademicBuilding>(
           player->getProperties().at(params[0]))) {
     auto name = building->getName();
+
+    // Verify that owner owns entire monopoly
+    for (auto &b_name : building->getBlockBuildings(building->getBlock())) {
+      if (!player_properties.count(b_name)) {
+        std::cout
+            << "You cannot improve a building without owning its monopoly!\n";
+        return;
+      }
+    }
+
     if (params[1] == "buy") {
       // Buy
       if (building->getNumImprovements() >=
