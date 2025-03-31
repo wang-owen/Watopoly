@@ -7,7 +7,7 @@
 Player::Player(const std::string &name, char piece, int balance)
     : name{name}, piece{piece}, balance{balance}, debt{0}, position{0},
       num_residences{0}, num_cups{0}, turns_in_tims{0}, doubles_rolled{0},
-      active{true}, rolled{false}, can_roll_again{false} {}
+      active{true}, rolled{false}, can_roll_again{false}, owes_to{nullptr} {}
 
 void Player::deactivate() { active = false; }
 
@@ -37,18 +37,28 @@ void Player::displayBalance() const {
 
 int Player::getDebt() const { return debt; }
 
-void Player::setDebt(int amount) { debt = amount; }
+void Player::setDebt(int amount, const std::shared_ptr<Player> &owes) {
+  debt = amount;
+  owes_to = owes;
+}
 
 void Player::increaseFunds(int amount) {
   if (debt > 0) {
     if (amount <= debt) {
       debt -= amount;
+      if (owes_to) {
+        owes_to->increaseFunds(amount);
+      }
       std::cout << "You have paid off $" << amount
                 << " of your debt. You have $" << debt
                 << " of debt remaining.\n";
       return;
     } else {
       amount -= debt;
+      if (owes_to) {
+        owes_to->increaseFunds(debt);
+        owes_to = nullptr;
+      }
       debt = 0;
       std::cout << "You have paid off your debt!\n";
     }

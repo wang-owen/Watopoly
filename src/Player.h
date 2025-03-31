@@ -35,7 +35,7 @@ public:
 
   int getDebt() const;
 
-  void setDebt(int amount);
+  void setDebt(int amount, const std::shared_ptr<Player> &owes_to = nullptr);
 
   void increaseFunds(int amount);
 
@@ -82,6 +82,7 @@ private:
       doubles_rolled;
   std::unordered_map<std::string, std::shared_ptr<OwnableBuilding>> properties;
   bool active, rolled, can_roll_again;
+  std::shared_ptr<Player> owes_to;
 };
 
 #endif

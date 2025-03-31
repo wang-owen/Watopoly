@@ -179,7 +179,7 @@ void OwnableBuilding::processEvent(const std::shared_ptr<Player> player) {
       getOwner()->increaseFunds(reduced_funds);
       if (reduced_funds < fee) {
         // Player lacks sufficient funds
-        player->setDebt(fee - reduced_funds);
+        player->setDebt(fee - reduced_funds, getOwner());
         std::cout << "You lack sufficient funds. You owe $"
                   << fee - reduced_funds << "\n";
       }
